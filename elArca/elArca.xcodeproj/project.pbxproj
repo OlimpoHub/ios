@@ -6,14 +6,24 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		66E339DA2EA8383000D1B784 /* Asset.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66E339D92EA8383000D1B784 /* Asset.xcassets */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		66E339372EA6D7D700D1B784 /* elArca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = elArca.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		66E339D92EA8383000D1B784 /* Asset.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Asset.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		66E339392EA6D7D700D1B784 /* elArca */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = elArca;
+			sourceTree = "<group>";
+		};
+		66E339EE2EA8384D00D1B784 /* Fonts */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +42,8 @@
 		66E3392E2EA6D7D700D1B784 = {
 			isa = PBXGroup;
 			children = (
+				66E339D92EA8383000D1B784 /* Asset.xcassets */,
+				66E339EE2EA8384D00D1B784 /* Fonts */,
 				66E339392EA6D7D700D1B784 /* elArca */,
 				66E339382EA6D7D700D1B784 /* Products */,
 			);
@@ -62,6 +74,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				66E339392EA6D7D700D1B784 /* elArca */,
+				66E339EE2EA8384D00D1B784 /* Fonts */,
 			);
 			name = elArca;
 			packageProductDependencies = (
@@ -109,6 +122,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66E339DA2EA8383000D1B784 /* Asset.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
