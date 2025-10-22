@@ -17,8 +17,8 @@
 - [ ] `CHANGELOG.md` is updated.
 - [ ] Backend is complete and functional.
 - [ ] Test design is build and the US pass the tests.
-- [ ] Code standars are met.
-- [ ] Commit standars are met.
+- [ ] Code standards are met [](../CodingStandard.md).
+- [ ] Commit standards are met.
 - [ ] Technical documentation is complete.
 - [ ] User manual is complete.
 - [ ] Code documentation is complete.
