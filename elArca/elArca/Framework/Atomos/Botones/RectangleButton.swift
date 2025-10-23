@@ -22,9 +22,9 @@ enum ButtonType {
     var height: CGFloat {
         switch self {
         case .smallWhite, .smallBlue:
-            return 24
-        case .mediumRed, .mediumGray, .mediumBlue:
             return 32
+        case .mediumRed, .mediumGray, .mediumBlue:
+            return 24
         case .largeBlue, .largeGray:
             return 40
         }
@@ -33,9 +33,9 @@ enum ButtonType {
     var width: CGFloat {
         switch self {
         case .smallWhite, .smallBlue:
-            return 95
-        case .mediumRed, .mediumGray, .mediumBlue:
             return 88
+        case .mediumRed, .mediumGray, .mediumBlue:
+            return 95
         case .largeBlue, .largeGray:
             return 112
         }
