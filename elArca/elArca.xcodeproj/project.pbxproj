@@ -6,13 +6,36 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		6646F7B92EAAE1F1005B89E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6646F7B62EAAE1F1005B89E6 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
-		66E339372EA6D7D700D1B784 /* elArca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = elArca.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6646F7B62EAAE1F1005B89E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6646F7CB2EAAE4CB005B89E6 /* elArca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = elArca.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		6646F7CD2EAAE4D0005B89E6 /* Exceptions for "elArca" folder in "elArca" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 66E339362EA6D7D700D1B784 /* elArca */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		6646F7C82EAAE4AF005B89E6 /* Fonts */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		66E339392EA6D7D700D1B784 /* elArca */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				6646F7CD2EAAE4D0005B89E6 /* Exceptions for "elArca" folder in "elArca" target */,
+			);
 			path = elArca;
 			sourceTree = "<group>";
 		};
@@ -32,17 +55,11 @@
 		66E3392E2EA6D7D700D1B784 = {
 			isa = PBXGroup;
 			children = (
+				6646F7C82EAAE4AF005B89E6 /* Fonts */,
 				66E339392EA6D7D700D1B784 /* elArca */,
-				66E339382EA6D7D700D1B784 /* Products */,
+				6646F7CB2EAAE4CB005B89E6 /* elArca.app */,
+				6646F7B62EAAE1F1005B89E6 /* Assets.xcassets */,
 			);
-			sourceTree = "<group>";
-		};
-		66E339382EA6D7D700D1B784 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				66E339372EA6D7D700D1B784 /* elArca.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -61,13 +78,14 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				6646F7C82EAAE4AF005B89E6 /* Fonts */,
 				66E339392EA6D7D700D1B784 /* elArca */,
 			);
 			name = elArca;
 			packageProductDependencies = (
 			);
 			productName = elArca;
-			productReference = 66E339372EA6D7D700D1B784 /* elArca.app */;
+			productReference = 6646F7CB2EAAE4CB005B89E6 /* elArca.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -95,7 +113,7 @@
 			mainGroup = 66E3392E2EA6D7D700D1B784;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 66E339382EA6D7D700D1B784 /* Products */;
+			productRefGroup = 66E3392E2EA6D7D700D1B784;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -109,6 +127,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6646F7B92EAAE1F1005B89E6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +269,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = elArca/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -292,6 +312,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = elArca/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
