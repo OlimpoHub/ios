@@ -10,52 +10,28 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack(spacing: 50) {
-            CircleButton(
-                title: "+",
-                action: { print("mas") },
+            Texts (
+                text: "Header 24",
+                type: .header
             )
-            
-            RectangleButton(
-                            title: "Generar QR",
-                            action: { print("generar qr") },
-                            type: .smallWhite
-                        )
-            RectangleButton(
-                            title: "Ver",
-                            action: { print("ver") },
-                            type: .smallBlue
-                        )
-            RectangleButton(
-                            title: "Eliminar",
-                            action: { print("eliminar") },
-                            type: .largeGray
-                        )
-            RectangleButton(
-                            title: "Modificar",
-                            action: { print("modificar") },
-                            type: .largeBlue
-                        )
-            RectangleButton(
-                            title: "Entregado",
-                            action: { print("entregado") },
-                            type: .mediumGray
-                        )
-            RectangleButton(
-                            title: "Activo",
-                            action: { print("activo") },
-                            type: .mediumBlue
-                        )
-            RectangleButton(
-                            title: "Caducado",
-                            action: { print("caducado") },
-                            type: .mediumRed
-                        )
+            Texts (
+                text: "Subtitle 20",
+                type: .subtitle
+            )
+            Texts (
+                text: "Small 12",
+                type: .small
+            )
+            Texts (
+                text: "Medium 14",
+                type: .medium
+            )
+            Texts (
+                text: "Large 16",
+                type: .large
+            )
         }
     }
-}
-
-#Preview {
-    ContentView()
 }
 
 #Preview {
