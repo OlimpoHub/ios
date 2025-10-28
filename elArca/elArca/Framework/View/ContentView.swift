@@ -7,55 +7,37 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct ContentView: View{
+    @State private var isValid: Bool = true
+    @State private var isValid1: Bool = true
+    
+    @State private var test: String = ""
+    
+    @State private var username: String = ""
+    
+    
     var body: some View {
-        VStack(spacing: 50) {
-            CircleButton(
-                title: "+",
-                action: { print("mas") },
-            )
+        VStack(spacing: 20) {
             
-            RectangleButton(
-                            title: "Generar QR",
-                            action: { print("generar qr") },
-                            type: .smallWhite
-                        )
-            RectangleButton(
-                            title: "Ver",
-                            action: { print("ver") },
-                            type: .smallBlue
-                        )
-            RectangleButton(
-                            title: "Eliminar",
-                            action: { print("eliminar") },
-                            type: .largeGray
-                        )
-            RectangleButton(
-                            title: "Modificar",
-                            action: { print("modificar") },
-                            type: .largeBlue
-                        )
-            RectangleButton(
-                            title: "Entregado",
-                            action: { print("entregado") },
-                            type: .mediumGray
-                        )
-            RectangleButton(
-                            title: "Activo",
-                            action: { print("activo") },
-                            type: .mediumBlue
-                        )
-            RectangleButton(
-                            title: "Caducado",
-                            action: { print("caducado") },
-                            type: .mediumRed
-                        )
+            TextInput(value: $username,
+                  isValid: $isValid,
+                  label: "Username",
+                  placeholder: "Only 6 chars or more",
+                  type: .textInput)
+                      .onChange(of: username) {
+                          isValid = username.count >= 6
+                  }
+            
+            TextInput(value: $test,
+                  isValid: $isValid1,
+                  label: "Test Text",
+                  placeholder: "Anything",
+                  type: .emailInput)
         }
     }
-}
-
-#Preview {
-    ContentView()
+    
+    
+    
 }
 
 #Preview {
