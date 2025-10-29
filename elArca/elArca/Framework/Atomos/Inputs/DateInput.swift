@@ -10,21 +10,27 @@ import SwiftUI
 struct DateInput: View {
     @Binding var value: Date
     
-    @Binding var isValid: Bool
+    @Binding var errorMessage: String
     @Binding var isActive: Bool
     @State private var placeholder: String = "Seleccionar aquí"
+    @State private var currentDate: Date = Date()
     
     var label: String
+    var startDate: Date = Calendar.current.date(from: DateComponents(year: 1900, month: 1, day: 1)) ?? Date()
+    var endDate: Date = Calendar.current.date(from: DateComponents(year: 2200, month: 12, day: 31)) ?? Date()
     
     let baseSize: CGFloat = 8
+    
     let fontSize: CGFloat = 14
     let shadowSize: CGFloat = 3
     let lineWidth: CGFloat = 2
         
     var body: some View {
         // Colors and shadow are obtained depending on the current state
+        let isValid: Bool = errorMessage == ""
         let backgroundColor: Color = isValid ? Color("BlackBlue") : Color("BlackRed")
         let highlightColor: Color = isValid ? Color("HighlightBlue") : Color("HighlightRed")
+        let errorHeight: CGFloat = isValid ? 0 : baseSize + shadowSize
         let shadowSelector: CGFloat = isActive ? shadowSize : 0
         
         VStack {
@@ -47,14 +53,40 @@ struct DateInput: View {
                 .padding(baseSize)
                 .zIndex(0)
                 .fullScreenCover(isPresented: $isActive) {
-                    DatePicker(selection: $value, displayedComponents: .date) {}
-                        .labelsHidden()
-                        .datePickerStyle(.graphical)
-                        .tint(.highlightBlue)
-                        .onChange(of: value) {
-                            isActive = false
-                            placeholder = value.formatted(.dateTime.day().month().year())
+                    VStack(spacing: baseSize * 3) {
+                        Spacer()
+                        DatePicker(selection: $currentDate, in: startDate...endDate, displayedComponents: .date){}
+                            .labelsHidden()
+                            .datePickerStyle(.graphical)
+                            .tint(.highlightBlue)
+                            .onChange(of: currentDate) {
+                                
+                            }
+                        
+                        HStack(spacing: baseSize) {
+                            RectangleButton(
+                                title: "Descartar",
+                                action: {
+                                    isActive = false
+                                },
+                                type: .largeGray
+                            )
+                            
+                            RectangleButton(
+                                title: "Seleccionar",
+                                action: {
+                                    isActive = false
+                                    value = currentDate
+                                    placeholder = value.formatted(.dateTime.day().month().year())
+                                },
+                                type: .largeBlue
+                            )
                         }
+                        Spacer()
+                            .frame(height: baseSize)
+                        Spacer()
+                    }
+                    .background(.blackBlue)
                 }
                 
                 HStack {
@@ -83,6 +115,18 @@ struct DateInput: View {
             .padding(.horizontal, shadowSize + lineWidth) // Padding added due to the shadow and border
             .animation(.easeInOut(duration: 0.15), value: isActive)
             .animation(.easeInOut(duration: 0.3), value: isValid)
+            
+            HStack {
+                Spacer()
+                    .frame(maxWidth: shadowSize + lineWidth)
+                Texts(text: errorMessage, type: .small)
+                    .foregroundStyle(.highlightRed)
+                Spacer()
+            }
+            .padding(.top, -(shadowSize + lineWidth))
+            .frame(height: errorHeight)
+            Spacer()
+                .frame(height: shadowSize * (isValid ? 0 : 1))
         }
     }
 }

@@ -44,7 +44,7 @@ enum InputType {
 struct TextInput: View {
     @Binding var value: String
     
-    @Binding var isValid: Bool
+    @Binding var errorMessage: String
     @FocusState private var isActive: Bool
     
     var label: String
@@ -54,6 +54,7 @@ struct TextInput: View {
     var type: InputType = .textInput
     
     let baseSize: CGFloat = 8
+    let smallFontSize: CGFloat = 12
     let fontSize: CGFloat = 14
     let shadowSize: CGFloat = 3
     let lineWidth: CGFloat = 2
@@ -61,8 +62,10 @@ struct TextInput: View {
         
     var body: some View {
         // Colors and shadow are obtained depending on the current state
+        let isValid: Bool = errorMessage == ""
         let backgroundColor: Color = isValid ? Color("BlackBlue") : Color("BlackRed")
         let highlightColor: Color = isValid ? Color("HighlightBlue") : Color("HighlightRed")
+        let errorHeight: CGFloat = isValid ? 0 : baseSize + shadowSize
         let shadowSelector: CGFloat = isActive ? shadowSize : 0
         
         VStack {
@@ -81,6 +84,7 @@ struct TextInput: View {
                     
                 case .emailInput, .textInput, .searchInput, .searchBarInput:
                     TextField(placeholder, text: $value)
+                        .tint(highlightColor)
                         .keyboardType(.emailAddress)
                         .frame(minHeight: baseSize * 3, maxHeight: baseSize * 3)
                         .padding(baseSize)
@@ -89,6 +93,7 @@ struct TextInput: View {
                     
                 case .areaInput:
                     TextEditor(text: $value)
+                        .tint(highlightColor)
                         .frame(minHeight: baseSize * textEditorMultiplier, maxHeight: baseSize * textEditorMultiplier)
                         .scrollContentBackground(.hidden)
                         .padding(.horizontal, baseSize / 2)
@@ -97,6 +102,7 @@ struct TextInput: View {
                     
                 case .passwordInput:
                     SecureField(placeholder, text: $value)
+                        .tint(highlightColor)
                         .frame(minHeight: baseSize * 3, maxHeight: baseSize * 3)
                         .padding(baseSize)
                         .focused($isActive)
@@ -149,6 +155,19 @@ struct TextInput: View {
             .padding(.horizontal, shadowSize + lineWidth) // Padding added due to the shadow and border
             .animation(.easeInOut(duration: 0.15), value: isActive)
             .animation(.easeInOut(duration: 0.3), value: isValid)
+            
+            HStack {
+                Spacer()
+                    .frame(maxWidth: shadowSize + lineWidth)
+                Texts(text: errorMessage, type: .small)
+                    .foregroundStyle(.highlightRed)
+                Spacer()
+            }
+            .padding(.top, -(shadowSize + lineWidth))
+            .frame(height: errorHeight)
+            Spacer()
+                .frame(height: shadowSize * (isValid ? 0 : 1))
+            
         }
     }
 }
