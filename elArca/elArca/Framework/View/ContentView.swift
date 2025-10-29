@@ -30,6 +30,33 @@ struct ContentView: View {
                 text: "Large 16",
                 type: .large
             )
+            RectangleButton(
+                            title: "Activo",
+                            action: {
+                                print("boton")
+                            },
+                            type: .mediumBlue
+                        )
+            RectangleButton(
+                            title: "Confirmar",
+                            action: {
+                                print("boton")
+                            },
+                            type: .largeBlue
+                        )
+            RectangleButton(
+                            title: "Confirmar",
+                            action: {
+                                print("boton")
+                            },
+                            type: .smallBlue
+                        )
+            CircleButton(
+                            title: "+",
+                            action: {
+                                print("boton")
+                            }
+                        )
         }
     }
 }

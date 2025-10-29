@@ -11,7 +11,7 @@ enum ButtonType {
     // Botones pequeños
     case smallWhite
     case smallBlue
-    // Botones medianos (estatus)
+    // Botones medianos
     case mediumBlue
     case mediumRed
     case mediumGray
@@ -19,31 +19,9 @@ enum ButtonType {
     case largeBlue
     case largeGray
 
-    var height: CGFloat {
-        switch self {
-        case .smallWhite, .smallBlue:
-            return 32
-        case .mediumRed, .mediumGray, .mediumBlue:
-            return 24
-        case .largeBlue, .largeGray:
-            return 40
-        }
-    }
-
-    var width: CGFloat {
-        switch self {
-        case .smallWhite, .smallBlue:
-            return 88
-        case .mediumRed, .mediumGray, .mediumBlue:
-            return 95
-        case .largeBlue, .largeGray:
-            return 112
-        }
-    }
-
     var fontSize: CGFloat {
         switch self {
-        case .smallWhite, .smallBlue,.mediumRed, .mediumGray, .mediumBlue:
+        case .smallWhite, .smallBlue, .mediumBlue, .mediumRed, .mediumGray:
             return 14
         case .largeBlue, .largeGray:
             return 16
@@ -65,12 +43,33 @@ enum ButtonType {
 
     var textColor: Color {
         switch self {
-        case .mediumGray, .largeGray:
-            return Color("DarkBlue")
-        case .smallWhite:
+        case .mediumGray, .largeGray, .smallWhite:
             return Color("DarkBlue")
         default:
             return .white
+        }
+    }
+
+    // 🔹 Padding dinámico según tamaño
+    var horizontalPadding: CGFloat {
+        switch self {
+        case .smallWhite, .smallBlue:
+            return 12
+        case .mediumBlue, .mediumRed, .mediumGray:
+            return 16
+        case .largeBlue, .largeGray:
+            return 20
+        }
+    }
+
+    var verticalPadding: CGFloat {
+        switch self {
+        case .smallWhite, .smallBlue:
+            return 6
+        case .mediumBlue, .mediumRed, .mediumGray:
+            return 8
+        case .largeBlue, .largeGray:
+            return 12
         }
     }
 }
@@ -79,17 +78,19 @@ struct RectangleButton: View {
     var title: String
     var action: () -> Void
     var type: ButtonType = .mediumBlue
-    
+
     var body: some View {
         Button(action: action) {
             Text(title)
                 .font(.custom("Poppins-SemiBold", size: type.fontSize))
                 .foregroundColor(type.textColor)
-                .frame(width: type.width, height: type.height)
+                .padding(.horizontal, type.horizontalPadding)
+                .padding(.vertical, type.verticalPadding)
                 .background(type.backgroundColor)
                 .cornerRadius(8)
         }
         .buttonStyle(.plain)
     }
 }
+
 
