@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
+import PhotosUI
 
+// Lets the user hide the keyboard if pressing on the screen
 extension View {
     func hideKeyboard() {
         UIApplication.shared.sendAction(
@@ -16,10 +18,12 @@ extension View {
     }
 }
 
-
 struct ContentView: View{
+    @State private var fileValue: String = ""
+    @State private var fileValid: String = ""
+    
     @State private var userValue: String = ""
-    @State private var userValid: String = "Usuario no encontrado"
+    @State private var userValid: String = ""
     
     @State private var passwordValue: String = ""
     @State private var passwordValid: String = ""
@@ -31,10 +35,10 @@ struct ContentView: View{
     @State private var descriptionValid2: String = ""
     
     @State private var selectValue: String = ""
-    @State private var selectValid: String = "No se tiene registro asociado"
+    @State private var selectValid: String = ""
     
     @State private var calendarValue: Date = Date()
-    @State private var calendarValid: String = "Fecha fuera de límites"
+    @State private var calendarValid: String = ""
     @State private var calendarActive: Bool = false
     
     @State private var calendarValue1: Date = Date()
@@ -42,11 +46,18 @@ struct ContentView: View{
     @State private var calendarActive1: Bool = false
     
     @State private var intValue: CGFloat = 0
-    @State private var intValid: String = "Número no válido"
+    @State private var intValid: String = ""
     
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
+                FileInput(
+                    value: $fileValue,
+                    errorMessage: $fileValid,
+                    label: "Foto de perfil",
+                    fileTypes: [.image],
+                )
+                
                 TextInput(
                     value: $userValue,
                     errorMessage: $userValid,
@@ -62,7 +73,7 @@ struct ContentView: View{
                     placeholder: "john123",
                     type: .passwordInput
                 ).onChange(of: passwordValue) {
-                    passwordValid = passwordValue.count >= 8 ? "" : "Eto ta mal mi elmano"
+                    passwordValid = passwordValue.count >= 8 ? "" : "Contraseña muy pequeña"
                 }
                 
                 TextInput(
@@ -76,7 +87,7 @@ struct ContentView: View{
                 TextInput(
                     value: $descriptionValue,
                     errorMessage: $descriptionValid,
-                    label: "Busqueda de persona",
+                    label: "Búsqueda de persona",
                     placeholder: "Juanito Pérez",
                     type: .searchInput
                 )
@@ -84,7 +95,7 @@ struct ContentView: View{
                 TextInput(
                     value: $descriptionValue,
                     errorMessage: $descriptionValid,
-                    label: "Busqueda de persona",
+                    label: "Búsqueda de persona",
                     placeholder: "Juanito Pérez",
                     type: .searchBarInput
                 )
@@ -94,7 +105,7 @@ struct ContentView: View{
                     errorMessage: $selectValid,
                     label: "Persona 1",
                     placeholder: "Seleccionar aquí",
-                    options: [("Juanma", "1"), ("Pepe", "2"), ("XD", "3")],
+                    options: [("Juan", "1"), ("José", "2"), ("Javier", "3")],
                     type: .selectInput
                 )
                 

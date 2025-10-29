@@ -46,15 +46,16 @@ struct TextInput: View {
     
     @Binding var errorMessage: String
     @FocusState private var isActive: Bool
+    @State private var selectedOption = "" // Only for dropdown menus
     
     var label: String
     var placeholder: String
+    
     var options: [(String, String)] = [] // Only for dropdown menus
     
     var type: InputType = .textInput
     
     let baseSize: CGFloat = 8
-    let smallFontSize: CGFloat = 12
     let fontSize: CGFloat = 14
     let shadowSize: CGFloat = 3
     let lineWidth: CGFloat = 2
@@ -113,11 +114,12 @@ struct TextInput: View {
                         ForEach(options, id: \.1) { optionText, optionValue in
                             Button(optionText) {
                                 value = optionValue
+                                selectedOption = optionText
                             }
                         }
                     } label: {
                         HStack {
-                            Text(value == "" ? placeholder : value)
+                            Text(value == "" ? placeholder : selectedOption)
                             Spacer()
                         }
                         .frame(minHeight: baseSize * 3, maxHeight: baseSize * 3)
@@ -156,6 +158,7 @@ struct TextInput: View {
             .animation(.easeInOut(duration: 0.15), value: isActive)
             .animation(.easeInOut(duration: 0.3), value: isValid)
             
+            // Error message
             HStack {
                 Spacer()
                     .frame(maxWidth: shadowSize + lineWidth)

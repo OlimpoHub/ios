@@ -1,5 +1,5 @@
 //
-//  DateInput.swift
+//  NumberInput.swift
 //  elArca
 //
 //  Created by Edmundo Canedo Cervantes on 28/10/25.
@@ -34,7 +34,6 @@ struct NumberInput: View {
     var type: NumberType
     
     let baseSize: CGFloat = 8
-    let smallFontSize: CGFloat = 12
     let fontSize: CGFloat = 14
     let shadowSize: CGFloat = 3
     let lineWidth: CGFloat = 2
@@ -101,6 +100,7 @@ struct NumberInput: View {
             .animation(.easeInOut(duration: 0.15), value: isActive)
             .animation(.easeInOut(duration: 0.3), value: isValid)
             
+            // Error message
             HStack {
                 Spacer()
                     .frame(maxWidth: shadowSize + lineWidth)

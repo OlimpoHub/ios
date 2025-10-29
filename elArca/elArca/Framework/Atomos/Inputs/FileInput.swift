@@ -1,23 +1,22 @@
 //
-//  DateInput.swift
+//  FileInput.swift
 //  elArca
 //
 //  Created by Edmundo Canedo Cervantes on 27/10/25.
 //
 
 import SwiftUI
+import PhotosUI
 
-struct DateInput: View {
-    @Binding var value: Date
+struct FileInput: View {
+    @Binding var value: String
     
     @Binding var errorMessage: String
-    @Binding var isActive: Bool
+    @State private var isActive: Bool = false
     @State private var placeholder: String = "Seleccionar aquí"
-    @State private var currentDate: Date = Date()
     
     var label: String
-    var startDate: Date = Calendar.current.date(from: DateComponents(year: 1900, month: 1, day: 1)) ?? Date()
-    var endDate: Date = Calendar.current.date(from: DateComponents(year: 2200, month: 12, day: 31)) ?? Date()
+    var fileTypes: [UTType]
     
     let baseSize: CGFloat = 8
     let fontSize: CGFloat = 14
@@ -30,6 +29,7 @@ struct DateInput: View {
         let backgroundColor: Color = isValid ? Color("BlackBlue") : Color("BlackRed")
         let highlightColor: Color = isValid ? Color("HighlightBlue") : Color("HighlightRed")
         let errorHeight: CGFloat = isValid ? 0 : baseSize + shadowSize
+        let shadowSelector: CGFloat = isActive ? shadowSize : 0
         
         VStack {
             // Label
@@ -50,46 +50,10 @@ struct DateInput: View {
                 .frame(minHeight: baseSize * 3, maxHeight: baseSize * 3)
                 .padding(baseSize)
                 .zIndex(0)
-                .fullScreenCover(isPresented: $isActive) {
-                    VStack(spacing: baseSize * 3) {
-                        Spacer()
-                        DatePicker(selection: $currentDate, in: startDate...endDate, displayedComponents: .date){}
-                            .labelsHidden()
-                            .datePickerStyle(.graphical)
-                            .tint(.highlightBlue)
-                            .onChange(of: currentDate) {
-                                
-                            }
-                        
-                        HStack(spacing: baseSize) {
-                            RectangleButton(
-                                title: "Descartar",
-                                action: {
-                                    isActive = false
-                                },
-                                type: .largeGray
-                            )
-                            
-                            RectangleButton(
-                                title: "Seleccionar",
-                                action: {
-                                    isActive = false
-                                    value = currentDate
-                                    placeholder = value.formatted(.dateTime.day().month().year())
-                                },
-                                type: .largeBlue
-                            )
-                        }
-                        Spacer()
-                            .frame(height: baseSize)
-                        Spacer()
-                    }
-                    .background(.blackBlue)
-                }
                 
                 HStack {
                     Spacer()
-                    Image(systemName: "calendar")
+                    Image(systemName: "square.and.arrow.up")
                         .tint(.white)
                         .aspectRatio(contentMode: .fit)
                         .frame(width: baseSize * 2, height: baseSize * 2)
@@ -103,13 +67,25 @@ struct DateInput: View {
             .padding(baseSize + shadowSize + lineWidth) // Returns the padding
             .onTapGesture { // Lets be clicked
                 isActive = true
+                print("Entré")
+            }
+            .fileImporter(isPresented: $isActive, allowedContentTypes: fileTypes) { result in
+                isActive = false
+                switch result {
+                case .success(let file):
+                    print(file.absoluteString)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
             }
             .foregroundColor(.white)
             .background(backgroundColor)
             .font(.custom("Poppins-Regular", size: fontSize))
             .overlay(RoundedRectangle(cornerRadius: baseSize).stroke(highlightColor, lineWidth: lineWidth))
             .clipShape(RoundedRectangle(cornerRadius: baseSize))
+            .shadow(color: highlightColor, radius: shadowSelector)
             .padding(.horizontal, shadowSize + lineWidth) // Padding added due to the shadow and border
+            .animation(.easeInOut(duration: 0.15), value: isActive)
             .animation(.easeInOut(duration: 0.3), value: isValid)
             
             // Error message
