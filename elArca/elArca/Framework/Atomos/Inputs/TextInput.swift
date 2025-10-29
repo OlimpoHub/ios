@@ -1,5 +1,5 @@
 //
-//  Input.swift
+//  TextInput.swift
 //  elArca
 //
 //  Created by Edmundo Canedo Cervantes on 27/10/25.
@@ -22,14 +22,10 @@ enum InputType {
             return "envelope.fill"
         case .passwordInput:
             return "key.horizontal.fill"
-        //case .numberInput:
-        //    return "arrow.up.and.down"
-        //case .dateInput:
-        //    return "calendar"
         case .searchInput, .searchBarInput:
             return "magnifyingglass"
         case .selectInput:
-            return "arrowtriangle.down.fill"
+            return "chevron.down"
         default:
             return ""
         }
@@ -46,57 +42,87 @@ enum InputType {
 }
 
 struct TextInput: View {
-    // Variable a regresar
     @Binding var value: String
     
-    // Variables se estado
     @Binding var isValid: Bool
     @FocusState private var isActive: Bool
     
     var label: String
     var placeholder: String
-    var options: [String] = [] // Only for dropdown menus
+    var options: [(String, String)] = [] // Only for dropdown menus
     
     var type: InputType = .textInput
-    var error: String = ""
     
     let baseSize: CGFloat = 8
+    let fontSize: CGFloat = 14
     let shadowSize: CGFloat = 3
     let lineWidth: CGFloat = 2
+    let textEditorMultiplier: CGFloat = 20
         
     var body: some View {
-        // Se obtienen los colores y tamaños dependiendo del estado
+        // Colors and shadow are obtained depending on the current state
         let backgroundColor: Color = isValid ? Color("BlackBlue") : Color("BlackRed")
         let highlightColor: Color = isValid ? Color("HighlightBlue") : Color("HighlightRed")
-        let errorText: String = isValid ? "" : error
-        let errorContainer: CGFloat = isValid ? 10 : 0
         let shadowSelector: CGFloat = isActive ? shadowSize : 0
         
         VStack {
             // Label
+            HStack {
+                Spacer()
+                    .frame(maxWidth: shadowSize + lineWidth)
+                Texts(text: label, type: .medium)
+                Spacer()
+            }
+            .padding(.bottom, -1 * baseSize + lineWidth)
             
-            // Entrada de texto
+            // Input
             ZStack {
                 switch type {
+                    
                 case .emailInput, .textInput, .searchInput, .searchBarInput:
                     TextField(placeholder, text: $value)
-                        .padding(8) // Padding de adentro
+                        .keyboardType(.emailAddress)
+                        .frame(minHeight: baseSize * 3, maxHeight: baseSize * 3)
+                        .padding(baseSize)
                         .focused($isActive)
                         .zIndex(0)
-                        
-                /*case .areaInput:
+                    
+                case .areaInput:
+                    TextEditor(text: $value)
+                        .frame(minHeight: baseSize * textEditorMultiplier, maxHeight: baseSize * textEditorMultiplier)
+                        .scrollContentBackground(.hidden)
+                        .padding(.horizontal, baseSize / 2)
+                        .focused($isActive)
+                        .zIndex(0)
                     
                 case .passwordInput:
+                    SecureField(placeholder, text: $value)
+                        .frame(minHeight: baseSize * 3, maxHeight: baseSize * 3)
+                        .padding(baseSize)
+                        .focused($isActive)
+                        .zIndex(0)
                     
-                case .selectInput:*/
-                default:
-                    Text("xDDD")
-                
+                case .selectInput:
+                    Menu {
+                        ForEach(options, id: \.1) { optionText, optionValue in
+                            Button(optionText) {
+                                value = optionValue
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            Text(value == "" ? placeholder : value)
+                            Spacer()
+                        }
+                        .frame(minHeight: baseSize * 3, maxHeight: baseSize * 3)
+                        .padding(baseSize)
+                        .contentShape(Rectangle())
+                    }
+                    .zIndex(0)
                 }
                 
                 if type.icon != "" {
                     HStack {
-                        // Pushes the image to the right
                         Spacer()
                         Image(systemName: type.icon)
                             .tint(.white)
@@ -105,20 +131,24 @@ struct TextInput: View {
                             .padding(baseSize)
                             .padding(.trailing, shadowSize + lineWidth)
                     }
+                    .zIndex(1)
                 }
-                
-                //RoundedRectangle(cornerRadius: 8).fill(Color(UIColor(red: 0, green: 0, blue: 0, alpha: 1)).shadow(.drop(color: highlightColor, radius: shadowSize)))
-                  //  .zIndex(0)
-            }.foregroundColor(.white)
-                .frame(width: .infinity)
-                .background(backgroundColor)
-                .font(.custom("Poppins-SemiBold", size: baseSize * 2))
-                .overlay(RoundedRectangle(cornerRadius: type.roundedCorner).stroke(highlightColor, lineWidth: lineWidth))
-                .clipShape(RoundedRectangle(cornerRadius: type.roundedCorner))
-                .shadow(color: highlightColor, radius: shadowSelector)
-                .padding(.horizontal, shadowSize + lineWidth) // Padding que compensa el borde
-                .animation(.easeInOut(duration: 0.15), value: isActive) // Animates the changes
-                .animation(.easeInOut(duration: 0.3), value: isValid) // Animates the changes
+            }
+            .padding(-(baseSize + shadowSize + lineWidth)) // Protects from overflow
+            .contentShape(Rectangle()) // Makes it clickable
+            .padding(baseSize + shadowSize + lineWidth) // Returns the padding
+            .onTapGesture { // Lets be clicked
+                isActive = true
+            }
+            .foregroundColor(.white)
+            .background(backgroundColor)
+            .font(.custom("Poppins-Regular", size: fontSize))
+            .overlay(RoundedRectangle(cornerRadius: type.roundedCorner).stroke(highlightColor, lineWidth: lineWidth))
+            .clipShape(RoundedRectangle(cornerRadius: type.roundedCorner))
+            .shadow(color: highlightColor, radius: shadowSelector)
+            .padding(.horizontal, shadowSize + lineWidth) // Padding added due to the shadow and border
+            .animation(.easeInOut(duration: 0.15), value: isActive)
+            .animation(.easeInOut(duration: 0.3), value: isValid)
         }
     }
 }
