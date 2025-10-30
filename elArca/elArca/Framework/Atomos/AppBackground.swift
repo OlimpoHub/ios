@@ -12,8 +12,8 @@ struct AppBackground<Content: View>: View {
 
     var body: some View {
         ZStack {
-            Color("Background")     // tu Color Set en Assets
-                .ignoresSafeArea()          // cubre toda la pantalla
+            Color("Background")
+                .ignoresSafeArea()
             content()
                 .foregroundColor(Color("TextColor"))
         }
