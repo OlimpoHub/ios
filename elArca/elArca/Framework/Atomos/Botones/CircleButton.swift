@@ -14,8 +14,8 @@ struct CircleButton: View {
     var fontSize: CGFloat = 40
     var textColor: Color = Color("DarkBlue")
     var backgroundColor: Color = .white
-    var height: CGFloat = 57
-    var width: CGFloat = 57
+    var horizontalPadding: CGFloat = 15
+    var verticalPadding: CGFloat = 15
         
     
     var body: some View {
@@ -23,7 +23,8 @@ struct CircleButton: View {
             Text(title)
                 .font(.custom("Poppins-SemiBold", size: fontSize))
                 .foregroundColor(textColor)
-                .frame(width: width, height: height)
+                .padding(.horizontal, horizontalPadding)
+                .padding(.vertical, verticalPadding)
                 .background(backgroundColor)
                 .clipShape(Circle())
                 .shadow(color: .gray.opacity(0.3), radius: 3, x: 0, y: 2)
