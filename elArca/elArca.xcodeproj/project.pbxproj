@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6646F7B92EAAE1F1005B89E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6646F7B62EAAE1F1005B89E6 /* Assets.xcassets */; };
+		70C55FA42EB1C42600F1CF7E /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 70C55FA32EB1C42600F1CF7E /* FSCalendar */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70C55FA42EB1C42600F1CF7E /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +85,7 @@
 			);
 			name = elArca;
 			packageProductDependencies = (
+				70C55FA32EB1C42600F1CF7E /* FSCalendar */,
 			);
 			productName = elArca;
 			productReference = 6646F7CB2EAAE4CB005B89E6 /* elArca.app */;
@@ -112,6 +115,9 @@
 			);
 			mainGroup = 66E3392E2EA6D7D700D1B784;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				70C55FA22EB1C42600F1CF7E /* XCRemoteSwiftPackageReference "FSCalendar" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 66E3392E2EA6D7D700D1B784;
 			projectDirPath = "";
@@ -374,6 +380,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		70C55FA22EB1C42600F1CF7E /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		70C55FA32EB1C42600F1CF7E /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 70C55FA22EB1C42600F1CF7E /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 66E3392F2EA6D7D700D1B784 /* Project object */;
 }
