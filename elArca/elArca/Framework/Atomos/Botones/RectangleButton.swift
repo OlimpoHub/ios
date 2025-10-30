@@ -50,7 +50,6 @@ enum ButtonType {
         }
     }
 
-    // 🔹 Padding dinámico según tamaño
     var horizontalPadding: CGFloat {
         switch self {
         case .smallWhite, .smallBlue:
