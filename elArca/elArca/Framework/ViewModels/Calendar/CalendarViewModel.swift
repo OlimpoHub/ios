@@ -1,83 +1,46 @@
-//
-//  CalendarViewModel.swift
-//  elArca
-//
-//  Created by Fátima Figueroa on 28/10/25.
-//
-
 import Foundation
+import Combine
 
-extension Calendar {
-    static func nearestMonday(from date: Date = .now) -> Date {
-        let calendar = Calendar.current
-        let weekday = calendar.component(.weekday, from: date)
-        let daysToSubstract = (weekday - 2 + 7) % 7
-        let nearestMonday = calendar.date(byAdding: .day, value: -daysToSubstract, to: date)!
-        
-        var dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: nearestMonday)
-        dateComponents.hour = 9
-        dateComponents.minute = 0
-        dateComponents.second = 0
-        
-        return Calendar.current.date(from: dateComponents) ?? nearestMonday
+@MainActor
+final class CalendarViewModel: ObservableObject {
+    @Published var selection: Date? {
+        didSet { Task { await loadForSelection() } }
     }
-    
-    static func currentWeek(from date: Date = .now) -> [Date] {
-        let calendar = Calendar.current
-        return (0...6).compactMap { offset in
-            calendar.date(byAdding: .day, value: offset, to: date)
+    @Published var title: String = Calendar.monthAndYear(from: .now)
+    @Published private(set) var itemsForSelectedDay: [DayItem] = []
+
+    private let repo: CalendarItemsRepository
+    private let calendar: Calendar
+
+    init(
+        selection: Date? = Date(),
+        repo: CalendarItemsRepository = InMemoryCalendarItemsRepository(),
+        calendar: Calendar = .current
+    ) {
+        self.selection = selection
+        self.repo = repo
+        self.calendar = calendar
+
+        if let sel = selection { title = Calendar.monthAndYear(from: sel) }
+        Task { await loadForSelection() }
+    }
+
+    func didTap(date: Date) {
+        selection = date
+        title = Calendar.monthAndYear(from: date)
+    }
+
+    func removeItem(_ item: DayItem) async {
+        guard let sel = selection else { return }
+        await repo.remove(item)
+        itemsForSelectedDay = await repo.items(for: sel)
+    }
+
+    private func loadForSelection() async {
+        guard let sel = selection else {
+            itemsForSelectedDay = []
+            return
         }
-    }
-    
-    static func nextWeek(from date: Date = .now) -> [Date] {
-        let calendar = Calendar.current
-        return (1...7).compactMap { offset in
-            calendar.date(byAdding: .day, value: offset, to: date)
-        }
-    }
-    
-    static func previousWeek(from date: Date = .now) -> [Date] {
-        let calendar = Calendar.current
-        return (1...7).compactMap { offset in
-            calendar.date(byAdding: .day, value: -(6 - offset + 2), to: date)
-        }
-    }
-    
-    static func dayNumber(from date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd"
-        return formatter.string(from: date)
-    }
-    
-    static func dayLetter(from date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEEEE"
-        return formatter.string(from: date)
-    }
-    
-    static func weekAndYear(from date: Date) -> String {
-        let calendar = Calendar.current
-        let weekNumber = calendar.component(.weekOfYear, from: date)
-        let year = calendar.component(.yearForWeekOfYear, from: date)
-        return "\(weekNumber)-\(year)"
-    }
-    
-    static func monthAndYear(from date: Date) -> String {
-        let calendar = Calendar.current
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "es_ES")
-        formatter.dateFormat = "MMMM"
-        
-        let month = formatter.string(from: date).capitalized
-        let year = calendar.component(.year, from: date)
-        
-        return "\(month) \(year)"
-    }
-    
-    static func isSameMonth(_ date1: Date, _ date2: Date) -> Bool {
-        let calendar = Calendar.current
-        let components1 = calendar.dateComponents([.year, .month], from: date1)
-        let components2 = calendar.dateComponents([.year, .month], from: date2)
-        return components1.year == components2.year && components1.month == components2.month
+        itemsForSelectedDay = await repo.items(for: sel)
     }
 }
