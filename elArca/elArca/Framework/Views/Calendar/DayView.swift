@@ -22,13 +22,13 @@ struct DayView: View {
                             .frame(width: 40, height: 40)
                     } else if Calendar.current.isDateInToday(date) {
                         Circle()
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(.gray)
                             .opacity(0.3)
                             .frame(width: 40, height: 40)
                     }
                 }
         }
-        .foregroundStyle(selectedDate == date ? .darkBlue : .black)
+        .foregroundStyle(selectedDate == date ? .darkBlue : .beige)
         .font(.system(.body, design: .rounded, weight: .medium))
         .onTapGesture {
             withAnimation(.easeInOut) {

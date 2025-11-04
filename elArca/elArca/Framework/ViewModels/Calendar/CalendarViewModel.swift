@@ -65,9 +65,10 @@ extension Calendar {
     static func monthAndYear(from date: Date) -> String {
         let calendar = Calendar.current
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "es_ES")
         formatter.dateFormat = "MMMM"
         
-        let month = formatter.string(from: date)
+        let month = formatter.string(from: date).capitalized
         let year = calendar.component(.year, from: date)
         
         return "\(month) \(year)"

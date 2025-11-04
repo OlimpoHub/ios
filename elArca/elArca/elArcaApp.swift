@@ -12,7 +12,7 @@ struct elArcaApp: App {
     var body: some Scene {
         WindowGroup {
             AppBackground {
-                ContentView()
+                CalendarView()
             }
         }
     }

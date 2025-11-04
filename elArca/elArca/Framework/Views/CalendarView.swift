@@ -31,15 +31,24 @@ struct CalendarView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            Color.gray.opacity(0.2).ignoresSafeArea()
+            Color("Background").ignoresSafeArea()
             
             VStack {
+                Texts (
+                    text: "Calendario",
+                    type: .header
+                ).multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                    .foregroundColor(Color("Beige"))
+                
                 HStack {
-                    Text(title).font(.title2.bold())
+                    Texts (
+                        text: title,
+                        type: .subtitle
+                    )
+                    .foregroundColor(Color("Beige"))
                     Spacer()
-                    Image(systemName: "gearshape.fill")
-                        .imageScale(.large)
-                        .foregroundStyle(.secondary)
                 }
                 .padding(.bottom)
                 .padding(.horizontal)
@@ -49,9 +58,9 @@ struct CalendarView: View {
                     ForEach(symbols, id: \.self) { symbol in
                         Text(symbol)
                             .fontWeight(.medium)
-                            .frame(minWidth: .infinity)
-                            .foregroundStyle(.secondary)
-                        
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(Color("Beige"))
+
                         if symbol != symbols.last {
                             Spacer()
                         }
@@ -82,7 +91,7 @@ struct CalendarView: View {
                 .clipped()
                 
                 Capsule()
-                    .fill(.gray.mix(with: .white, by: 0.6))
+                    .fill(Color("Beige"))
                     .frame(width: 40, height: 4)
                     .padding(.bottom, 6)
             }
@@ -90,10 +99,14 @@ struct CalendarView: View {
                 UnevenRoundedRectangle(
                     cornerRadii: .init(bottomLeading: 16, bottomTrailing: 16)
                 )
-                .fill(.white)
+                .fill(Color("Background"))
                 .ignoresSafeArea()
             )
-            .onChange(of: selection) {}
+            .onChange(of: selection) { _, newValue in
+                guard let newValue else { return }
+                title = Calendar.monthAndYear(from: newValue)
+                
+            }
             .onChange(of: focusedWeek) { _, n in
                 print(n.id)
             }
@@ -101,7 +114,7 @@ struct CalendarView: View {
                 DragGesture(minimumDistance: .zero)
                     .onChanged { value in
                         isDragging = true
-                        CalendarType = verticalDragOffset == 0 ? .week : .month
+                        calendarType = verticalDragOffset == 0 ? .week : .month
                         
                         if initialDragOffset == nil {
                             initialDragOffset = verticalDragOffset
@@ -139,7 +152,7 @@ struct CalendarView: View {
                             
                             dragProgress = verticalDragOffset / (Constants.monthHeight - Constants.dayHeight)
                         } completion: {
-                            CalendarType = verticalDragOffset == 0 ? .week : .month
+                            calendarType = verticalDragOffset == 0 ? .week : .month
                         }
                     }
             )

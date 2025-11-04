@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WeekCalendarView: View {
-    let isDragging = Bool
+    let isDragging: Bool
     
     @Binding var title: String
     @Binding var focused: Week

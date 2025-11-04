@@ -15,7 +15,6 @@ struct AppBackground<Content: View>: View {
             Color("Background")
                 .ignoresSafeArea()
             content()
-                .foregroundColor(Color("TextColor"))
         }
     }
 }
