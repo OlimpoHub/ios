@@ -109,6 +109,15 @@ struct ContentView: View{
                     type: .selectInput
                 )
                 
+                TextInput(
+                    value: $selectValue,
+                    errorMessage: $selectValid,
+                    label: "Persona 19",
+                    placeholder: "Seleccionar aquí",
+                    options: [("Juan", "1"), ("José", "2"), ("Javier", "3")],
+                    type: .textInput
+                )
+                
                 // If using many inputs in a row, the .top is essential
                 HStack(alignment: .top) {
                     DateInput(
