@@ -19,7 +19,7 @@ extension View {
 }
 
 struct ContentView: View{
-    @State private var fileValue: String = ""
+    /*@State private var fileValue: String = ""
     @State private var fileValid: String = ""
     
     @State private var userValue: String = ""
@@ -46,10 +46,10 @@ struct ContentView: View{
     @State private var calendarActive1: Bool = false
     
     @State private var intValue: CGFloat = 0
-    @State private var intValid: String = ""
+    @State private var intValid: String = ""*/
     
     var body: some View {
-        ScrollView {
+        /*ScrollView {
             VStack(spacing: 0) {
                 FileInput(
                     value: $fileValue,
@@ -139,10 +139,16 @@ struct ContentView: View{
         .contentShape(Rectangle())
         .onTapGesture {
             hideKeyboard()
+        }*/
+        
+        VStack {
+            HomeView()
         }
     }
 }
 
 #Preview {
-    ContentView().preferredColorScheme(.dark)
+    AppBackground {
+        ContentView().preferredColorScheme(.dark)
+    }
 }

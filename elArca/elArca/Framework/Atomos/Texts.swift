@@ -11,8 +11,11 @@ enum TextType {
     case header
     case subtitle
     case small
+    case smallbold
     case medium
+    case mediumbold
     case large
+    case largebold
     
     var fontSize: CGFloat {
         switch self {
@@ -22,16 +25,22 @@ enum TextType {
             return 20
         case .small:
             return 12
+        case .smallbold:
+            return 12
         case .medium:
             return 14
+        case .mediumbold:
+            return 14
         case .large:
+            return 16
+        case .largebold:
             return 16
         }
     }
     
     var thickness: String {
         switch self {
-        case .header, .subtitle:
+        case .header, .subtitle, .smallbold, .mediumbold, .largebold:
             return "Poppins-Bold"
         case .small, .medium, .large:
             return "Poppins-Regular"
@@ -51,4 +60,3 @@ struct Texts: View {
             
     }
 }
-
