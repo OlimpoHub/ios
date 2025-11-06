@@ -27,8 +27,8 @@ struct NavBar: View {
 
     var body: some View {
         GeometryReader { geometry in
-            VStack {
-                Spacer()
+            //VStack {
+                //Spacer()
                 
                 HStack(spacing: 0) {
                     ForEach(items) { item in
@@ -50,8 +50,9 @@ struct NavBar: View {
                 .background(backgroundColor)
                 .clipShape(RoundedRectangle(cornerRadius: 4))
             }
-            .ignoresSafeArea(edges: .bottom)
-        }
+            //.ignoresSafeArea(edges: .bottom)
+            .frame(height: 65)
+        //}
     }
 }
 

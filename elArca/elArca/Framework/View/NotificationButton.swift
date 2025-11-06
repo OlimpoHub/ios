@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FlowStacks
 
 enum NotificationType {
     case with
@@ -31,11 +32,14 @@ enum NotificationType {
 }
 
 struct NotificationButton: View {
-    var notificationType: NotificationType
+    var notificationType: NotificationType = .with
+    @EnvironmentObject var navigator: FlowNavigator<Screen>
     
     var body: some View {
+        
         SystemButton(icon: notificationType.icon, mainColor: notificationType.color, iconSize: 30) {
-            // TODO: Redirección
+            changeView(screen: .notifications, navigator: navigator)
         }
+        
     }
 }

@@ -57,8 +57,8 @@ struct MenuButton: View {
                     .frame(maxHeight: 140)
                 
             case .url(let url):
-                
-                WebImage(url: URL(string: url ?? ""))
+
+                WebImage(url: URL(string: url ))
                     .resizable()
                     .scaledToFit()
                     .frame(maxHeight: 140)

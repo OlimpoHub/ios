@@ -11,6 +11,7 @@ struct HomeView: View {
     var userName: String = "Mundito"
     var notifications: NotificationType = .with
     var qrText: String = "Generar QR de Asistencia"
+    var qrSize: CGFloat = hasBigScreen() ? 148 : 110
 
     var body: some View {
         VStack {
@@ -25,8 +26,7 @@ struct HomeView: View {
                 Spacer()
                 
                 HStack(spacing: 24) {
-                    NotificationButton(notificationType: .with)
-                    NotificationButton(notificationType: .without)
+                    NotificationButton()
                     
                     SystemButton(icon: Image(systemName: "gear"), iconSize: 30) {
                         print("xd")
@@ -35,22 +35,21 @@ struct HomeView: View {
             }
             
             Spacer()
-                .frame(height: 40)
+                .frame(height: 32)
             
-            MenuButton(text: qrText, height: 148, buttonType: .solid, image: .asset("QR"))
+            MenuButton(text: qrText, height: qrSize, buttonType: .solid, image: .asset("QR"))
             
             Spacer()
-                .frame(height: 37)
+                .frame(height: 32)
             
             HStack(){
                 Texts(text: "Menú principal", type: .header)
                 Spacer()
             }
             
-            Spacer()
-                .frame(height: 32)
-            
             VStack {
+                Spacer()
+                
                 MenuButton(text: "Usuarios", height: 110, buttonType: .gradient, image: .asset("Usuarios"))
                 Spacer()
                 
@@ -63,5 +62,6 @@ struct HomeView: View {
             
         }
         .padding(.horizontal, 24)
+        .navigationBarBackButtonHidden(true)
     }
 }
