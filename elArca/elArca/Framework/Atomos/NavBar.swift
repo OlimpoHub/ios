@@ -48,32 +48,27 @@ struct NavBar: View {
 
     var body: some View {
         GeometryReader { geometry in
-            //VStack {
-                //Spacer()
-                
-                HStack(spacing: 0) {
-                    ForEach(userNav.items) { item in
-                        IconButton(
-                            iconName: item.icon,
-                            title: item.title,
-                            screen: item.screen,
-                            iconSize: geometry.size.width * 0.075,
-                            textSize: geometry.size.width * 0.024,
-                            iconColor: Color.white,
-                            textColor: Color.white,
-                            backgroundColor: backgroundColor,
-                        )
-                    }
+            HStack(spacing: 0) {
+                ForEach(userNav.items) { item in
+                    IconButton(
+                        iconName: item.icon,
+                        title: item.title,
+                        screen: item.screen,
+                        iconSize: geometry.size.width * 0.075,
+                        textSize: geometry.size.width * 0.024,
+                        iconColor: Color.white,
+                        textColor: Color.white,
+                        backgroundColor: backgroundColor,
+                    )
                 }
-                .padding(.horizontal, geometry.size.width * 0.04)
-                .padding(.vertical, 6)
-                .padding(.bottom, geometry.safeAreaInsets.bottom > 0 ? geometry.safeAreaInsets.bottom - 5 : 5)
-                .background(backgroundColor)
-                .clipShape(RoundedRectangle(cornerRadius: 4))
             }
-            //.ignoresSafeArea(edges: .bottom)
-            .frame(height: 65)
-        //}
+            .padding(.horizontal, geometry.size.width * 0.04)
+            .padding(.vertical, 6)
+            .padding(.bottom, geometry.safeAreaInsets.bottom > 0 ? geometry.safeAreaInsets.bottom - 5 : 5)
+            .background(backgroundColor)
+            .clipShape(RoundedRectangle(cornerRadius: 4))
+        }
+        .frame(height: 65)
     }
 }
 

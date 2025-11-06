@@ -8,6 +8,7 @@
 import SwiftUI
 import FlowStacks
 
+// Changes the screen to another one
 func changeView(screen: Screen, navigator: FlowNavigator<Screen>) {
     if screen == .home {
         navigator.goBackToRoot()

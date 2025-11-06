@@ -71,7 +71,8 @@ struct HomeView: View {
             
             Spacer()
             
-            MenuButton(text: userHome.qrText, height: qrSize, buttonType: .solid, image: .asset("QR"), screen: .assistance)
+            // Attendance button
+            MenuButton(text: userHome.qrText, height: qrSize, buttonType: .solid, image: .asset("QR"), screen: .attendance)
             
             Spacer()
             

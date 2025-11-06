@@ -19,7 +19,7 @@ enum Screen {
     case beneficiaries
     case inventory
     case orders
-    case assistance
+    case attendance
     case configuration
 }
 
@@ -34,7 +34,7 @@ struct CoordinatorView: View {
         
     var body: some View {
         FlowStack($accountRoute, withNavigation: true) {
-            // Set home destination
+            // Set home destination for login/logout
             LoginView()
             .flowDestination(for: Account.self) { account in
                 switch account {
@@ -42,74 +42,75 @@ struct CoordinatorView: View {
                     
                     ZStack {
                         FlowStack($routes, withNavigation: true) {
-                            // Set home destination
+                            // Set home destination for in-app use
                             VStack(spacing: 0) {
                                 HomeView(userHome: .coordinator)
                                 NavBar(userNav: .collaborator)
                             }
                             .flowDestination(for: Screen.self) { screen in
-                                switch screen {
-                                case .home:
-                                    HomeView(userHome: .coordinator)
-                                case .notifications:
-                                    NotificationView(notificationType: .with)
-                                case .users:
-                                    VStack {
-                                        Text("Usuarios")
-                                        Spacer()
+                                VStack(spacing: 0) {
+                                    // Changes the screen depending on the enum
+                                    switch screen {
+                                    case .home:
+                                        HomeView(userHome: .coordinator)
+                                    case .notifications:
+                                        NotificationView(notificationType: .with)
+                                    case .users:
+                                        VStack {
+                                            Text("Usuarios")
+                                            Spacer()
+                                        }
+                                    case .capacitations:
+                                        VStack {
+                                            Text("Capacitaciones")
+                                            Spacer()
+                                        }
+                                    case .dashboard:
+                                        VStack {
+                                            Text("Analisis")
+                                            Spacer()
+                                        }
+                                    case .workshop:
+                                        VStack {
+                                            Text("Talleres")
+                                            Spacer()
+                                        }
+                                    case .calendar:
+                                            CalendarView()
+                                    case .beneficiaries:
+                                        VStack {
+                                            Text("Beneficiarios")
+                                            Spacer()
+                                        }
+                                    case .inventory:
+                                        VStack {
+                                            Text("Inventario")
+                                            Spacer()
+                                        }
+                                    case .orders:
+                                        VStack {
+                                            Text("Pedidos")
+                                            Spacer()
+                                        }
+                                    case .attendance:
+                                        VStack {
+                                            Text("Asistencias")
+                                            Spacer()
+                                        }
+                                    case .configuration:
+                                        VStack {
+                                            Text("Configuracion")
+                                            Spacer()
+                                        }
+                                    default:
+                                        VStack {
+                                            Text("Nada")
+                                            Spacer()
+                                        }
                                     }
-                                case .capacitations:
-                                    VStack {
-                                        Text("Capacitaciones")
-                                        Spacer()
-                                    }
-                                case .dashboard:
-                                    VStack {
-                                        Text("Analisis")
-                                        Spacer()
-                                    }
-                                case .workshop:
-                                    VStack {
-                                        Text("Talleres")
-                                        Spacer()
-                                    }
-                                case .calendar:
-                                    VStack {
-                                        CalendarView()
-                                    }
-                                case .beneficiaries:
-                                    VStack {
-                                        Text("Beneficiarios")
-                                        Spacer()
-                                    }
-                                case .inventory:
-                                    VStack {
-                                        Text("Inventario")
-                                        Spacer()
-                                    }
-                                case .orders:
-                                    VStack {
-                                        Text("Pedidos")
-                                        Spacer()
-                                    }
-                                case .assistance:
-                                    VStack {
-                                        Text("Asistencias")
-                                        Spacer()
-                                    }
-                                case .configuration:
-                                    VStack {
-                                        Text("Configuracion")
-                                        Spacer()
-                                    }
-                                default:
-                                    VStack {
-                                        Text("Nada")
-                                        Spacer()
-                                    }
+                                    
+                                    NavBar(userNav: .collaborator)
                                 }
-                                
-                                NavBar(userNav: .collaborator)
                             }
                         }.zIndex(1)
                         
