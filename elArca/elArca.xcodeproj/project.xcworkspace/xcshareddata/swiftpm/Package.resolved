@@ -1,6 +1,15 @@
 {
-  "originHash" : "e42426350ff1f57b12426d4d67f93d8cea4be1928ea635497a32970ee95c4234",
+  "originHash" : "594fe84b7a40c6a361b94cfda834918de5740bce6b121fedfff65b925e5de400",
   "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "513364f870f6bfc468f9d2ff0a95caccc10044c5",
+        "version" : "5.10.2"
+      }
+    },
     {
       "identity" : "flowstacks",
       "kind" : "remoteSourceControl",
