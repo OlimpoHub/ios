@@ -11,13 +11,15 @@ struct Beneficiary: View {
     @State private var descriptionValue: String = ""
     @State private var descriptionValid: String = ""
     @State private var selectedBeneficiario: Int? = nil
+    @State private var showRegister = false
     
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
+                
                 VStack(alignment: .leading, spacing: 16) {
                     
-                    //titulo y campana
+                    // Título y campana
                     HStack(spacing: 8) {
                         Texts(text: "Beneficiarios", type: .header)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -27,7 +29,7 @@ struct Beneficiary: View {
                     }
                     .padding(.horizontal)
                     
-                    //search bar y filtrar
+                    // Search bar y filtro
                     HStack(spacing: 8){
                         TextInput(
                             value: $descriptionValue,
@@ -39,9 +41,10 @@ struct Beneficiary: View {
                         IconButtonAtom(imageName: "filter") {
                             print("filtro")
                         }
-                    }.padding(.horizontal)
+                    }
+                    .padding(.horizontal)
                     
-                    //main
+                    // Contenido principal con Scroll
                     ScrollView {
                         LazyVGrid(
                             columns: [
@@ -51,7 +54,6 @@ struct Beneficiary: View {
                             spacing: 30
                         ) {
                             ForEach(0..<20, id: \.self) { index in
-                                // navigationlink
                                 Button {
                                     selectedBeneficiario = index
                                 } label: {
@@ -72,17 +74,33 @@ struct Beneficiary: View {
                             }
                         }
                         .padding(.horizontal)
+                        .padding(.bottom, 80) // para el boton
                     }
-                    Spacer()
                 }
-                //barra navegacion
+                
+                // Boton de mas
+                HStack {
+                    Spacer()
+                    CircleButton(title: "+") {
+                    withAnimation {
+                    showRegister = true }}
+                    .padding(.trailing, 24)
+                    .padding(.bottom, 100)
+                }
+                
+                // Barra de navegación
                 NavBar()
             }
-            //para regresar
+            
+            // Navegación a detalles
             .navigationDestination(item: $selectedBeneficiario) { index in
                 BeneficiarioInfoCardsView()
                     .navigationBarBackButtonHidden(true)
             }
+
+           .sheet(isPresented: $showRegister) {
+            BeneficiaryRegister()
+                   .presentationDetents([.large])}
         }
     }
 }
