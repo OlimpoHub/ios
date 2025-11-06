@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		076F35782EBC24B0007907FF /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 076F35772EBC24B0007907FF /* SDWebImageSwiftUI */; };
 		6646F7B92EAAE1F1005B89E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6646F7B62EAAE1F1005B89E6 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				076F35782EBC24B0007907FF /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +85,7 @@
 			);
 			name = elArca;
 			packageProductDependencies = (
+				076F35772EBC24B0007907FF /* SDWebImageSwiftUI */,
 			);
 			productName = elArca;
 			productReference = 6646F7CB2EAAE4CB005B89E6 /* elArca.app */;
@@ -112,6 +115,9 @@
 			);
 			mainGroup = 66E3392E2EA6D7D700D1B784;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				076F35762EBC24B0007907FF /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 66E3392E2EA6D7D700D1B784;
 			projectDirPath = "";
@@ -374,6 +380,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		076F35762EBC24B0007907FF /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		076F35772EBC24B0007907FF /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 076F35762EBC24B0007907FF /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 66E3392F2EA6D7D700D1B784 /* Project object */;
 }
