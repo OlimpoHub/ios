@@ -1,5 +1,5 @@
 //
-//  CalendarItemsRepository.swift
+//  CalendarItemsRequirement.swift
 //  elArca
 //
 //  Created by Fátima Figueroa on 03/11/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol CalendarItemsRepository {
+public protocol CalendarItemsRequirement {
     func items(for day: Date) async -> [DayItem]
     func remove(_ item: DayItem) async
 }

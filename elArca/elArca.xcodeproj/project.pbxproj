@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6646F7B92EAAE1F1005B89E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6646F7B62EAAE1F1005B89E6 /* Assets.xcassets */; };
-		70C55FA42EB1C42600F1CF7E /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 70C55FA32EB1C42600F1CF7E /* FSCalendar */; };
+		70B5FA362EBC26EA00052676 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 70B5FA352EBC26EA00052676 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,7 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70C55FA42EB1C42600F1CF7E /* FSCalendar in Frameworks */,
+				70B5FA362EBC26EA00052676 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,7 +85,7 @@
 			);
 			name = elArca;
 			packageProductDependencies = (
-				70C55FA32EB1C42600F1CF7E /* FSCalendar */,
+				70B5FA352EBC26EA00052676 /* Alamofire */,
 			);
 			productName = elArca;
 			productReference = 6646F7CB2EAAE4CB005B89E6 /* elArca.app */;
@@ -116,7 +116,7 @@
 			mainGroup = 66E3392E2EA6D7D700D1B784;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				70C55FA22EB1C42600F1CF7E /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				70B5FA342EBC26E900052676 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 66E3392E2EA6D7D700D1B784;
@@ -382,21 +382,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		70C55FA22EB1C42600F1CF7E /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+		70B5FA342EBC26E900052676 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.8.4;
+				minimumVersion = 5.10.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		70C55FA32EB1C42600F1CF7E /* FSCalendar */ = {
+		70B5FA352EBC26EA00052676 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 70C55FA22EB1C42600F1CF7E /* XCRemoteSwiftPackageReference "FSCalendar" */;
-			productName = FSCalendar;
+			package = 70B5FA342EBC26E900052676 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

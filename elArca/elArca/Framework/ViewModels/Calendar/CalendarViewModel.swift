@@ -9,12 +9,12 @@ final class CalendarViewModel: ObservableObject {
     @Published var title: String = Calendar.monthAndYear(from: .now)
     @Published private(set) var itemsForSelectedDay: [DayItem] = []
 
-    private let repo: CalendarItemsRepository
+    private let repo: CalendarItemsRequirement
     private let calendar: Calendar
 
     init(
         selection: Date? = Date(),
-        repo: CalendarItemsRepository = InMemoryCalendarItemsRepository(),
+        repo: CalendarItemsRequirement = CalendarItemsRepository(),
         calendar: Calendar = .current
     ) {
         self.selection = selection
