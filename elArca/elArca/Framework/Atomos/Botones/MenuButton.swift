@@ -47,22 +47,32 @@ struct MenuButton: View {
             
             HStack{
                 Spacer()
-                Texts(text: text, type: .largebold)
+                Texts(text: text, type: .mediumbold)
                     .multilineTextAlignment(.center)
                 Spacer()
             }
             
             switch image {
             case .asset(let name):
-                
-                Image(name)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxHeight: 140)
+                // Try to load the asset, if it doesn't exist, use SF Symbol fallback
+                if UIImage(named: name) != nil {
+                    Image(name)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxHeight: 140)
+                } else {
+                    // Fallback to SF Symbols based on the asset name
+                    let symbolName = symbolForAsset(name)
+                    Image(systemName: symbolName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 80, height: 80)
+                        .foregroundColor(.white.opacity(0.9))
+                }
                 
             case .url(let url):
-
-                WebImage(url: URL(string: url ))
+                
+                WebImage(url: URL(string: url))
                     .resizable()
                     .scaledToFit()
                     .frame(maxHeight: 140)
@@ -78,7 +88,23 @@ struct MenuButton: View {
         .padding(EdgeInsets(top: 18, leading: 18, bottom: 14, trailing: 14))
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .onTapGesture {
-            changeView(screen: screen, navigator: navigator)
+            if screen != .none {
+                changeView(screen: screen, navigator: navigator)
+            }
+        }
+    }
+    
+    // Helper function to map asset names to SF Symbols
+    private func symbolForAsset(_ assetName: String) -> String {
+        switch assetName {
+        case "img_taller_arte":
+            return "paintpalette.fill"
+        case "img_taller_panaderia":
+            return "birthday.cake.fill"
+        case "img_taller_bisuteria":
+            return "bag.fill"
+        default:
+            return "hammer.fill"
         }
     }
 }

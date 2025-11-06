@@ -15,12 +15,14 @@ enum Screen {
     case capacitations
     case dashboard
     case workshop
+    case workshopDetail
     case calendar
     case beneficiaries
     case inventory
     case orders
     case attendance
     case configuration
+    case none
 }
 
 enum Account {
@@ -45,7 +47,7 @@ struct CoordinatorView: View {
                             // Set home destination for in-app use
                             VStack(spacing: 0) {
                                 HomeView(userHome: .coordinator)
-                                NavBar(userNav: .collaborator)
+                                NavBar(userNav: .coordinator)
                             }
                             .flowDestination(for: Screen.self) { screen in
                                 VStack(spacing: 0) {
@@ -71,8 +73,10 @@ struct CoordinatorView: View {
                                             Spacer()
                                         }
                                     case .workshop:
+                                        WorkshopView()
+                                    case .workshopDetail:
                                         VStack {
-                                            Text("Talleres")
+                                            Text("Un taller")
                                             Spacer()
                                         }
                                     case .calendar:
@@ -109,14 +113,14 @@ struct CoordinatorView: View {
                                         }
                                     }
                                     
-                                    NavBar(userNav: .collaborator)
+                                    NavBar(userNav: .coordinator)
                                 }
                             }
                         }.zIndex(1)
                         
                         VStack {
                             Spacer()
-                            NavBar(userNav: .collaborator)
+                            NavBar(userNav: .coordinator)
                         }
                         .zIndex(2)
                         .allowsHitTesting(false)

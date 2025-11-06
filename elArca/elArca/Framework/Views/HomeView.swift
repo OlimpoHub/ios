@@ -18,7 +18,7 @@ enum UserHome {
             return [
                 NavItem(title: "Usuarios", icon: "Usuarios", screen: .users),
                 NavItem(title: "Capacitaciones", icon: "Capacitaciones", screen: .capacitations),
-                NavItem(title: "Análisis", icon: "Analisis", screen: .users)
+                NavItem(title: "Análisis", icon: "Analisis", screen: .dashboard)
             ]
             
         case .collaborator:
