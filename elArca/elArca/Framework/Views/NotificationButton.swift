@@ -26,7 +26,7 @@ enum NotificationType {
         case .with:
             return Color("HighlightBlue")
         case .without:
-            return Color("TextColor")
+            return Color("Beige")
         }
     }
 }

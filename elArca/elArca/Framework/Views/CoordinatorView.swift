@@ -75,8 +75,7 @@ struct CoordinatorView: View {
                                     }
                                 case .calendar:
                                     VStack {
-                                        Text("Calendario")
-                                        Spacer()
+                                        CalendarView()
                                     }
                                 case .beneficiaries:
                                     VStack {

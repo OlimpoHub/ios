@@ -9,8 +9,8 @@ import SwiftUI
 
 struct SystemButton: View {
     var icon: Image
-    var mainColor: Color = Color("TextColor")
-    var secondaryColor: Color = Color("TextColor")
+    var mainColor: Color = Color("Beige")
+    var secondaryColor: Color = Color("Beige")
     var iconSize: CGFloat
     var action: () -> Void
     
