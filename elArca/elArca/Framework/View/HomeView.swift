@@ -6,12 +6,47 @@
 //
 
 import SwiftUI
+import FlowStacks
+
+enum UserHome {
+    case collaborator
+    case coordinator
+    
+    var items: [NavItem] {
+        switch self {
+        case .coordinator:
+            return [
+                NavItem(title: "Usuarios", icon: "Usuarios", screen: .users),
+                NavItem(title: "Capacitaciones", icon: "Capacitaciones", screen: .capacitations),
+                NavItem(title: "Análisis", icon: "Analisis", screen: .users)
+            ]
+            
+        case .collaborator:
+            return [
+                NavItem(title: "Capacitaciones", icon: "Capacitaciones", screen: .capacitations),
+                NavItem(title: "Calendario", icon: "Analisis", screen: .calendar),
+            ]
+        }
+    }
+    
+    var qrText: String {
+        switch self {
+        case .coordinator :
+            return "Generar QR de Asistencia"
+        case .collaborator :
+            return "Registrar QR de Asistencia"
+        }
+    }
+}
 
 struct HomeView: View {
     var userName: String = "Mundito"
     var notifications: NotificationType = .with
-    var qrText: String = "Generar QR de Asistencia"
     var qrSize: CGFloat = hasBigScreen() ? 148 : 110
+    
+    var userHome: UserHome = .collaborator
+    
+    @EnvironmentObject var navigator: FlowNavigator<Screen>
 
     var body: some View {
         VStack {
@@ -29,39 +64,43 @@ struct HomeView: View {
                     NotificationButton()
                     
                     SystemButton(icon: Image(systemName: "gear"), iconSize: 30) {
-                        print("xd")
+                        changeView(screen: .configuration, navigator: navigator)
                     }
                 }
             }
             
             Spacer()
-                .frame(height: 32)
             
-            MenuButton(text: qrText, height: qrSize, buttonType: .solid, image: .asset("QR"))
+            MenuButton(text: userHome.qrText, height: qrSize, buttonType: .solid, image: .asset("QR"), screen: .assistance)
             
             Spacer()
-                .frame(height: 32)
             
             HStack(){
                 Texts(text: "Menú principal", type: .header)
                 Spacer()
             }
             
-            VStack {
-                Spacer()
-                
-                MenuButton(text: "Usuarios", height: 110, buttonType: .gradient, image: .asset("Usuarios"))
-                Spacer()
-                
-                MenuButton(text: "Capacitaciones", height: 110, buttonType: .gradient, image: .asset("Capacitaciones"))
-                Spacer()
-                
-                MenuButton(text: "Análisis", height: 110, buttonType: .gradient, image: .asset("Analisis"))
+            Spacer()
+            
+            ForEach(userHome.items) { item in
+                MenuButton(
+                    text: item.title,
+                    height: 110,
+                    buttonType: .gradient,
+                    image: .asset(item.icon),
+                    screen: item.screen
+                )
                 Spacer()
             }
             
         }
         .padding(.horizontal, 24)
         .navigationBarBackButtonHidden(true)
+    }
+}
+
+#Preview {
+    VStack{
+        HomeView(userHome: .collaborator)
     }
 }

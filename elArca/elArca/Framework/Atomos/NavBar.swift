@@ -6,23 +6,44 @@
 //
 
 import SwiftUI
+import FlowStacks
+
+enum UserNav {
+    case collaborator
+    case coordinator
+    
+    var items: [NavItem] {
+        switch self {
+        case .coordinator:
+            return [
+                NavItem(title: "Inicio", icon: "house.fill", screen: .home),
+                NavItem(title: "Talleres", icon: "wrench.and.screwdriver.fill", screen: .workshop),
+                NavItem(title: "Pedidos", icon: "shippingbox.fill", screen: .orders),
+                NavItem(title: "Inventario", icon: "circle.grid.2x2.topleft.checkmark.filled", screen: .inventory),
+                NavItem(title: "Beneficiarios", icon: "person.fill", screen: .beneficiaries)
+            ]
+            
+        case .collaborator:
+            return [
+                NavItem(title: "Inicio", icon: "house.fill", screen: .home),
+                NavItem(title: "Talleres", icon: "wrench.and.screwdriver.fill", screen: .workshop),
+                NavItem(title: "Calendario", icon: "calendar", screen: .calendar),
+                NavItem(title: "Beneficiarios", icon: "person.fill", screen: .beneficiaries)
+            ]
+        }
+    }
+}
 
 struct NavItem: Identifiable {
     let id = UUID()
     let title: String
     let icon: String
-    let action: () -> Void
+    let screen: Screen
 }
 
 struct NavBar: View {
-    var items: [NavItem] = [
-        NavItem(title: "Inicio", icon: "house-door-fill") { print("Inicio") },
-        NavItem(title: "Talleres", icon: "tools") { print("Talleres") },
-        NavItem(title: "Pedidos", icon: "box-seam-fill") { print("Pedidos") },
-        NavItem(title: "Inventario", icon: "ui-checks-grid") { print("Inventario") },
-        NavItem(title: "Beneficiarios", icon: "person-heart") { print("Beneficiarios") }
-    ]
-    
+    var userNav: UserNav
+        
     var backgroundColor: Color = Color("Background")
 
     var body: some View {
@@ -31,16 +52,16 @@ struct NavBar: View {
                 //Spacer()
                 
                 HStack(spacing: 0) {
-                    ForEach(items) { item in
+                    ForEach(userNav.items) { item in
                         IconButton(
                             iconName: item.icon,
                             title: item.title,
-                            action: item.action,
+                            screen: item.screen,
                             iconSize: geometry.size.width * 0.075,
                             textSize: geometry.size.width * 0.024,
                             iconColor: Color.white,
                             textColor: Color.white,
-                            backgroundColor: backgroundColor
+                            backgroundColor: backgroundColor,
                         )
                     }
                 }
@@ -59,6 +80,6 @@ struct NavBar: View {
 #Preview {
     ZStack {
         Color.black.ignoresSafeArea()
-        NavBar()
+        NavBar(userNav: .coordinator)
     }
 }

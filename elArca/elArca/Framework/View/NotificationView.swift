@@ -21,6 +21,8 @@ struct NotificationView: View {
             RectangleButton(title: "Regresar", type: .largeBlue) {
                 changeView(screen: .home, navigator: navigator)
             }
+            
+            Spacer()
         }.navigationBarBackButtonHidden(true)
     }
 }
