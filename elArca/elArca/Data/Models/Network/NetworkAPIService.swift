@@ -4,54 +4,70 @@
 //
 //  Created by Fátima Figueroa on 05/11/25.
 //
+// Shared network service that provides a generic fetch method for Decodable types
+// (If u need a different Decoder configuration for specific models, pass a custom JSONDecoder instance in your Service File)
 
 import Foundation
-import Alamofire
 
-final class NetworkAPIService {
-    static let shared = NetworkAPIService()
+public enum ApiError: Error {
+    case invalidURL
+    case networkError(Error)
+    case invalidResponse(statusCode: Int)
+    case decodingError(Error)
+}
+
+public final class NetworkAPIService {
+    public static let shared = NetworkAPIService()
     private init() {}
 
-    // Decodifier for date
-    private static var decoder: JSONDecoder = {
-        let dec = JSONDecoder()
-        dec.dateDecodingStrategy = .custom { decoder in
-            let value = try decoder.singleValueContainer().decode(String.self)
-            let fmt = ISO8601DateFormatter()
-            fmt.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-            if let date = fmt.date(from: value) {
-                return date
-            }
-            // Fallback
-            fmt.formatOptions = [.withInternetDateTime]
-            if let date = fmt.date(from: value) {
-                return date
-            }
-            throw DecodingError.dataCorrupted(
-                .init(codingPath: decoder.codingPath, debugDescription: "Fecha inválida: \(value)")
-            )
+ 
+    public func fetch<T: Decodable>(baseURL: URL, path: String, decoder: JSONDecoder = JSONDecoder()) async throws -> T {
+        let url = baseURL.appendingPathComponent(path)
+        print("Requesting from: \(url.absoluteString)")
+
+        let (data, response): (Data, URLResponse)
+        do {
+            (data, response) = try await URLSession.shared.data(from: url)
+        } catch {
+            print("Network request failed: \(error)")
+            throw ApiError.networkError(error)
         }
-        return dec
-    }()
 
-    func getCalendarList(baseURL: URL, path: String = "calendar/", limit: Int? = nil) async throws -> [CalendarInfo] {
-        var url = baseURL.appendingPathComponent(path)
-        var params: Parameters = [:]
-        if let limit { params["limit"] = limit }
+        guard let httpResponse = response as? HTTPURLResponse else {
+            print("Response was not HTTPURLResponse: \(response)")
+            throw ApiError.invalidResponse(statusCode: 0)
+        }
 
-        let request = AF.request(url, method: .get, parameters: params).validate()
-        let response = await request.serializingData().response
+        guard (200...299).contains(httpResponse.statusCode) else {
+            print("HTTP Error - Status code: \(httpResponse.statusCode)")
+            throw ApiError.invalidResponse(statusCode: httpResponse.statusCode)
+        }
 
-        switch response.result {
-        case .success(let data):
-            if let jsonString = String(data: data, encoding: .utf8) {
-                    print("JSON completo recibido desde la API:\n\(jsonString)")
-                } else {
-                    print("No se pudo convertir la respuesta a String (data.count = \(data.count))")
+        print("HTTP \(httpResponse.statusCode) OK - Received \(data.count) bytes")
+        if let jsonString = String(data: data, encoding: .utf8) {
+            print("Raw JSON response: \(jsonString)")
+        }
+
+        do {
+            let decoded = try decoder.decode(T.self, from: data)
+            return decoded
+        } catch {
+            print("JSON Decoding Error: \(error)")
+            if let decodingError = error as? DecodingError {
+                switch decodingError {
+                case .keyNotFound(let key, let context):
+                    print("Missing key: \(key.stringValue) - \(context.debugDescription)")
+                case .typeMismatch(let type, let context):
+                    print("Type mismatch for type: \(type) - \(context.debugDescription)")
+                case .valueNotFound(let type, let context):
+                    print("Value not found for type: \(type) - \(context.debugDescription)")
+                case .dataCorrupted(let context):
+                    print("Data corrupted: \(context.debugDescription)")
+                @unknown default:
+                    print("Unknown decoding error")
                 }
-            return try NetworkAPIService.decoder.decode([CalendarInfo].self, from: data)
-        case .failure(let error):
-            throw error
+            }
+            throw ApiError.decodingError(error)
         }
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 
 struct CalendarInfo: Codable {
     var idTaller: String
-    var IdCapacitacion: String
+    var idCapacitacion: String
     var idUsuario: String
     var nombreTaller: String
     var fecha: Date

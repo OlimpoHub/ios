@@ -7,29 +7,18 @@
 
 import Foundation
 
-struct Api {
-    static let base = "http://localhost:8080/"
-    struct routes {
-        static let workshops = "workshop/"
-    }
-}
-
 protocol WorkshopRepositoryProtocol {
     func getWorkshops() async -> [WorkshopResponse]?
 }
 
 final class WorkshopRepository: WorkshopRepositoryProtocol {
     static let shared = WorkshopRepository()
-    
+
     private var storage: [WorkshopResponse] = []
     private var didLoadFromAPI = false
-    
-    let nservice: NetworkAPIService
-    
-    init(nservice: NetworkAPIService = NetworkAPIService.shared) {
-        self.nservice = nservice
-    }
-    
+
+    init() {}
+
     private func ensureLoaded() async {
         guard !didLoadFromAPI else { return }
         didLoadFromAPI = true
@@ -37,21 +26,21 @@ final class WorkshopRepository: WorkshopRepositoryProtocol {
             print("Error: Invalid base URL")
             return
         }
-        
+
         do {
             print("Fetching workshops from: \(baseURL.appendingPathComponent(Api.routes.workshops).absoluteString)")
-            storage = try await nservice.getWorkshops(
+            storage = try await WorkshopService.shared.getWorkshops(
                 baseURL: baseURL,
                 path: Api.routes.workshops
             )
-            
+
             print("Successfully fetched and stored \(storage.count) workshops")
         } catch {
             print("Error al cargar talleres: \(error)")
             print("Error details: \(error.localizedDescription)")
         }
     }
-    
+
     func getWorkshops() async -> [WorkshopResponse]? {
         await ensureLoaded()
         return storage

@@ -7,12 +7,6 @@
 
 import Foundation
 
-struct Api {
-    static let base = "http://localhost:8080/"
-    struct routes {
-        static let calendar = "calendar/"
-    }
-}
 
 final class CalendarItemsRepository: CalendarItemsRequirement {
     private var storage: [Date: [DayItem]] = [:]
@@ -25,7 +19,7 @@ final class CalendarItemsRepository: CalendarItemsRequirement {
         guard let baseURL = URL(string: Api.base) else { return }
 
         do {
-            let remote: [CalendarInfo] = try await NetworkAPIService.shared.getCalendarList(baseURL: baseURL, path: Api.routes.calendar, limit: nil)
+            let remote: [CalendarInfo] = try await CalendarService.shared.getCalendarList(baseURL: baseURL, path: Api.routes.calendar, limit: nil)
 
             // Group per day
             var tmp: [Date: [DayItem]] = [:]
@@ -53,4 +47,3 @@ final class CalendarItemsRepository: CalendarItemsRequirement {
         storage[k]?.removeAll { $0.id == item.id }
     }
 }
-

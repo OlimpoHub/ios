@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		076F35782EBC24B0007907FF /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 076F35772EBC24B0007907FF /* SDWebImageSwiftUI */; };
+		07DD9F402EC01A96007EC8BC /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 07DD9F3F2EC01A96007EC8BC /* SDWebImageSwiftUI */; };
+		07DD9F432EC01AA0007EC8BC /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 07DD9F422EC01AA0007EC8BC /* Alamofire */; };
 		6646F7B92EAAE1F1005B89E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6646F7B62EAAE1F1005B89E6 /* Assets.xcassets */; };
-		70B5FA362EBC26EA00052676 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 70B5FA352EBC26EA00052676 /* Alamofire */; };
+		70B5FA362EBC26EA00052676 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,7 +49,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70B5FA362EBC26EA00052676 /* Alamofire in Frameworks */,
+				07DD9F432EC01AA0007EC8BC /* Alamofire in Frameworks */,
+				07DD9F402EC01A96007EC8BC /* SDWebImageSwiftUI in Frameworks */,
+				70B5FA362EBC26EA00052676 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +89,8 @@
 			);
 			name = elArca;
 			packageProductDependencies = (
+				07DD9F3F2EC01A96007EC8BC /* SDWebImageSwiftUI */,
+				07DD9F422EC01AA0007EC8BC /* Alamofire */,
 			);
 			productName = elArca;
 			productReference = 6646F7CB2EAAE4CB005B89E6 /* elArca.app */;
@@ -115,6 +120,10 @@
 			);
 			mainGroup = 66E3392E2EA6D7D700D1B784;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				07DD9F3E2EC01A96007EC8BC /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				07DD9F412EC01AA0007EC8BC /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 66E3392E2EA6D7D700D1B784;
 			projectDirPath = "";
@@ -269,7 +278,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LM4Y356JNU;
+				DEVELOPMENT_TEAM = 5U4ML4DKVX;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -316,7 +325,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LM4Y356JNU;
+				DEVELOPMENT_TEAM = 5U4ML4DKVX;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -377,6 +386,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		07DD9F3E2EC01A96007EC8BC /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.4;
+			};
+		};
+		07DD9F412EC01AA0007EC8BC /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		07DD9F3F2EC01A96007EC8BC /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 07DD9F3E2EC01A96007EC8BC /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+		07DD9F422EC01AA0007EC8BC /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 07DD9F412EC01AA0007EC8BC /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 66E3392F2EA6D7D700D1B784 /* Project object */;
 }
