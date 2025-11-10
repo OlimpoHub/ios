@@ -7,13 +7,6 @@
 
 import Foundation
 
-struct Api {
-    static let base = "http://localhost:8080/"
-    struct routes {
-        static let calendar = "calendar/"
-    }
-}
-
 final class CalendarItemsRepository: CalendarItemsRequirement {
     private var storage: [Date: [DayItem]] = [:]
     private let calendar: Calendar = .current

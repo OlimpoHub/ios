@@ -29,8 +29,6 @@ struct CalendarView: View {
 
     var body: some View {
         ZStack(alignment: .top) {
-            Color("Background").ignoresSafeArea()
-
             VStack {
                 // Header
                 Texts(text: "Calendario", type: .header)
@@ -95,13 +93,6 @@ struct CalendarView: View {
                     .padding(.horizontal)
                     .animation(.default, value: viewModel.selection)
             }
-            .background(
-                UnevenRoundedRectangle(
-                    cornerRadii: .init(bottomLeading: 16, bottomTrailing: 16)
-                )
-                .fill(Color("Background"))
-                .ignoresSafeArea()
-            )
             .gesture(dragGesture)
         }
     }
