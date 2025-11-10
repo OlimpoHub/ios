@@ -47,7 +47,6 @@ struct DayItemsSection: View {
                 }
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
-                .background(Color("Background"))
                 .padding(.vertical, 8)
             }
         }

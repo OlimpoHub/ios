@@ -12,7 +12,7 @@ struct WorkshopView: View {
     @StateObject private var viewModel = WorkshopViewModel()
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ZStack {
                 // Background Color
                 Color("Background")
@@ -26,19 +26,7 @@ struct WorkshopView: View {
                         
                         Spacer()
                         
-                        // Bell notification icon
-                        ZStack(alignment: .topTrailing) {
-                            Image(systemName: "bell.fill")
-                                .font(.system(size: 24))
-                                .foregroundColor(.white)
-                            
-                            // Blue notification dot
-                            Circle()
-                                .fill(Color("HighlightBlue"))
-                                .frame(width: 10, height: 10)
-                                .offset(x: 2, y: -2)
-                        }
-                        .padding(.trailing, 4)
+                        NotificationButton()
                     }
                     .padding(.horizontal, 24)
                     .padding(.top, 20)
@@ -100,14 +88,15 @@ struct WorkshopView: View {
             } else {
                 // --- Estado de Éxito (Lista) ---
                 ScrollView(showsIndicators: false) {
-                    LazyVStack(spacing: 32) {
+                    VStack(spacing: 32) {
                         ForEach(viewModel.workshops) { workshop in
                             NavigationLink(destination: WorkshopDetailView(id: workshop.idTaller)) {
                                 MenuButton(
                                     text: workshop.name,
                                     height: 110,
                                     buttonType: .gradient,
-                                    image: .asset(workshop.imageName)
+                                    image: .asset(workshop.imageName),
+                                    screen: .none
                                 )
                             }
                         }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import FlowStacks
 
 enum MenuButtonType {
     case gradient
@@ -37,13 +38,16 @@ struct MenuButton: View {
     var height: CGFloat
     var buttonType: MenuButtonType
     var image: MenuButtonImage
+    var screen: Screen
+    
+    @EnvironmentObject var navigator: FlowNavigator<Screen>
     
     var body: some View {
         HStack {
             
             HStack{
                 Spacer()
-                Texts(text: text, type: .medium)
+                Texts(text: text, type: .mediumbold)
                     .multilineTextAlignment(.center)
                 Spacer()
             }
@@ -83,6 +87,11 @@ struct MenuButton: View {
         .contentShape(Rectangle())
         .padding(EdgeInsets(top: 18, leading: 18, bottom: 14, trailing: 14))
         .clipShape(RoundedRectangle(cornerRadius: 20))
+        .onTapGesture {
+            if screen != .none {
+                changeView(screen: screen, navigator: navigator)
+            }
+        }
     }
     
     // Helper function to map asset names to SF Symbols
