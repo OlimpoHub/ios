@@ -1,5 +1,5 @@
 //
-//  CoordinatorView.swift
+//  collaboratorView.swift
 //  elArca
 //
 //  Created by Edmundo Canedo Cervantes on 04/11/25.
@@ -82,10 +82,7 @@ struct CoordinatorView: View {
                                     case .calendar:
                                             CalendarView()
                                     case .beneficiaries:
-                                        VStack {
-                                            Text("Beneficiarios")
-                                            Spacer()
-                                        }
+                                        Beneficiary()
                                     case .inventory:
                                         VStack {
                                             Text("Inventario")

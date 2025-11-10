@@ -15,7 +15,7 @@ enum ApiError: Error {
 }
 
 struct Api {
-    static let base = "http://10.102.201.23:8080/"
+    static let base = "http://localhost:8080/"
     struct routes {
         static let calendar = "calendar/"
         static let workshops = "workshop/"
