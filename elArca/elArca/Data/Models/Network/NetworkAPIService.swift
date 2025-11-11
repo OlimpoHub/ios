@@ -4,96 +4,53 @@
 //
 //  Created by Fátima Figueroa on 05/11/25.
 //
+// Shared network service that provides a generic fetch method for Decodable types
+// (If u need a different Decoder configuration for specific models, pass a custom JSONDecoder instance in your Service File)
 
 import Foundation
-import Alamofire
 
-enum ApiError: Error {
+public enum ApiError: Error {
     case invalidURL
     case networkError(Error)
+    case invalidResponse(statusCode: Int)
     case decodingError(Error)
 }
 
-struct Api {
-    static let base = "http://localhost:8080/"
-    struct routes {
-        static let calendar = "calendar/"
-        static let workshops = "workshop/"
-    }
-}
-
-final class NetworkAPIService {
-    static let shared = NetworkAPIService()
+public final class NetworkAPIService {
+    public static let shared = NetworkAPIService()
     private init() {}
 
-    // Decodifier for date
-    private static var decoder: JSONDecoder = {
-        let dec = JSONDecoder()
-        dec.dateDecodingStrategy = .custom { decoder in
-            let value = try decoder.singleValueContainer().decode(String.self)
-            let fmt = ISO8601DateFormatter()
-            fmt.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-            if let date = fmt.date(from: value) {
-                return date
-            }
-            // Fallback
-            fmt.formatOptions = [.withInternetDateTime]
-            if let date = fmt.date(from: value) {
-                return date
-            }
-            throw DecodingError.dataCorrupted(
-                .init(codingPath: decoder.codingPath, debugDescription: "Fecha inválida: \(value)")
-            )
-        }
-        return dec
-    }()
-
-    func getCalendarList(baseURL: URL, path: String = "calendar/", limit: Int? = nil) async throws -> [CalendarInfo] {
-        var url = baseURL.appendingPathComponent(path)
-        var params: Parameters = [:]
-        if let limit { params["limit"] = limit }
-
-        let request = AF.request(url, method: .get, parameters: params).validate()
-        let response = await request.serializingData().response
-
-        switch response.result {
-        case .success(let data):
-            if let jsonString = String(data: data, encoding: .utf8) {
-                    print("JSON completo recibido desde la API:\n\(jsonString)")
-                } else {
-                    print("No se pudo convertir la respuesta a String (data.count = \(data.count))")
-                }
-            return try NetworkAPIService.decoder.decode([CalendarInfo].self, from: data)
-        case .failure(let error):
-            throw error
-        }
-    }
-    
-    func getWorkshops(baseURL: URL, path: String) async throws -> [WorkshopResponse] {
+ 
+    public func fetch<T: Decodable>(baseURL: URL, path: String, decoder: JSONDecoder = JSONDecoder()) async throws -> T {
         let url = baseURL.appendingPathComponent(path)
-        
-        print("Requesting workshops from: \(url.absoluteString)")
-        
-        let (data, response) = try await URLSession.shared.data(from: url)
-        
-        guard let httpResponse = response as? HTTPURLResponse,
-              (200...299).contains(httpResponse.statusCode) else {
-            print("HTTP Error - Status code: \((response as? HTTPURLResponse)?.statusCode ?? 0)")
-            throw ApiError.networkError(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid response"]))
+        print("Requesting from: \(url.absoluteString)")
+
+        let (data, response): (Data, URLResponse)
+        do {
+            (data, response) = try await URLSession.shared.data(from: url)
+        } catch {
+            print("Network request failed: \(error)")
+            throw ApiError.networkError(error)
         }
-        
-        print("HTTP 200 OK - Received \(data.count) bytes")
-        
-        // Print raw JSON for debugging
+
+        guard let httpResponse = response as? HTTPURLResponse else {
+            print("Response was not HTTPURLResponse: \(response)")
+            throw ApiError.invalidResponse(statusCode: 0)
+        }
+
+        guard (200...299).contains(httpResponse.statusCode) else {
+            print("HTTP Error - Status code: \(httpResponse.statusCode)")
+            throw ApiError.invalidResponse(statusCode: httpResponse.statusCode)
+        }
+
+        print("HTTP \(httpResponse.statusCode) OK - Received \(data.count) bytes")
         if let jsonString = String(data: data, encoding: .utf8) {
             print("Raw JSON response: \(jsonString)")
         }
-        
-        let decoder = JSONDecoder()
+
         do {
-            let workshops = try decoder.decode([WorkshopResponse].self, from: data)
-            print("Successfully decoded \(workshops.count) workshops")
-            return workshops
+            let decoded = try decoder.decode(T.self, from: data)
+            return decoded
         } catch {
             print("JSON Decoding Error: \(error)")
             if let decodingError = error as? DecodingError {

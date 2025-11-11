@@ -1,3 +1,10 @@
+//
+//  WorkshopView.swift
+//  elArca
+//
+//  Created by Carlos Martinez Vazquez on 04/11/25.
+//
+
 import SwiftUI
 
 struct WorkshopView: View {
@@ -83,7 +90,7 @@ struct WorkshopView: View {
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 32) {
                         ForEach(viewModel.workshops) { workshop in
-                            NavigationLink(destination: WorkshopDetailView(workshop: workshop)) {
+                            NavigationLink(destination: WorkshopDetailView(id: workshop.idTaller)) {
                                 MenuButton(
                                     text: workshop.name,
                                     height: 110,

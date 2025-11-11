@@ -9,6 +9,7 @@ import Foundation
 
 protocol WorkshopListRequirementProtocol {
     func getWorkshopList() async -> [WorkshopResponse]?
+    func getWorkshop(id: String) async -> WorkshopResponse?
 }
 
 class WorkshopListRequirement: WorkshopListRequirementProtocol {
@@ -22,5 +23,9 @@ class WorkshopListRequirement: WorkshopListRequirementProtocol {
     
     func getWorkshopList() async -> [WorkshopResponse]? {
         return await dataRepository.getWorkshops()
+    }
+    
+    func getWorkshop(id: String) async -> WorkshopResponse? {
+        return await dataRepository.getWorkshop(id: id)
     }
 }

@@ -2,7 +2,7 @@
 //  CalendarView.swift
 //  elArca
 //
-//  Created by Fátima Figueroa on 30/10/25.
+//  Created by Carlos Martinez Vazquez on 04/11/25.
 //
 
 import SwiftUI
