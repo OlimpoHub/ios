@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 // Checks wheter the user has a plus/max phone or not
 func hasBigScreen() -> Bool {

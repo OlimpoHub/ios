@@ -17,19 +17,13 @@ final class CalendarService {
         let dec = JSONDecoder()
         dec.dateDecodingStrategy = .custom { decoder in
             let value = try decoder.singleValueContainer().decode(String.self)
-            let fmt = ISO8601DateFormatter()
-            fmt.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-            if let date = fmt.date(from: value) {
-                return date
-            }
-            // Fallback
-            fmt.formatOptions = [.withInternetDateTime]
-            if let date = fmt.date(from: value) {
-                return date
-            }
-            throw DecodingError.dataCorrupted(
-                .init(codingPath: decoder.codingPath, debugDescription: "Fecha inválida: \(value)")
-            )
+            let f = ISO8601DateFormatter()
+            f.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            if let d = f.date(from: value) { return d }
+            f.formatOptions = [.withInternetDateTime]
+            if let d = f.date(from: value) { return d }
+            throw DecodingError.dataCorrupted(.init(codingPath: decoder.codingPath,
+                                                    debugDescription: "Fecha inválida: \(value)"))
         }
         return dec
     }()

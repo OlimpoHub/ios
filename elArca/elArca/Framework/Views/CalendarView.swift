@@ -147,5 +147,5 @@ struct CalendarView: View {
 }
 
 #Preview {
-    CalendarView()
+    CalendarView().preferredColorScheme(.dark)
 }

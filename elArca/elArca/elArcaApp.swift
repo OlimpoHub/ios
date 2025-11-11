@@ -13,7 +13,8 @@ struct elArcaApp: App {
     var body: some Scene {
         WindowGroup {
             AppBackground {
-                CoordinatorView().preferredColorScheme(.dark)
+                CalendarView().preferredColorScheme(.dark)
+//                CoordinatorView().preferredColorScheme(.dark)
             }
         }
     }
