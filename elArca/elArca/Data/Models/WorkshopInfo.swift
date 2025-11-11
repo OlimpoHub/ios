@@ -13,7 +13,6 @@ struct WorkshopResponse: Codable, Identifiable {
     let nombreTaller: String
     let horaEntrada: String
     let horaSalida: String
-    let HorarioTaller: String
     let Fecha: String
     let URL: String?
     
@@ -24,7 +23,6 @@ struct WorkshopResponse: Codable, Identifiable {
     var name: String { nombreTaller }
     var startTime: String { horaEntrada }
     var endTime: String { horaSalida }
-    var schedule: String { HorarioTaller }
     var date: String { Fecha }
     var url: String? { URL }
     
@@ -36,7 +34,6 @@ struct WorkshopResponse: Codable, Identifiable {
         case nombreTaller
         case horaEntrada
         case horaSalida
-        case HorarioTaller
         case Fecha
         case URL
     }
