@@ -99,7 +99,6 @@ struct WorkshopDetailView: View {
                                     VStack(alignment: .leading, spacing: 12) {
                                         BulletPoint(text: "Horario: \(workshop.startTime) - \(workshop.endTime)")
                                         BulletPoint(text: "Fecha: \(formatDate(workshop.date))")
-                                        BulletPoint(text: "Turno: \(workshop.schedule)")
                                     }
                                 }
 
