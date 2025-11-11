@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="24411" systemVersion="25A362" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CDCalendarItem" representedClassName="CDCalendarItem" syncable="YES" codeGenerationType="class">
+        <attribute name="fecha" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="horaEntrada" optional="YES" attributeType="String"/>
+        <attribute name="horaSalida" optional="YES" attributeType="String"/>
+        <attribute name="idCapacitacion" optional="YES" attributeType="String"/>
+        <attribute name="idTaller" optional="YES" attributeType="String"/>
+        <attribute name="idUsuario" optional="YES" attributeType="String"/>
+        <attribute name="nombreTaller" optional="YES" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="idTaller"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+</model>
