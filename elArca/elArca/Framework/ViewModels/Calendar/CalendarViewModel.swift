@@ -14,7 +14,7 @@ final class CalendarViewModel: ObservableObject {
 
     init(
         selection: Date? = Date(),
-        repo: CalendarItemsRequirement = CalendarItemsRepository(),
+        repo: CalendarItemsRequirement = CDCalendarItemsRepo(),
         calendar: Calendar = .current
     ) {
         self.selection = selection
