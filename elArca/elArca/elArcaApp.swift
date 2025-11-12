@@ -6,13 +6,15 @@
 //
 
 import SwiftUI
+import FlowStacks
 
 @main
 struct elArcaApp: App {
     var body: some Scene {
         WindowGroup {
             AppBackground {
-                ContentView()
+                CalendarView().preferredColorScheme(.dark)
+//                CoordinatorView().preferredColorScheme(.dark)
             }
         }
     }

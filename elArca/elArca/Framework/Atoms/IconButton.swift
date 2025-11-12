@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import FlowStacks
 
 struct IconButton: View {
     var iconName: String       // Bootstrap icon (image in Assets)
     var title: String
-    var action: () -> Void
+    var screen: Screen
 
     // Customization
     var iconSize: CGFloat = 26
@@ -20,10 +21,12 @@ struct IconButton: View {
     var backgroundColor: Color = Color("Background")
     var spacing: CGFloat = 6
 
+    @EnvironmentObject var navigator: FlowNavigator<Screen>
+    
     var body: some View {
-        Button(action: action) {
+        Button(action: { changeView(screen: screen, navigator: navigator)} ) {
             VStack(spacing: spacing) {
-                Image(iconName) // Loads Bootstrap icon from Assets
+                Image(systemName: iconName) // Loads Bootstrap icon from Assets
                     .resizable()
                     .scaledToFit()
                     .frame(width: iconSize, height: iconSize)
