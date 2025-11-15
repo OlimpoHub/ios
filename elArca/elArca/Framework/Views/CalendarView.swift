@@ -94,7 +94,9 @@ struct CalendarView: View {
                     .animation(.default, value: viewModel.selection)
             }
             .gesture(dragGesture)
+            .navigationBarBackButtonHidden(true)
         }
+        .navigationBarBackButtonHidden(true)
     }
 
     // vertical gesture

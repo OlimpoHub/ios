@@ -40,7 +40,7 @@ struct MenuButton: View {
     var image: MenuButtonImage
     var screen: Screen
     
-    @EnvironmentObject var navigator: FlowNavigator<Screen>
+    @EnvironmentObject var router: CoordinatorViewModel
     
     var body: some View {
         HStack {
@@ -89,7 +89,7 @@ struct MenuButton: View {
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .onTapGesture {
             if screen != .none {
-                changeView(screen: screen, navigator: navigator)
+                router.changeView(newScreen: screen)
             }
         }
     }
