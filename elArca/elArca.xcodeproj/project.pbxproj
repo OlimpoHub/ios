@@ -11,6 +11,7 @@
 		01ED9BF02EBC810100495FF2 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 01ED9BEF2EBC810100495FF2 /* Alamofire */; };
 		01F4DEE02EBACCB2001E21A9 /* FlowStacks in Frameworks */ = {isa = PBXBuildFile; productRef = 01F4DEDF2EBACCB2001E21A9 /* FlowStacks */; };
 		6646F7B92EAAE1F1005B89E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6646F7B62EAAE1F1005B89E6 /* Assets.xcassets */; };
+		70BF80FE2EC65F1E0069A029 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 70BF80FD2EC65F1E0069A029 /* CodeScanner */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,7 +20,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		6646F7CD2EAAE4D0005B89E6 /* Exceptions for "elArca" folder in "elArca" target */ = {
+		70BF818C2EC669780069A029 /* Exceptions for "elArca" folder in "elArca" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -37,7 +38,7 @@
 		66E339392EA6D7D700D1B784 /* elArca */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				6646F7CD2EAAE4D0005B89E6 /* Exceptions for "elArca" folder in "elArca" target */,
+				70BF818C2EC669780069A029 /* Exceptions for "elArca" folder in "elArca" target */,
 			);
 			path = elArca;
 			sourceTree = "<group>";
@@ -49,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70BF80FE2EC65F1E0069A029 /* CodeScanner in Frameworks */,
 				01ED9BF02EBC810100495FF2 /* Alamofire in Frameworks */,
 				017A513E2EBB10AE0031BC27 /* SDWebImageSwiftUI in Frameworks */,
 				01F4DEE02EBACCB2001E21A9 /* FlowStacks in Frameworks */,
@@ -92,6 +94,7 @@
 				01F4DEDF2EBACCB2001E21A9 /* FlowStacks */,
 				017A513D2EBB10AE0031BC27 /* SDWebImageSwiftUI */,
 				01ED9BEF2EBC810100495FF2 /* Alamofire */,
+				70BF80FD2EC65F1E0069A029 /* CodeScanner */,
 			);
 			productName = elArca;
 			productReference = 6646F7CB2EAAE4CB005B89E6 /* elArca.app */;
@@ -125,6 +128,7 @@
 				01F4DEDE2EBACCB2001E21A9 /* XCRemoteSwiftPackageReference "FlowStacks" */,
 				017A513C2EBB10AE0031BC27 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				01ED9BEE2EBC810100495FF2 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				70BF80FC2EC65F1E0069A029 /* XCRemoteSwiftPackageReference "CodeScanner" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 66E3392E2EA6D7D700D1B784;
@@ -288,6 +292,7 @@
 				INFOPLIST_FILE = elArca/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "El Arca";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Necesitamos acceso a la camara para escanear el QR";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -298,6 +303,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -335,6 +341,7 @@
 				INFOPLIST_FILE = elArca/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "El Arca";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Necesitamos acceso a la camara para escanear el QR";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -345,6 +352,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -414,6 +422,14 @@
 				minimumVersion = 0.10.12;
 			};
 		};
+		70BF80FC2EC65F1E0069A029 /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -431,6 +447,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 01F4DEDE2EBACCB2001E21A9 /* XCRemoteSwiftPackageReference "FlowStacks" */;
 			productName = FlowStacks;
+		};
+		70BF80FD2EC65F1E0069A029 /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 70BF80FC2EC65F1E0069A029 /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

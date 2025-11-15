@@ -33,7 +33,8 @@ enum Account {
 struct CoordinatorView: View {
     @State var routes: [Route<Screen>] = []
     @State var accountRoute: [Route<Account>] = []
-        
+    @StateObject private var attendanceVM = AttendanceViewModel()
+
     var body: some View {
         FlowStack($accountRoute, withNavigation: true) {
             // Set home destination for login/logout
@@ -94,10 +95,7 @@ struct CoordinatorView: View {
                                             Spacer()
                                         }
                                     case .attendance:
-                                        VStack {
-                                            Text("Asistencias")
-                                            Spacer()
-                                        }
+                                        ReadQRView(viewModel: attendanceVM)
                                     case .configuration:
                                         VStack {
                                             Text("Configuracion")
