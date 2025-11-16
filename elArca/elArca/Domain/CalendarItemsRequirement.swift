@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol CalendarItemsRequirement {
+protocol CalendarItemsRequirement {
     func items(for day: Date) async -> [DayItem]
     func remove(_ item: DayItem) async
 }
