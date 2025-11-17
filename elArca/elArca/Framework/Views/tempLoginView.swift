@@ -9,8 +9,8 @@ import FlowStacks
 import SwiftUI
 
 struct LoginView: View {
-    @EnvironmentObject var accountNavigator: FlowNavigator<Account>
     @StateObject private var viewModel = LoginViewModel()
+    @EnvironmentObject var router: CoordinatorViewModel
     
     var body: some View {
         AppBackground {
@@ -126,7 +126,7 @@ struct LoginView: View {
                 KeychainHelper.shared.save(role, service: "com.elarca.auth", account: "userRole")
 
                 Task { @MainActor in
-                    accountNavigator.presentCover(.logged)
+                    router.changeView(newScreen: .home)
                 }
             }
         }
