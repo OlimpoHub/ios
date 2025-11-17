@@ -21,10 +21,10 @@ struct IconButton: View {
     var backgroundColor: Color = Color("Background")
     var spacing: CGFloat = 6
 
-    @EnvironmentObject var navigator: FlowNavigator<Screen>
+    @EnvironmentObject var router: CoordinatorViewModel
     
     var body: some View {
-        Button(action: { changeView(screen: screen, navigator: navigator)} ) {
+        Button(action: { router.changeView(newScreen: screen)} ) {
             VStack(spacing: spacing) {
                 Image(systemName: iconName) // Loads Bootstrap icon from Assets
                     .resizable()

@@ -8,12 +8,12 @@
 import FlowStacks
 import SwiftUI
 
-struct LoginView: View {
-    @EnvironmentObject var accountNavigator: FlowNavigator<Account>
+struct LoginView: View {    
+    @EnvironmentObject var router: CoordinatorViewModel
     
     var body: some View {
         RectangleButton(title: "Entrar"){ // TODO: Cambiar al login
-            accountNavigator.presentCover(.logged)
+            router.changeView(newScreen: .home)
         }
     }
 }

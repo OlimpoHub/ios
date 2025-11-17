@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import FlowStacks
 
 enum UserHome {
     case collaborator
@@ -46,7 +45,7 @@ struct HomeView: View {
     
     var userHome: UserHome = .collaborator
     
-    @EnvironmentObject var navigator: FlowNavigator<Screen>
+    @EnvironmentObject var router: CoordinatorViewModel
 
     var body: some View {
         VStack {
@@ -64,7 +63,7 @@ struct HomeView: View {
                     NotificationButton()
                     
                     SystemButton(icon: Image(systemName: "gear"), iconSize: 30) {
-                        changeView(screen: .configuration, navigator: navigator)
+                        router.changeView(newScreen: .configuration)
                     }
                 }
             }
@@ -96,7 +95,6 @@ struct HomeView: View {
             
         }
         .padding(.horizontal, 24)
-        .navigationBarBackButtonHidden(true)
     }
 }
 

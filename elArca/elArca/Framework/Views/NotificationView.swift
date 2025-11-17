@@ -11,7 +11,7 @@ import FlowStacks
 struct NotificationView: View {
     var notificationType: NotificationType
     
-    @EnvironmentObject var navigator: FlowNavigator<Screen>
+    @EnvironmentObject var router: CoordinatorViewModel
     
     var body: some View {
         VStack {
@@ -19,10 +19,10 @@ struct NotificationView: View {
                 // TODO: Redirección
             }
             RectangleButton(title: "Regresar", type: .largeBlue) {
-                changeView(screen: .home, navigator: navigator)
+                router.changeView(newScreen: .home)
             }
             
             Spacer()
-        }.navigationBarBackButtonHidden(true)
+        }
     }
 }
