@@ -16,7 +16,7 @@ struct WorkshopView: View {
             NavigationView {
                 ZStack {
                     // Background Color
-                    Color("Background")
+                    Color("Bg")
                         .ignoresSafeArea()
                     
                     VStack(spacing: 0) {
@@ -60,7 +60,6 @@ struct WorkshopView: View {
                     }
                 }
                 .edgesIgnoringSafeArea(.bottom)
-                .navigationBarHidden(true)
             }
         }
     }

@@ -89,6 +89,7 @@ struct Beneficiary: View {
                 }
                 
             }
+            .background(Color("Bg"))
             
             // Navegación a detalles
             .navigationDestination(item: $selectedBeneficiario) { index in

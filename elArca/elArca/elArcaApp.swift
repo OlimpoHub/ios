@@ -18,11 +18,8 @@ struct elArcaApp: App {
     
     var body: some Scene {
         WindowGroup {
-            AppBackground {
-                //CalendarView().preferredColorScheme(.dark)
-                CoordinatorView(userNav: $userNav, notificationType: $notif).preferredColorScheme(.dark)
-                    .environmentObject(router)
-            }
+            CoordinatorView(userNav: $userNav, notificationType: $notif).preferredColorScheme(.dark)
+                .environmentObject(router)
         }
     }
 }
