@@ -8,9 +8,9 @@ import Foundation
 
 final class BeneficiaryService {
     static let shared = BeneficiaryService()
-
     func getBeneficiaries(baseURL: URL, path: String) async throws -> [BeneficiaryResponse] {
-        let url = baseURL.appendingPathComponent(path)
+
+        let url = baseURL.appendingPathComponent(path + "list")
         print("Requesting beneficiaries from \(url.absoluteString)")
 
         let (data, _) = try await URLSession.shared.data(from: url)
@@ -18,21 +18,19 @@ final class BeneficiaryService {
         if let jsonString = String(data: data, encoding: .utf8) {
             print("✅ JSON recibido desde la API:\n\(jsonString)")
         }
-
-        // 👇 Primero checamos si vino un mensaje de error
         if let errorResponse = try? JSONDecoder().decode([String: String].self, from: data),
            let message = errorResponse["message"] {
             throw NSError(domain: "", code: -1,
                           userInfo: [NSLocalizedDescriptionKey: message])
         }
 
-        // ✅ Si no hubo error, decodificamos normalmente
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         return try decoder.decode([BeneficiaryResponse].self, from: data)
     }
 
     func getBeneficiary(baseURL: URL, path: String, id: String) async throws -> BeneficiaryResponse {
+
         let url = baseURL.appendingPathComponent(path + id)
         print("Requesting beneficiary \(id) from \(url.absoluteString)")
 
@@ -42,7 +40,6 @@ final class BeneficiaryService {
             print("✅ JSON recibido desde la API:\n\(jsonString)")
         }
 
-        // 👇 También manejamos el caso de error aquí
         if let errorResponse = try? JSONDecoder().decode([String: String].self, from: data),
            let message = errorResponse["message"] {
             throw NSError(domain: "", code: -1,
