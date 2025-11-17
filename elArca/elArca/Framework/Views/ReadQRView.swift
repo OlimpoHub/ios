@@ -11,18 +11,27 @@ import AVFoundation
 
 struct ReadQRView: View {
     @ObservedObject var viewModel: AttendanceViewModel
-    
+    @EnvironmentObject var router: CoordinatorViewModel
     @State private var isPresentingScanner = false
-    
+
     var body: some View {
         VStack(spacing: 16) {
-            Text(viewModel.scannedCode.isEmpty
-                 ? "Escanea el QR de asistencia"
-                 : "QR leído, registrando asistencia...")
+            Text(viewModel.message)
+                .multilineTextAlignment(.center)
                 .padding()
         }
         .onAppear {
+            print("ReadQRView onAppear")
+            viewModel.reset()
             isPresentingScanner = true
+        }
+        .onChange(of: viewModel.finished) { done in
+            guard done else { return }
+            // Pequeño delay para que se vea el mensaje y luego regresar
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                viewModel.reset()
+                router.changeView(newScreen: .home)
+            }
         }
         .sheet(isPresented: $isPresentingScanner) {
             CodeScannerView(
@@ -30,12 +39,14 @@ struct ReadQRView: View {
                 completion: { result in
                     switch result {
                     case .success(let code):
-                        // send POST
+                        print("QR leído:", code.string)
                         viewModel.handleScannedCode(code.string)
                         isPresentingScanner = false
                     case .failure(let error):
-                        print("Error al leer QR: \(error.localizedDescription)")
+                        print("Error al leer QR:", error.localizedDescription)
                         isPresentingScanner = false
+                        viewModel.message = "Error al registrar asistencia"
+                        viewModel.finished = true
                     }
                 }
             )
@@ -45,4 +56,6 @@ struct ReadQRView: View {
 
 #Preview {
     ReadQRView(viewModel: AttendanceViewModel())
+        .environmentObject(CoordinatorViewModel())
 }
+

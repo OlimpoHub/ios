@@ -14,7 +14,8 @@ struct CoordinatorView: View {
     
     // Lets the screens change
     @EnvironmentObject var router: CoordinatorViewModel
-
+    @StateObject private var attendanceVM = AttendanceViewModel()
+    
     var body: some View {
         
         VStack(spacing: 0) {
@@ -47,6 +48,10 @@ struct CoordinatorView: View {
                 // TODO: Renombrar a beneficiaryView
                 Beneficiary()
                     .tag(Screen.beneficiaries)
+                    .toolbar(.hidden, for: .tabBar)
+                
+                ReadQRView(viewModel: attendanceVM)
+                    .tag(Screen.attendance)
                     .toolbar(.hidden, for: .tabBar)
             }
             
