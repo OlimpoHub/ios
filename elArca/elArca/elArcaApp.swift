@@ -10,11 +10,17 @@ import FlowStacks
 
 @main
 struct elArcaApp: App {
+    @StateObject private var deepLinkRouter = DeepLinkRouter()
+
     var body: some Scene {
         WindowGroup {
             AppBackground {
-                //CalendarView().preferredColorScheme(.dark)
-                CoordinatorView().preferredColorScheme(.dark)
+                CoordinatorView()
+                    .preferredColorScheme(.dark)
+                    .environmentObject(deepLinkRouter)
+                    .onOpenURL { url in
+                        deepLinkRouter.handle(url)
+                    }
             }
         }
     }
