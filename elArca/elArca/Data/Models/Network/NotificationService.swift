@@ -28,13 +28,15 @@ final class NotificationService {
         return dec
     }()
 
+    // Obtains the user notifications
     func fetchNotifications(baseURL: URL, path: String = "notifications/fetch", userId: String) async throws -> [NotificationInfo] {
-        var url = baseURL.appendingPathComponent(path)
-        var body: [String: Any] = [
+        let url = baseURL.appendingPathComponent(path)
+                
+        let params: [String: Any] = [
             "userId": userId
         ]
 
-        let request = AF.request(url, method: .get, parameters: body, encoding: JSONEncoding.default).validate()
+        let request = AF.request(url, method: .get, parameters: params).validate()
         let response = await request.serializingData().response
 
         switch response.result {
@@ -50,13 +52,14 @@ final class NotificationService {
         }
     }
     
+    // Obtains the amount of notifications the user hasn't seen
     func fetchNewNotifications(baseURL: URL, path: String = "notifications/fetch/new", userId: String) async throws -> NotificationNewInfo {
-        var url = baseURL.appendingPathComponent(path)
-        var body: [String: Any] = [
+        let url = baseURL.appendingPathComponent(path)
+        let params: [String: Any] = [
             "userId": userId
         ]
 
-        let request = AF.request(url, method: .get, parameters: body, encoding: JSONEncoding.default).validate()
+        let request = AF.request(url, method: .get, parameters: params).validate()
         let response = await request.serializingData().response
 
         switch response.result {
@@ -66,9 +69,20 @@ final class NotificationService {
                 } else {
                     print("No se pudo convertir la respuesta a String (data.count = \(data.count))")
                 }
-            return try NotificationService.decoder.decode([NotificationNewInfo].self, from: data)[0]
+            return try NotificationService.decoder.decode(NotificationNewInfo.self, from: data)
         case .failure(let error):
             throw error
         }
+    }
+    
+    // Marks a notification as read
+    func readNotification(baseURL: URL, path: String = "notifications/read", notificationId: String) async throws -> Void {
+        let url = baseURL.appendingPathComponent(path)
+        let body: [String: Any] = [
+            "notificationId": notificationId
+        ]
+
+        let request = AF.request(url, method: .post, parameters: body, encoding: JSONEncoding.default).validate()
+        await request.serializingData().response
     }
 }

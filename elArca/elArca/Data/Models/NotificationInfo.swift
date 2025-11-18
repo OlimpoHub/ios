@@ -7,12 +7,15 @@
 
 import Foundation
 
-struct NotificationInfo: Codable {
+struct NotificationInfo: Identifiable, Codable {
     let titulo: String
     let mensaje: String
     let fechaCreacion: Date
     let idNotificacionesUsuario: String
-    let leido: Int
+    var leido: Int
+    
+    // Identifiable conformance
+    var id: String { idNotificacionesUsuario }
 }
 
 struct NotificationNewInfo: Codable {
