@@ -10,6 +10,7 @@ struct Api {
     struct routes {
         static let calendar = "calendar/"
         static let workshops = "workshop/"
+        static let beneficiary = "beneficiary/"
         //static let otherEndpoint = "otherEndpoint/"
         //Define the endpoints here as needed and then use them in the repositories.
     }
