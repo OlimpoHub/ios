@@ -7,10 +7,5 @@
         <attribute name="idTaller" attributeType="String"/>
         <attribute name="idUsuario" attributeType="String"/>
         <attribute name="nombreTaller" attributeType="String"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="idTaller"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
     </entity>
 </model>
