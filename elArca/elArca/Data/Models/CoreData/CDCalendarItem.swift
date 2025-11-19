@@ -16,7 +16,6 @@ public class CDCalendarItem: NSManagedObject {
     }
 
     @NSManaged public var idTaller: String
-    @NSManaged public var idCapacitacion: String
     @NSManaged public var idUsuario: String
     @NSManaged public var nombreTaller: String
     @NSManaged public var fecha: Date
