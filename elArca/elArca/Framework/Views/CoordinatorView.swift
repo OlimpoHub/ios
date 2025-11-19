@@ -24,7 +24,6 @@ struct CoordinatorView: View {
                 case .login:
                     LoginView()
                 
-<<<<<<< HEAD
                 case .home:
                     HomeView()
                     
@@ -43,38 +42,6 @@ struct CoordinatorView: View {
                 default:
                     Text("Nothing")
                 }
-=======
-                LoginView()
-                    .tag(Screen.login)
-                    .toolbar(.hidden, for: .tabBar)
-                
-                HomeView()
-                    .tag(Screen.home)
-                    .toolbar(.hidden, for: .tabBar)
-                
-                NotificationView(notificationType: notificationType)
-                    .tag(Screen.notifications)
-                    .toolbar(.hidden, for: .tabBar)
-                
-                WorkshopView()
-                    .navigationBarBackButtonHidden(true)
-                    .tag(Screen.workshop)
-                    .toolbar(.hidden, for: .tabBar)
-                
-                
-                CalendarView()
-                    .tag(Screen.calendar)
-                    .toolbar(.hidden, for: .tabBar)
-                
-                // TODO: Renombrar a beneficiaryView
-                Beneficiary()
-                    .tag(Screen.beneficiaries)
-                    .toolbar(.hidden, for: .tabBar)
-                
-                ReadQRView(viewModel: attendanceVM)
-                    .tag(Screen.attendance)
-                    .toolbar(.hidden, for: .tabBar)
->>>>>>> 9f029e2b98ac68c4d0072a168fa91cbf14eeacd4
             }
             .background(Color("Bg"))
             
