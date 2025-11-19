@@ -19,6 +19,8 @@ final class AuthenticationRepository: AuthenticationRequirementProtocol {
         let response = try await authService.login(username: username, password: password)
         // Persist tokens using TokenManager
         tokenManager.save(access: response.accessToken, refresh: response.refreshToken)
+        // Persist the user id locally so the app can know which user is logged in
+        UserDefaults.standard.set(response.user.id, forKey: "currentUserId")
         return response.user
     }
 }

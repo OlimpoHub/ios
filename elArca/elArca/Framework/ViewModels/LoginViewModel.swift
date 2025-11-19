@@ -54,6 +54,8 @@ class LoginViewModel: ObservableObject {
                 let role = user.role ?? ""
                 await MainActor.run {
                     self.isLoading = false
+                    // Print the user id and username for debugging (visible in Xcode console / device logs)
+                    // print("[Login] Logged in user id: \(user.id), username: \(user.username)")
                     // Show a temporary green success message for visual confirmation during testing
                     //self.successMessage = "Inicio de sesión correcto"
                     // Clear it after a short delay so it doesn't persist forever

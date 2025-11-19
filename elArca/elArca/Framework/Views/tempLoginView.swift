@@ -1,22 +1,22 @@
-//
-//  CoordinatorView.swift
-//  elArca
-//
-//  Created by Edmundo Canedo Cervantes on 04/11/25.
-//
-
 import FlowStacks
 import SwiftUI
 
 struct LoginView: View {
     @StateObject private var viewModel = LoginViewModel()
+
+    @State private var showingFirstLogin = false
+    @State private var showingResetPassword = false
+    @EnvironmentObject var deepLinkRouter: DeepLinkRouter
+    @State private var showingUpdatePassword = false
+    @State private var updatePasswordToken: String = ""
+
     @EnvironmentObject var router: CoordinatorViewModel
     
     var body: some View {
         AppBackground {
-            ZStack {
+            GeometryReader { geo in
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .leading, spacing: 0) {
                         VStack(spacing: 20) {
                             Image("logo-el-arca")
                                 .resizable()
@@ -45,7 +45,8 @@ struct LoginView: View {
                             .frame(maxWidth: .infinity)
 
                             Button(action: {
-                                viewModel.forgotPasswordTapped()
+                                // present reset password view
+                                showingResetPassword = true
                             }) {
                                 Texts(text: "Recuperar Contraseña", type: .small)
                                     .underline()
@@ -65,20 +66,20 @@ struct LoginView: View {
                             .frame(maxWidth: .infinity)
                             .frame(height: 52)
 
-                            // Error / Success messages
-                            if let error = viewModel.loginError {
-                                Texts(text: error, type: .small)
-                                    .foregroundColor(Color("HighlightRed"))
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                    .padding(.top, 10)
+                            VStack {
+                                if let error = viewModel.loginError {
+                                    Texts(text: error, type: .small)
+                                        .foregroundColor(Color("HighlightRed"))
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                        .padding(.top, 10)
+                                } else if let success = viewModel.successMessage {
+                                    Texts(text: success, type: .small)
+                                        .foregroundColor(.green)
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                        .padding(.top, 10)
+                                }
                             }
-
-                            if let success = viewModel.successMessage {
-                                Texts(text: success, type: .small)
-                                    .foregroundColor(.green)
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                    .padding(.top, 10)
-                            }
+                            .frame(minHeight: 40)
                         }
                         .padding(24)
                         .background(
@@ -88,7 +89,7 @@ struct LoginView: View {
                         .padding(.top, 40)
 
                         Spacer()
-                            .frame(height: 16)
+                            .frame(height: 70)
 
                         // Bottom first-login / activate account link
                         HStack {
@@ -96,7 +97,7 @@ struct LoginView: View {
                             Texts(text: "Si es tu primer ingreso, ", type: .small)
                                 .foregroundColor(Color("Beige"))
                             Button(action: {
-                                viewModel.firstLoginTapped()
+                                showingFirstLogin = true
                             }) {
                                 Texts(text: "activa tu cuenta", type: .small)
                                     .underline()
@@ -104,20 +105,13 @@ struct LoginView: View {
                             }
                             Spacer()
                         }
-                        .padding(.top, 140)
-
-                        Spacer()
-                            .frame(height: 60)
                     }
                     .padding(.horizontal, 14)
+                    .frame(minHeight: geo.size.height)
                 }
                 .contentShape(Rectangle())
                 .onTapGesture {
                     hideKeyboard()
-                }
-
-                VStack {
-                    Spacer()
                 }
             }
         }
@@ -128,6 +122,27 @@ struct LoginView: View {
                 Task { @MainActor in
                     router.changeView(newScreen: .home)
                 }
+            }
+        }
+
+        .sheet(isPresented: $showingFirstLogin) {
+            FirstLoginView()
+        }
+        .sheet(isPresented: $showingResetPassword) {
+            ResetPasswordView()
+        }
+        // present UpdatePasswordView when deep link router publishes updatePassword
+        .sheet(isPresented: $showingUpdatePassword) {
+            UpdatePasswordView(token: updatePasswordToken)
+        }
+        .onReceive(deepLinkRouter.$activeRoute) { route in
+            guard let route = route else { return }
+            switch route {
+            case .updatePassword(let token):
+                updatePasswordToken = token
+                showingUpdatePassword = true
+            default:
+                break
             }
         }
     }

@@ -1,3 +1,4 @@
+
 //
 //  elArcaApp.swift
 //  elArca
@@ -10,6 +11,8 @@ import FlowStacks
 
 @main
 struct elArcaApp: App {
+    @StateObject private var deepLinkRouter = DeepLinkRouter()
+    
     // Used to change the views
     @StateObject var router = CoordinatorViewModel()
     
@@ -19,8 +22,13 @@ struct elArcaApp: App {
     var body: some Scene {
         WindowGroup {
             AppBackground {
-                CoordinatorView(userNav: $userNav, notificationType: $notif).preferredColorScheme(.dark)
+                CoordinatorView(userNav: $userNav, notificationType: $notif)
                     .environmentObject(router)
+                    .environmentObject(deepLinkRouter)
+                    .preferredColorScheme(.dark)
+                    .onOpenURL { url in
+                        deepLinkRouter.handle(url)
+                    }
             }
         }
     }
