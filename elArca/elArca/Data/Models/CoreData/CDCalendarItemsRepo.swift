@@ -69,35 +69,48 @@ final class CDCalendarItemsRepo: CalendarItemsRequirement {
 
     // Sync (API -> Core Data)
     func sync() async {
-            guard let baseURL = URL(string: Api.base) else { return }
-            do {
-                let remote = try await service.getCalendarList(baseURL: baseURL, path: Api.routes.calendar, limit: nil)
-                let ctx = stack.newBackgroundContext()
-                ctx.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        guard let baseURL = URL(string: Api.base) else { return }
 
-                try await ctx.perform {
-                    for info in remote {
-                        // upsert via idTaller (requires unique Constraint = idTaller in the model)
-                        let req: NSFetchRequest<CDCalendarItem> = CDCalendarItem.fetchRequest()
-                        req.fetchLimit = 1
-                        req.predicate = NSPredicate(format: "idTaller == %@", info.idTaller)
+        do {
+            let remote = try await service.getCalendarList(
+                baseURL: baseURL,
+                path: Api.routes.calendar,
+                limit: nil
+            )
 
-                        let obj = try ctx.fetch(req).first ?? CDCalendarItem(context: ctx)
-                        obj.idTaller = info.idTaller
-                        obj.idCapacitacion = info.idCapacitacion
-                        obj.idUsuario = info.idUsuario
-                        obj.nombreTaller = info.nombreTaller
-                        obj.fecha = info.fecha
-                        obj.horaEntrada = info.horaEntrada
-                        obj.horaSalida = info.horaSalida
-                    }
-                    if ctx.hasChanges { try ctx.save() }
+            print("Sync: la API regresó \(remote.count) talleres")
+
+            let ctx = stack.newBackgroundContext()
+
+            try await ctx.perform {
+                // 1) Erase what was before
+                let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "CDCalendarItem")
+                let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetch)
+                try ctx.execute(deleteRequest)
+
+                // 2) Insert new items
+                for info in remote {
+                    let obj = CDCalendarItem(context: ctx)
+                    obj.idTaller       = info.idTaller
+                    obj.idUsuario      = info.idUsuario
+                    obj.nombreTaller   = info.nombreTaller
+                    obj.fecha          = info.fecha
+                    obj.horaEntrada    = info.horaEntrada
+                    obj.horaSalida     = info.horaSalida
                 }
-                print("Sync OK: \(remote.count) registros")
-            } catch {
-                print("Sync falló (offline sigue funcionando):", error)
+
+                if ctx.hasChanges { try ctx.save() }
             }
+
+            let viewCtx = stack.viewContext
+            let countReq: NSFetchRequest<CDCalendarItem> = CDCalendarItem.fetchRequest()
+            let total = (try? viewCtx.count(for: countReq)) ?? -1
+            print("Core Data ahora tiene \(total) talleres guardados")
+
+        } catch {
+            print("Sync falló (offline sigue funcionando):", error)
         }
+    }
 
     // Helpers
     private func dayBounds(for day: Date) -> (Date, Date) {

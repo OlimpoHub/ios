@@ -33,12 +33,13 @@ enum NotificationType {
 
 struct NotificationButton: View {
     var notificationType: NotificationType = .with
-    @EnvironmentObject var navigator: FlowNavigator<Screen>
+    
+    @EnvironmentObject var router: CoordinatorViewModel
     
     var body: some View {
         
         SystemButton(icon: notificationType.icon, mainColor: notificationType.color, iconSize: 30) {
-            changeView(screen: .notifications, navigator: navigator)
+            router.changeView(newScreen: .notifications)
         }
         
     }
