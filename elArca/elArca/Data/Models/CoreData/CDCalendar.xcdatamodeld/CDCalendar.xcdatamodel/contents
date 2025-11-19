@@ -4,7 +4,6 @@
         <attribute name="fecha" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="horaEntrada" attributeType="String"/>
         <attribute name="horaSalida" attributeType="String"/>
-        <attribute name="idCapacitacion" attributeType="String"/>
         <attribute name="idTaller" attributeType="String"/>
         <attribute name="idUsuario" attributeType="String"/>
         <attribute name="nombreTaller" attributeType="String"/>
