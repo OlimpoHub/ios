@@ -17,7 +17,16 @@ struct NotificationView: View {
     var body: some View {
         NavigationStack() {
             VStack(spacing: 0) {
-                HStack {                    
+                HStack {
+                    Button(action: {
+                        router.pop()
+                    }) {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundColor(.white)
+                            .frame(width: 44, height: 44)
+                    }
+                    
                     Texts(text: "Notificaciones", type: .header)
                         .foregroundColor(.white)
                     

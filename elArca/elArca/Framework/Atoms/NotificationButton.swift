@@ -40,7 +40,7 @@ struct NotificationButton: View {
         var notificationType: NotificationType = viewModel.hasNewNotifications ? .with : .without
         
         SystemButton(icon: notificationType.icon, mainColor: notificationType.color, iconSize: 30) {
-            router.changeView(newScreen: .notifications)
+            router.push(newScreen: .notifications)
         }
 
         .onAppear() {
