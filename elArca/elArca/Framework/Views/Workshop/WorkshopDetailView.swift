@@ -22,9 +22,6 @@ struct WorkshopDetailView: View {
 
     var body: some View {
         ZStack {
-            Color("Background")
-                .ignoresSafeArea()
-
             VStack(spacing: 0) {
                 // Header with back button and title
                 HStack(spacing: 16) {
@@ -79,7 +76,7 @@ struct WorkshopDetailView: View {
 
 
                                     Texts(
-                                        text: workshop.url ?? "No hay descripción proporcionada.",
+                                        text: workshop.descripcion ?? "No hay descripción proporcionada.",
                                         type: .medium
                                     )
                                     .foregroundColor(.white)
@@ -150,4 +147,3 @@ struct BulletPoint: View {
         }
     }
 }
-

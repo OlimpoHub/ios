@@ -49,6 +49,7 @@ struct MenuButton: View {
                 Spacer()
                 Texts(text: text, type: .mediumbold)
                     .multilineTextAlignment(.center)
+                    .foregroundColor(.white)
                 Spacer()
             }
             
