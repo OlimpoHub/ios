@@ -17,8 +17,8 @@ struct NotificationView: View {
     var body: some View {
         NavigationStack() {
             VStack(spacing: 0) {
-                HStack {
-                    Texts(text: "Notifications", type: .header)
+                HStack {                    
+                    Texts(text: "Notificaciones", type: .header)
                         .foregroundColor(.white)
                     
                     Spacer()
@@ -56,10 +56,10 @@ struct NotificationView: View {
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 8) {
                         ForEach($viewModel.notifications) { $notification in
-                            NavigationLink(destination: NotificationDetailView(notification: $notification)) {
+                            NavigationLink(destination: NotificationDetailView(notification: $notification, notifications: $viewModel.notifications)) {
                                 VStack {
                                     HStack {
-                                        VStack {
+                                        VStack(alignment: .leading) {
                                             Spacer()
                                                 .frame(height: 4)
                                             

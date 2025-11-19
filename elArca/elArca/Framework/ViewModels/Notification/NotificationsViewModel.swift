@@ -27,7 +27,7 @@ class NotificationsViewModel: ObservableObject {
         errorMessage = nil
         
         Task {
-            let result = await notificationsRequirement.fetchNotifications(userId: "1") // TODO: Cambiar a user ID al implementar con login
+            let result = await notificationsRequirement.fetchNotifications(userId: KeychainHelper.shared.currentUserIdFromDefaults() ?? "")
             
             if let notifications = result {
                 self.notifications = notifications

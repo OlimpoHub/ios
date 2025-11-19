@@ -39,6 +39,13 @@ struct CoordinatorView: View {
                 case .beneficiaries:
                     Beneficiary()
                     
+                case .attendance:
+                    VStack {
+                        Spacer()
+                        ReadQRView(viewModel: AttendanceViewModel())
+                        Spacer()
+                    }
+                    
                 default:
                     Text("Nothing")
                 }

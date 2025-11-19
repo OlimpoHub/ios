@@ -13,7 +13,6 @@ final class KeychainHelper {
     static let shared = KeychainHelper()
     private init() {}
 
-
     @discardableResult
     func save(_ value: String, service: String, account: String) -> Bool {
         guard let data = value.data(using: .utf8) else { return false }
@@ -64,5 +63,14 @@ final class KeychainHelper {
             kSecAttrAccount as String: account
         ]
         SecItemDelete(query as CFDictionary)
+    }
+
+    // Store/Read the current user id in UserDefaults.
+    func saveCurrentUserIdToDefaults(_ id: String) {
+        UserDefaults.standard.set(id, forKey: "currentUserId")
+    }
+
+    func currentUserIdFromDefaults() -> String? {
+        return UserDefaults.standard.string(forKey: "currentUserId")
     }
 }

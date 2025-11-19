@@ -20,35 +20,30 @@ final class NotificationRepository: NotificationRepositoryProtocol {
     private var didLoadFromAPI = false
 
     init() {}
-
-    // Loads the notifications
-    private func ensureLoaded(userId: String) async {
-        guard !didLoadFromAPI else { return }
-        didLoadFromAPI = true
+    
+    // Obtains the user notifications
+    func fetchNotifications(userId: String) async -> [NotificationInfo]? {
         guard let baseURL = URL(string: Api.base) else {
             print("Error: Invalid base URL")
-            return
+            return []
         }
 
         do {
             print("Fetching notifications from: \(baseURL.appendingPathComponent(Api.routes.notifications).absoluteString)fetch")
-            storage = try await NotificationService.shared.fetchNotifications(
+            let result = try await NotificationService.shared.fetchNotifications(
                 baseURL: baseURL,
                 userId: userId
             )
+            .sorted()
 
-            print("Successfully fetched and stored \(storage.count) notifications")
+            print("Successfully fetched and stored \(result.count) notifications")
+                        
+            return result
         } catch {
             print("Error whilst loading notifications: \(error)")
             print("Error details: \(error.localizedDescription)")
+            return []
         }
-    }
-    
-    // Obtains the user notifications
-    func fetchNotifications(userId: String) async -> [NotificationInfo]? {
-        didLoadFromAPI = false
-        await ensureLoaded(userId: userId)
-        return storage
     }
     
     // Checks if the user has notifications left to read

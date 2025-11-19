@@ -17,6 +17,7 @@ import Foundation
 
 struct NotificationDetailView: View {
     @Binding var notification: NotificationInfo
+    @Binding var notifications: [NotificationInfo]
     
     @StateObject var viewModel = NotificationDetailViewModel()
     
@@ -65,7 +66,7 @@ struct NotificationDetailView: View {
             if notification.leido == 0 {
                 viewModel.readNotification(notification: notification.idNotificacionesUsuario)
                 notification.leido = 1
-                
+                notifications.sort()
             }
         }
     }

@@ -20,7 +20,7 @@ class NotificationButtonViewModel: ObservableObject {
     
     // Verifies for new notifications
     func updateNotifications() async -> Bool {
-        hasNewNotifications = await notificationsRequirement.hasNewNotifications(userId: "1") // TODO: Change to real users
+        hasNewNotifications = await notificationsRequirement.hasNewNotifications(userId: KeychainHelper.shared.currentUserIdFromDefaults() ?? "")
         return hasNewNotifications
     }
 }

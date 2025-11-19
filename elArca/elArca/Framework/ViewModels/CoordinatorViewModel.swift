@@ -37,7 +37,7 @@ enum Screen {
 
 class CoordinatorViewModel: ObservableObject {
     @Published var screen: Screen = .login
-    
+        
     // Changes the view to the one provided in screen
     func changeView(newScreen: Screen) {
         self.screen = newScreen

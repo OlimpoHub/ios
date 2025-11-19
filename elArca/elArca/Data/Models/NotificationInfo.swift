@@ -18,6 +18,15 @@ struct NotificationInfo: Identifiable, Codable {
     var id: String { idNotificacionesUsuario }
 }
 
+extension NotificationInfo: Comparable {
+    static func <(itemA: NotificationInfo, itemB: NotificationInfo) -> Bool {
+        if itemA.leido != itemB.leido {
+            return itemA.leido < itemB.leido
+        }
+        return itemA.fechaCreacion > itemB.fechaCreacion
+    }
+}
+
 struct NotificationNewInfo: Codable {
     let size: Int
 }
