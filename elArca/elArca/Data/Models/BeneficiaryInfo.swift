@@ -11,7 +11,7 @@ struct BeneficiaryResponse: Codable, Identifiable, Hashable {
     let idBeneficiario: String
     let nombre: String
     let apellidoPaterno: String
-    let apellidoMaterno: String
+    let apellidoMaterno: String?
     let fechaNacimiento: Date?
     let numeroEmergencia: String?
     let nombreContactoEmergencia: String?

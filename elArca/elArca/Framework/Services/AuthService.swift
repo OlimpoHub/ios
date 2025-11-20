@@ -73,7 +73,7 @@ final class AuthService {
     init() {}
 
     func login(username: String, password: String) async throws -> LoginResponse {
-        let url = baseURL.appendingPathComponent("/user/login")
+        let url = baseURL.appendingPathComponent("user/login")
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -138,7 +138,7 @@ final class AuthService {
 
     /// POST /user/refresh
     func refresh(refreshToken: String) async throws -> RefreshResponse {
-        let url = baseURL.appendingPathComponent("/user/refresh")
+        let url = baseURL.appendingPathComponent("user/refresh")
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")

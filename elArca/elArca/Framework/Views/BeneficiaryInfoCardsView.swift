@@ -74,7 +74,7 @@ struct BeneficiarioInfoCardsView: View {
                     
                     VStack(alignment: .leading, spacing: 15) {
                         Texts(text: "Nombre del beneficiario:", type: .mediumbold)
-                        Texts(text: "\(beneficiary.nombre) \(beneficiary.apellidoPaterno) \(beneficiary.apellidoMaterno)", type: .medium)
+                        Texts(text: "\(beneficiary.nombre) \(beneficiary.apellidoPaterno) \(beneficiary.apellidoMaterno ?? "")", type: .medium)
                         Texts(text: "Nombre del contacto de emergencia:", type: .mediumbold)
                         Texts(text: beneficiary.nombreContactoEmergencia ?? "N/A", type: .medium)
                         Texts(text: "Relación del contacto:", type: .mediumbold)

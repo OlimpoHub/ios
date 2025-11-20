@@ -31,7 +31,7 @@
 				<key>NSIncludesSubdomains</key>
 				<true/>
 				<!--Include to allow HTTP requests-->
-				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 				<!--Include to specify minimum TLS version-->
 				<key>NSTemporaryExceptionMinimumTLSVersion</key>
@@ -39,5 +39,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>This app needs local network access to connect to the server.</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_tcp.</string>
+		<string>_udp.</string>
+	</array>
 </dict>
 </plist>
