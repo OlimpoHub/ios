@@ -15,7 +15,7 @@ struct Beneficiary: View {
     @State private var showRegister = false
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack(alignment: .bottom) {
                 
                 if viewModel.isLoading {
