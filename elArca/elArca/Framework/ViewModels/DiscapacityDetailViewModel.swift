@@ -4,7 +4,7 @@ import Combine
 @MainActor
 class DiscapacityDetailViewModel: ObservableObject {
     
-    @Published var disabilities: [DiscapacityResponse] = []
+    @Published var discapacity: DiscapacityResponse?
     @Published var searchText: String = ""
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?

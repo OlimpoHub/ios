@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct CapacitationsDetailView: View {
-    @StateObject var viewModel: DiscapacityDetailViewModel
+    @StateObject var viewModel: CapacitationsDetailViewModel
 
     init(id: String) {
-        _viewModel = StateObject(wrappedValue: DiscapacityDetailViewModel())
+        _viewModel = StateObject(wrappedValue: CapacitationsDetailViewModel(id: id))
     }
 
     var body: some View {
@@ -14,72 +14,43 @@ struct CapacitationsDetailView: View {
             if viewModel.isLoading {
                 ProgressView()
                     .tint(.white)
-            } else if let capacit = viewModel.item {
+            } else if let capacit = viewModel.discapacity {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
 
                         // --- TÍTULO ---
-                        Text(capacit.name)
+                        Text(capacit.nombre)
                             .font(.custom("Poppins-Bold", size: 26))
                             .foregroundColor(.white)
 
-                        // --- SUBTÍTULO ---
-                        if !capacit.subtitle.isEmpty {
-                            Text("[\(capacit.subtitle)]")
-                                .font(.custom("Poppins-Regular", size: 16))
-                                .foregroundColor(Color("GrayLight"))
-                        }
-
                         // --- DESCRIPCIÓN ---
-                        Text(capacit.description)
-                            .font(.custom("Poppins-Regular", size: 14))
-                            .foregroundColor(.white)
-                            .multilineTextAlignment(.leading)
-
-                        // --- IMAGEN ---
-                        if let img = capacit.image, !img.isEmpty {
-                            AsyncImage(url: URL(string: img)) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFit()
-                                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                            } placeholder: {
-                                Rectangle()
-                                    .fill(Color("BlackCard"))
-                                    .frame(height: 180)
-                                    .overlay(ProgressView())
-                            }
-                        }
-
-                        // --- SECCIÓN "Sobre la capacitación" ---
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Sobre la capacitación:")
-                                .font(.custom("Poppins-SemiBold", size: 18))
+                        if let desc = capacit.descripcion, !desc.isEmpty {
+                            Text(desc)
+                                .font(.custom("Poppins-Regular", size: 14))
                                 .foregroundColor(.white)
-
-                            ForEach(capacit.details, id: \.self) { detail in
-                                HStack(alignment: .top, spacing: 10) {
-                                    Circle()
-                                        .fill(.white.opacity(0.6))
-                                        .frame(width: 6, height: 6)
-
-                                    Text(detail)
-                                        .font(.custom("Poppins-Regular", size: 14))
-                                        .foregroundColor(.white)
-                                }
-                            }
+                                .multilineTextAlignment(.leading)
                         }
-                        .padding(.top, 10)
 
                         Spacer(minLength: 40)
                     }
                     .padding(.horizontal, 20)
+                    .padding(.top, 20)
                 }
 
             } else {
-                Text(viewModel.errorMessage ?? "Error desconocido")
-                    .foregroundColor(.red)
+                VStack(spacing: 12) {
+                    Image(systemName: "exclamationmark.triangle")
+                        .font(.system(size: 40))
+                        .foregroundColor(.white.opacity(0.6))
+                    
+                    Text(viewModel.errorMessage ?? "Error desconocido")
+                        .font(.custom("Poppins-Regular", size: 16))
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                }
+                .padding()
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
