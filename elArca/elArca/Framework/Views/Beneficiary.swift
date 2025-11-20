@@ -42,7 +42,7 @@ struct Beneficiary: View {
                         .padding(.top, 20)
                         
                         // Search bar y filtro
-                        HStack(spacing: 8) {
+                        /*HStack(spacing: 8) {
                             TextInput(
                                 value: $descriptionValue,
                                 errorMessage: $descriptionValid,
@@ -54,7 +54,7 @@ struct Beneficiary: View {
                                 print("Filtro")
                             }
                         }
-                        .padding(.horizontal)
+                        .padding(.horizontal)*/
                         
                         // Contenido principal con Scroll
                         ScrollView {

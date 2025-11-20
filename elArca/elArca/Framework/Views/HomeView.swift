@@ -53,7 +53,7 @@ struct HomeView: View {
             HStack {
                 // Name
                 VStack(alignment: .leading) {
-                    Texts(text: "Bienvenido,", type: .medium)
+                    Texts(text: "Bienvenid@,", type: .medium)
                     Texts(text: viewModel.userName, type: .header)
                 }
                 
