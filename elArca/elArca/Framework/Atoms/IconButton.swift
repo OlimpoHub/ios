@@ -23,7 +23,23 @@ struct IconButton: View {
 
     @EnvironmentObject var router: CoordinatorViewModel
     
+    var currentOpacity: CGFloat {
+        switch router.stack.first {
+        case .home, .configuration:
+            return title == "Inicio" ? 1 : 0.4
+        case .workshop:
+            return title == "Talleres" ? 1 : 0.4
+        case .calendar:
+            return title == "Calendario" ? 1 : 0.4
+        case .beneficiaries:
+            return title == "Beneficiarios" ? 1 : 0.4
+        default:
+            return 0.4
+        }
+    }
+    
     var body: some View {
+        
         Button(action: { router.changeView(newScreen: screen)} ) {
             VStack(spacing: spacing) {
                 Image(systemName: iconName) // Loads Bootstrap icon from Assets
@@ -43,6 +59,7 @@ struct IconButton: View {
             .cornerRadius(8)
         }
         .buttonStyle(.plain)
+        .opacity(currentOpacity)
     }
 }
 

@@ -49,7 +49,11 @@ struct CoordinatorView: View {
                 default:
                     VStack {
                         Spacer()
-                        Texts(text: "En proceso...", type: .header)
+                        HStack {
+                            Spacer()
+                            Texts(text: "En proceso...", type: .header)
+                            Spacer()
+                        }
                         Spacer()
                     }
                 }

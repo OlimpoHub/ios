@@ -64,9 +64,9 @@ struct BeneficiarioInfoCardsView: View {
                         
                         // Fechas y estatus
                         Texts(text: "Fecha de nacimiento:", type: .mediumbold)
-                        Texts(text: formatDate(beneficiary.fechaNacimiento), type: .medium)
+                        Texts(text: ReadableDate(date: beneficiary.fechaNacimiento), type: .medium)
                         Texts(text: "Fecha de ingreso:", type: .mediumbold)
-                        Texts(text: formatDate(beneficiary.fechaIngreso), type: .medium)
+                        Texts(text: ReadableDate(date: beneficiary.fechaIngreso), type: .medium)
                         Texts(text: "Estatus:", type: .mediumbold)
                         Texts(text: beneficiary.estatus == 1 ? "Activo" : "Inactivo", type: .medium)
                     }
