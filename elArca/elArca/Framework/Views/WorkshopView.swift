@@ -79,6 +79,9 @@ struct WorkshopView: View {
                                 )
                                 .allowsHitTesting(false)
                             }
+                            .padding(EdgeInsets(top: -18, leading: -18, bottom: -14, trailing: -14))
+                            .contentShape(Rectangle())
+                            .padding(EdgeInsets(top: 18, leading: 18, bottom: 14, trailing: 14))
                         }
                     }
                     .padding(.horizontal, 24)

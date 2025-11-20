@@ -84,9 +84,9 @@ struct MenuButton: View {
         }
         .frame(height: height)
         .background(buttonType.background)
-        .padding(EdgeInsets(top: -18, leading: -18, bottom: -14, trailing: -14))
+        .padding(EdgeInsets(top: -14, leading: -14, bottom: -9, trailing: -9))
         .contentShape(Rectangle())
-        .padding(EdgeInsets(top: 18, leading: 18, bottom: 14, trailing: 14))
+        .padding(EdgeInsets(top: 14, leading: 14, bottom: 9, trailing: 9))
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .onTapGesture {
             if screen != .none {
