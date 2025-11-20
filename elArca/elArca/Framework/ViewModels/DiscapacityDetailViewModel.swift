@@ -13,7 +13,8 @@ class DiscapacityDetailViewModel: ObservableObject {
     
     private var allDisabilities: [DiscapacityResponse] = []
 
-    init(disabilityListRequirement: DiscapacityListRequirementProtocol = DiscapacityListRequirement.shared) {
+    init(id: String, disabilityListRequirement: DiscapacityListRequirementProtocol = DiscapacityListRequirement.shared) {
+        self.id = id
         self.disabilityListRequirement = disabilityListRequirement
         load()
     }
@@ -23,25 +24,14 @@ class DiscapacityDetailViewModel: ObservableObject {
         errorMessage = nil
         
         Task {
-            let result = await disabilityListRequirement.getDiscapacityList()
+            let result = await disabilityListRequirement.getDiscapacity (id :id)
             
-            if let disabilities = result {
-                self.allDisabilities = disabilities
-                self.filter()
-            }
-            
-            self.isLoading = false
-        }
-    }
-    
-    func filter() {
-        if searchText.isEmpty {
-            self.disabilities = allDisabilities
+            self.disability = result
         } else {
-            let lower = searchText.lowercased()
-            self.disabilities = allDisabilities.filter {
-                $0.name.lowercased().contains(lower)
-            }
+            self.errorMessage = "No se pudo cargar la información de la discapacidad."
         }
+
+        isLoading = false
     }
+
 }
