@@ -25,7 +25,7 @@ struct CapacitacionesView: View {
                 VStack(alignment: .leading, spacing: 20) {
 
                     // --- TÍTULO ---
-                    Texts(text: "Capacitaciones", type: .title)
+                    Texts(text: "Capacitaciones", type: .header)
                         .padding(.horizontal)
 
                     // --- BUSCADOR ---

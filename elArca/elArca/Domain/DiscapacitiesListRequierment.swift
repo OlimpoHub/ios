@@ -22,5 +22,3 @@ class DiscapacityListRequirement: DiscapacityListRequirementProtocol {
         return await dataRepository.getDiscapacity(id: id)
     }
 }
-
-

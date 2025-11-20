@@ -2,18 +2,18 @@ import Foundation
 import Combine
 
 @MainActor
-class DisabilityViewModel: ObservableObject {
+class DiscapacityViewModel: ObservableObject {
     
-    @Published var disabilities: [DisabilityResponse] = []
+    @Published var disabilities: [DiscapacityResponse] = []
     @Published var searchText: String = ""
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     
-    private var allDisabilities: [DisabilityResponse] = []
+    private var allDisabilities: [DiscapacityResponse] = []
     
-    var disabilityListRequirement: DisabilityListRequirementProtocol
+    var disabilityListRequirement: DiscapacityListRequirementProtocol
     
-    init(disabilityListRequirement: DisabilityListRequirementProtocol = DisabilityListRequirement.shared) {
+    init(disabilityListRequirement: DiscapacityListRequirementProtocol = DiscapacityListRequirement.shared) {
         self.disabilityListRequirement = disabilityListRequirement
         loadDisabilities()
     }
@@ -23,7 +23,7 @@ class DisabilityViewModel: ObservableObject {
         errorMessage = nil
         
         Task {
-            let result = await disabilityListRequirement.getDisabilityList()
+            let result = await disabilityListRequirement.getDiscapacityList()
             
             if let list = result {
                 self.allDisabilities = list
