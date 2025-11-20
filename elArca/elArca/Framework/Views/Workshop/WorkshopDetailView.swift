@@ -22,6 +22,10 @@ struct WorkshopDetailView: View {
 
     var body: some View {
         ZStack {
+            // Background Color
+            Color("Bg")
+                .ignoresSafeArea()
+            
             VStack(spacing: 0) {
                 // Header with back button and title
                 HStack(spacing: 16) {

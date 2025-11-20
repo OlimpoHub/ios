@@ -77,6 +77,7 @@ struct WorkshopView: View {
                                     image: .asset(workshop.imageName),
                                     screen: .none
                                 )
+                                .allowsHitTesting(false)
                             }
                         }
                     }

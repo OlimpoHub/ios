@@ -65,12 +65,13 @@ final class KeychainHelper {
         SecItemDelete(query as CFDictionary)
     }
 
-    // Store/Read the current user id in UserDefaults.
-    func saveCurrentUserIdToDefaults(_ id: String) {
-        UserDefaults.standard.set(id, forKey: "currentUserId")
-    }
-
+    // Read the current user id in UserDefaults.
     func currentUserIdFromDefaults() -> String? {
         return UserDefaults.standard.string(forKey: "currentUserId")
+    }
+    
+    // Read the current user id in UserDefaults.
+    func currentUserNameFromDefaults() -> String? {
+        return UserDefaults.standard.string(forKey: "currentUserName")
     }
 }

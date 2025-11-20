@@ -29,15 +29,17 @@ struct Beneficiary: View {
                 } else {
                     VStack(alignment: .leading, spacing: 16) {
                         
-                        // Título y campana
-                        HStack(spacing: 8) {
+                        // Header with Title and Notification Bell (needs to update icons and add navbar)
+                        HStack {
                             Texts(text: "Beneficiarios", type: .header)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            IconButtonAtom(imageName: "notification") {
-                                print("Notificación")
-                            }
+                                .foregroundColor(.white)
+                            
+                            Spacer()
+                            
+                            NotificationButton()
                         }
-                        .padding(.horizontal)
+                        .padding(.horizontal, 24)
+                        .padding(.top, 20)
                         
                         // Search bar y filtro
                         HStack(spacing: 8) {
@@ -68,7 +70,7 @@ struct Beneficiary: View {
                                         selectedBeneficiary = beneficiary
                                     } label: {
                                         VStack(alignment: .leading, spacing: 8) {
-                                            Text("\(beneficiary.nombre) \(beneficiary.apellidoPaterno)")
+                                            Texts(text: "\(beneficiary.nombre) \(beneficiary.apellidoPaterno)", type: .medium)
                                                 .font(.headline)
                                                 .foregroundColor(.black)
                                         }

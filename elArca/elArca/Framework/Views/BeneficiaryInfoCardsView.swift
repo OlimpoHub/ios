@@ -14,16 +14,31 @@ struct BeneficiarioInfoCardsView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
+            // Background Color
+            Color("Bg")
+                .ignoresSafeArea()
+            
             VStack(spacing: 8) {
-                // Encabezado
-                HStack(spacing: 8) {
-                    IconButtonAtom(imageName: "return") {
+                // Header with back button and title
+                HStack(spacing: 16) {
+                    Button(action: {
                         dismiss()
+                    }) {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundColor(.white)
+                            .frame(width: 44, height: 44)
                     }
+
                     Texts(text: "\(beneficiary.nombre) \(beneficiary.apellidoPaterno)", type: .header)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .foregroundColor(.white)
+
+                    Spacer()
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 24)
+                .padding(.top, 20)
+                .padding(.bottom, 16)
+
                 
                 // Dos columnas
                 HStack(alignment: .top) {

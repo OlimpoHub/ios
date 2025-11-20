@@ -39,8 +39,8 @@ enum UserHome {
 }
 
 struct HomeView: View {
-    var userName: String = "Mundito"
-    var notifications: NotificationType = .with
+    @StateObject private var viewModel = HomeViewModel()
+    
     var qrSize: CGFloat = hasBigScreen() ? 148 : 110
     
     var userHome: UserHome = .collaborator
@@ -54,7 +54,7 @@ struct HomeView: View {
                 // Name
                 VStack(alignment: .leading) {
                     Texts(text: "Bienvenido,", type: .medium)
-                    Texts(text: userName, type: .header)
+                    Texts(text: viewModel.userName, type: .header)
                 }
                 
                 Spacer()
@@ -67,6 +67,7 @@ struct HomeView: View {
                     }
                 }
             }
+            .padding(.top, 20)
             
             Spacer()
             
@@ -95,11 +96,5 @@ struct HomeView: View {
             
         }
         .padding(.horizontal, 24)
-    }
-}
-
-#Preview {
-    VStack{
-        HomeView(userHome: .collaborator)
     }
 }
