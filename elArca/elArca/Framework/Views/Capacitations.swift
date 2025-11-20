@@ -78,7 +78,7 @@ struct CapacitacionesView: View {
                         LazyVGrid(columns: columns, spacing: 20) {
                             ForEach(discapacityVM.discapacities) { item in
                                 NavigationLink(
-                                    destination: DiscapacityDetailView(id: item.idDiscapacidad)
+                                    destination: CapacitationsDetailView(id: item.idDiscapacidad)
                                 ) {
                                     RoundedRectangle(cornerRadius: 12)
                                         .fill(Color("BlackBlue"))

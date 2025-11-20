@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct CapacitationsDetailView: View {
-    @StateObject var viewModel: CapacitationsDetailViewModel
+    @StateObject var viewModel: DiscapacityDetailViewModel
 
     init(id: String) {
-        _viewModel = StateObject(wrappedValue: CapacitationsDetailViewModel(id: id))
+        _viewModel = StateObject(wrappedValue: DiscapacityDetailViewModel())
     }
 
     var body: some View {

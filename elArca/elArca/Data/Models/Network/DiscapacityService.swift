@@ -10,7 +10,7 @@ final class DiscapacityService {
 let decoder = JSONDecoder()
         
         let discapacities: [DiscapacityResponse] = try await NetworkAPIService.shared.fetch(baseURL: baseURL, path: path, decoder: decoder)
-        print("DiscapacityService: received \(discapacity.count) discapacities")
+        print("DiscapacityService: received \(discapacities.count) discapacities")
         return discapacities
     }
 
@@ -33,5 +33,3 @@ let decoder = JSONDecoder()
         return first
     }
 }
-
-struct AnyCodable: Codable {}
