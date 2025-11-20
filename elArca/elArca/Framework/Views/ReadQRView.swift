@@ -15,23 +15,27 @@ struct ReadQRView: View {
     @State private var isPresentingScanner = false
 
     var body: some View {
-        VStack(spacing: 16) {
-            Spacer()
-            Texts(text: viewModel.message, type: .medium)
-                .multilineTextAlignment(.center)
-                .padding()
-            
-            if !viewModel.finished {
-                HStack {
-                    Spacer()
-                        .frame(height: 24)
-                }
-                RectangleButton(title: "Abrir cámara") {
-                    isPresentingScanner = true
-                }
+        ZStack {
+            Color("Bg")
+                .ignoresSafeArea()
+            VStack(spacing: 16) {
+                Spacer()
+                Texts(text: viewModel.message, type: .medium)
+                    .multilineTextAlignment(.center)
+                    .padding()
+                
+                //            if !viewModel.finished {
+                //                HStack {
+                //                    Spacer()
+                //                        .frame(height: 24)
+                //                }
+                //                RectangleButton(title: "Abrir cámara") {
+                //                    isPresentingScanner = true
+                //                }
+                //            }
+                Spacer()
             }
-            
-            Spacer()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .onAppear {
             print("ReadQRView onAppear")

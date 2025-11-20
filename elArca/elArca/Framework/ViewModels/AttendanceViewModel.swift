@@ -8,26 +8,35 @@
 import Foundation
 import Combine
 
+import Foundation
+import Combine
+
 final class AttendanceViewModel: ObservableObject {
     @Published var scannedCode: String = ""
     @Published var message: String = "Escanea el QR de asistencia"
     @Published var finished: Bool = false
-    
-    // Se cambiará cuando se tenga el login
-    var userID: String = "aeda87dd-b9b8-11f0-b6b8-020161fa237d"
 
     func handleScannedCode(_ code: String) {
-        print("🔹 handleScannedCode con: \(code)")
+        print("handleScannedCode con: \(code)")
         self.scannedCode = code
         self.message = "Registrando asistencia..."
         sendAttendance()
     }
+
     private func sendAttendance() {
         guard !scannedCode.isEmpty else { return }
 
+        // Read userID in session
+        guard let userID = KeychainHelper.shared.currentUserIdFromDefaults(),
+              !userID.isEmpty else {
+            print("No hay userID guardado en UserDefaults")
+            self.message = "No se encontró el usuario en sesión"
+            self.finished = true
+            return
+        }
+
         let qrValue = scannedCode
         let readTime = Int(Date().timeIntervalSince1970 * 1000)
-        let userID = self.userID
 
         guard let url = URL(string: "\(Api.base)qr/validate") else { return }
 
