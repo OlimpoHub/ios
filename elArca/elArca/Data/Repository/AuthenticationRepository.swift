@@ -21,6 +21,7 @@ final class AuthenticationRepository: AuthenticationRequirementProtocol {
         tokenManager.save(access: response.accessToken, refresh: response.refreshToken)
         // Persist the user id locally so the app can know which user is logged in
         UserDefaults.standard.set(response.user.id, forKey: "currentUserId")
+        print("El usuario es: \(KeychainHelper.shared.currentUserIdFromDefaults())")
         return response.user
     }
 }

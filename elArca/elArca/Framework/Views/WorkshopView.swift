@@ -15,6 +15,10 @@ struct WorkshopView: View {
         VStack {
             NavigationView {
                 ZStack {
+                    // Background Color
+                    Color("Bg")
+                        .ignoresSafeArea()
+                    
                     VStack(spacing: 0) {
                         // Header with Title and Notification Bell (needs to update icons and add navbar)
                         HStack {
@@ -34,7 +38,6 @@ struct WorkshopView: View {
                     }
                 }
                 .edgesIgnoringSafeArea(.bottom)
-                .navigationBarHidden(true)
             }
         }
     }

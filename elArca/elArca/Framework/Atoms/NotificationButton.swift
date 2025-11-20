@@ -32,15 +32,21 @@ enum NotificationType {
 }
 
 struct NotificationButton: View {
-    var notificationType: NotificationType = .with
+    @StateObject var viewModel = NotificationButtonViewModel()
     
     @EnvironmentObject var router: CoordinatorViewModel
     
     var body: some View {
+        var notificationType: NotificationType = viewModel.hasNewNotifications ? .with : .without
         
         SystemButton(icon: notificationType.icon, mainColor: notificationType.color, iconSize: 30) {
-            router.changeView(newScreen: .notifications)
+            router.push(newScreen: .notifications)
         }
-        
+
+        .onAppear() {
+            Task {
+                notificationType = await viewModel.updateNotifications() ? .with : .without
+            }
+        }
     }
 }

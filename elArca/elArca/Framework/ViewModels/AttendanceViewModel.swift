@@ -29,7 +29,7 @@ final class AttendanceViewModel: ObservableObject {
         let readTime = Int(Date().timeIntervalSince1970 * 1000)
         let userID = self.userID
 
-        guard let url = URL(string: "http://192.168.1.98:8080/qr/validate") else { return }
+        guard let url = URL(string: "\(Api.base)qr/validate") else { return }
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"

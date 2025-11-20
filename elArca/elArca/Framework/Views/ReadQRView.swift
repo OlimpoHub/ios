@@ -16,9 +16,22 @@ struct ReadQRView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            Text(viewModel.message)
+            Spacer()
+            Texts(text: viewModel.message, type: .medium)
                 .multilineTextAlignment(.center)
                 .padding()
+            
+            if !viewModel.finished {
+                HStack {
+                    Spacer()
+                        .frame(height: 24)
+                }
+                RectangleButton(title: "Abrir cámara") {
+                    isPresentingScanner = true
+                }
+            }
+            
+            Spacer()
         }
         .onAppear {
             print("ReadQRView onAppear")

@@ -98,6 +98,7 @@ struct Beneficiary: View {
                     .padding(.bottom, 100)
                 }*/
             }
+            .background(Color("Bg"))
             
             // Navegación a detalles
             .navigationDestination(item: $selectedBeneficiary) { beneficiary in
