@@ -15,7 +15,7 @@ enum NetworkError: Error {
 
 struct LoginResponse: Codable {
     struct User: Codable {
-        let id: Int
+        let id: String
         let username: String
         let role: String?
 
@@ -27,15 +27,15 @@ struct LoginResponse: Codable {
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
 
-            if let intId = try? container.decode(Int.self, forKey: .id) {
+            if let intId = try? container.decode(String.self, forKey: .id) {
                 id = intId
             } else if let strId = try? container.decode(String.self, forKey: .id) {
                 let trimmed = strId.trimmingCharacters(in: .whitespacesAndNewlines)
-                if let parsed = Int(trimmed) {
+                if let parsed = String?(trimmed) {
                     id = parsed
                 } else if let doubleVal = Double(trimmed) {
                     // If backend sent a decimal like "123.0", accept it
-                    id = Int(doubleVal)
+                    id = String(doubleVal)
                 } else {
                     throw DecodingError.typeMismatch(Int.self,
                                                      DecodingError.Context(codingPath: container.codingPath + [CodingKeys.id],
@@ -73,7 +73,7 @@ final class AuthService {
     init() {}
 
     func login(username: String, password: String) async throws -> LoginResponse {
-        let url = baseURL.appendingPathComponent("/user/login")
+        let url = baseURL.appendingPathComponent("user/login")
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -138,7 +138,7 @@ final class AuthService {
 
     /// POST /user/refresh
     func refresh(refreshToken: String) async throws -> RefreshResponse {
-        let url = baseURL.appendingPathComponent("/user/refresh")
+        let url = baseURL.appendingPathComponent("user/refresh")
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")

@@ -47,7 +47,15 @@ struct CoordinatorView: View {
                     }
                     
                 default:
-                    Text("Nothing")
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            Texts(text: "En proceso...", type: .header)
+                            Spacer()
+                        }
+                        Spacer()
+                    }
                 }
             }
             .background(Color("Bg"))

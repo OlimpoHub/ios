@@ -21,5 +21,30 @@
 		<string>Poppins-Regular.ttf</string>
 		<string>Poppins-Bold.ttf</string>
 	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>74.208.78.8</key>
+			<dict>
+				<!--Include to allow subdomains-->
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<!--Include to allow HTTP requests-->
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<!--Include to specify minimum TLS version-->
+				<key>NSTemporaryExceptionMinimumTLSVersion</key>
+				<string>TLSv1.1</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>This app needs local network access to connect to the server.</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_tcp.</string>
+		<string>_udp.</string>
+	</array>
 </dict>
 </plist>

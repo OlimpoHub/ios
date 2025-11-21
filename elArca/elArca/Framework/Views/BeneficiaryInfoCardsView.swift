@@ -14,16 +14,31 @@ struct BeneficiarioInfoCardsView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
+            // Background Color
+            Color("Bg")
+                .ignoresSafeArea()
+            
             VStack(spacing: 8) {
-                // Encabezado
-                HStack(spacing: 8) {
-                    IconButtonAtom(imageName: "return") {
+                // Header with back button and title
+                HStack(spacing: 16) {
+                    Button(action: {
                         dismiss()
+                    }) {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundColor(.white)
+                            .frame(width: 44, height: 44)
                     }
+
                     Texts(text: "\(beneficiary.nombre) \(beneficiary.apellidoPaterno)", type: .header)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .foregroundColor(.white)
+
+                    Spacer()
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 24)
+                .padding(.top, 20)
+                .padding(.bottom, 16)
+
                 
                 // Dos columnas
                 HStack(alignment: .top) {
@@ -49,9 +64,9 @@ struct BeneficiarioInfoCardsView: View {
                         
                         // Fechas y estatus
                         Texts(text: "Fecha de nacimiento:", type: .mediumbold)
-                        Texts(text: formatDate(beneficiary.fechaNacimiento), type: .medium)
+                        Texts(text: ReadableDate(date: beneficiary.fechaNacimiento), type: .medium)
                         Texts(text: "Fecha de ingreso:", type: .mediumbold)
-                        Texts(text: formatDate(beneficiary.fechaIngreso), type: .medium)
+                        Texts(text: ReadableDate(date: beneficiary.fechaIngreso), type: .medium)
                         Texts(text: "Estatus:", type: .mediumbold)
                         Texts(text: beneficiary.estatus == 1 ? "Activo" : "Inactivo", type: .medium)
                     }
@@ -59,7 +74,7 @@ struct BeneficiarioInfoCardsView: View {
                     
                     VStack(alignment: .leading, spacing: 15) {
                         Texts(text: "Nombre del beneficiario:", type: .mediumbold)
-                        Texts(text: "\(beneficiary.nombre) \(beneficiary.apellidoPaterno) \(beneficiary.apellidoMaterno)", type: .medium)
+                        Texts(text: "\(beneficiary.nombre) \(beneficiary.apellidoPaterno) \(beneficiary.apellidoMaterno ?? "")", type: .medium)
                         Texts(text: "Nombre del contacto de emergencia:", type: .mediumbold)
                         Texts(text: beneficiary.nombreContactoEmergencia ?? "N/A", type: .medium)
                         Texts(text: "Relación del contacto:", type: .mediumbold)
