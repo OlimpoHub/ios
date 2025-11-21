@@ -17,7 +17,7 @@ struct DiscapacityResponse: Codable, Identifiable {
     enum CodingKeys: String, CodingKey {
         case idDiscapacidad
         case name
-        case descripcion
+        case caracteristicas
     }
 }
 
