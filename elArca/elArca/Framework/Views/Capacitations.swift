@@ -6,8 +6,8 @@ import SwiftUI
 struct CapacitacionesView: View {
 
     // ViewModels
-    @StateObject var workshopVM = WorkshopViewModel()
-    @StateObject var discapacityVM = DiscapacityViewModel()
+    @StateObject private var workshopVM = WorkshopViewModel()
+    @StateObject private var discapacityVM = DiscapacityViewModel()
 
     // Search
     @State private var search: String = ""
@@ -53,7 +53,7 @@ struct CapacitacionesView: View {
                                         destination: WorkshopDetailView(id: workshop.idTaller)
                                     ) {
                                         VStack {
-                                            Image(workshop.image)
+                                            Image(workshop.imageName)
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: 90, height: 90)
@@ -76,7 +76,7 @@ struct CapacitacionesView: View {
                             .padding(.horizontal)
 
                         LazyVGrid(columns: columns, spacing: 20) {
-                            ForEach(discapacityVM.discapacities) { item in
+                            ForEach(discapacityVM.disabilities) { item in
                                 NavigationLink(
                                     destination: CapacitationsDetailView(id: item.idDiscapacidad)
                                 ) {
@@ -84,7 +84,7 @@ struct CapacitacionesView: View {
                                         .fill(Color("BlackBlue"))
                                         .frame(height: 120)
                                         .overlay(
-                                            Text(item.nombre)
+                                            Text(item.name)
                                                 .foregroundColor(.white)
                                                 .font(.system(size: 14))
                                         )
@@ -100,4 +100,8 @@ struct CapacitacionesView: View {
             .background(Color("DarkBlue").ignoresSafeArea())
         }
     }
+}
+
+#Preview {
+    CapacitacionesView().preferredColorScheme(.dark)
 }

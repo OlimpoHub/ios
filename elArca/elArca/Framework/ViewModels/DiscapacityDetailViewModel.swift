@@ -9,6 +9,8 @@ class DiscapacityDetailViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     
+    var id: String
+    
     var disabilityListRequirement: DiscapacityListRequirementProtocol
     
     private var allDisabilities: [DiscapacityResponse] = []
@@ -24,11 +26,12 @@ class DiscapacityDetailViewModel: ObservableObject {
         errorMessage = nil
         
         Task {
-            let result = await disabilityListRequirement.getDiscapacity (id :id)
-            
-            self.disability = result
-        } else {
-            self.errorMessage = "No se pudo cargar la información de la discapacidad."
+            do {
+                let result = await disabilityListRequirement.getDiscapacity(id: self.id)
+                self.discapacity = result
+            } catch {
+                self.errorMessage = "No se pudo cargar la información de la discapacidad."
+            }
         }
 
         isLoading = false

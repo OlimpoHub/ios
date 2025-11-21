@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct CapacitationsDetailView: View {
-    @StateObject var viewModel: CapacitationsDetailViewModel
+    @StateObject var viewModel: DiscapacityDetailViewModel
 
     init(id: String) {
-        _viewModel = StateObject(wrappedValue: CapacitationsDetailViewModel(id: id))
+        _viewModel = StateObject(wrappedValue: DiscapacityDetailViewModel(id: id))
     }
 
     var body: some View {
@@ -19,7 +19,7 @@ struct CapacitationsDetailView: View {
                     VStack(alignment: .leading, spacing: 20) {
 
                         // --- TÍTULO ---
-                        Text(capacit.nombre)
+                        Text(capacit.name)
                             .font(.custom("Poppins-Bold", size: 26))
                             .foregroundColor(.white)
 
