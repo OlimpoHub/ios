@@ -88,7 +88,7 @@ struct CapacitacionesView: View {
                                                                 .fill(Color("BlackCard"))
                                                                 .frame(width: 100, height: 100)
                                                             
-                                                            Image(workshop.image)
+                                                            Image(workshop.imageName)
                                                                 .resizable()
                                                                 .aspectRatio(contentMode: .fit)
                                                                 .frame(width: 70, height: 70)
@@ -124,7 +124,7 @@ struct CapacitacionesView: View {
                                             .padding(.vertical, 40)
                                         Spacer()
                                     }
-                                } else if discapacityVM.discapacities.isEmpty {
+                                } else if discapacityVM.disabilities.isEmpty {
                                     Text(search.isEmpty ? "No hay información disponible" : "No se encontraron resultados")
                                         .font(.custom("Poppins-Regular", size: 14))
                                         .foregroundColor(.white.opacity(0.6))
@@ -132,7 +132,7 @@ struct CapacitacionesView: View {
                                         .padding(.vertical, 20)
                                 } else {
                                     LazyVGrid(columns: columns, spacing: 16) {
-                                        ForEach(discapacityVM.discapacities) { item in
+                                        ForEach(discapacityVM.disabilities) { item in
                                             NavigationLink(
                                                 destination: CapacitationsDetailView(id: item.idDiscapacidad)
                                             ) {
@@ -142,7 +142,7 @@ struct CapacitacionesView: View {
                                                         .frame(height: 140)
                                                         .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
                                                     
-                                                    Text(item.nombre)
+                                                    Text(item.name)
                                                         .font(.custom("Poppins-Medium", size: 15))
                                                         .foregroundColor(.white)
                                                         .multilineTextAlignment(.center)
