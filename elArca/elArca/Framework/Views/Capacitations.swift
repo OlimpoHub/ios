@@ -3,8 +3,8 @@ import SwiftUI
 struct CapacitacionesView: View {
 
     // ViewModels
-    @StateObject private var workshopVM = WorkshopViewModel()
-    @StateObject private var discapacityVM = DiscapacityViewModel()
+    @StateObject var workshopVM = WorkshopViewModel()
+    @StateObject var discapacityVM = DiscapacityViewModel()
 
     // Search
     @State private var search: String = ""
@@ -40,17 +40,6 @@ struct CapacitacionesView: View {
                     ScrollView(showsIndicators: false) {
                         VStack(alignment: .leading, spacing: 32) {
 
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 20) {
-                                ForEach(workshopVM.workshops) { workshop in
-                                    NavigationLink(
-                                        destination: WorkshopDetailView(id: workshop.idTaller)
-                                    ) {
-                                        VStack {
-                                            Image(workshop.imageName)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 90, height: 90)
                             // --- BUSCADOR ---
                             TextInput(
                                 value: $search,
@@ -127,19 +116,6 @@ struct CapacitacionesView: View {
                                     .foregroundColor(.white)
                                     .padding(.horizontal, 24)
 
-                        LazyVGrid(columns: columns, spacing: 20) {
-                            ForEach(discapacityVM.disabilities) { item in
-                                NavigationLink(
-                                    destination: CapacitationsDetailView(id: item.idDiscapacidad)
-                                ) {
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill(Color("BlackBlue"))
-                                        .frame(height: 120)
-                                        .overlay(
-                                            Text(item.name)
-                                                .foregroundColor(.white)
-                                                .font(.system(size: 14))
-                                        )
                                 if discapacityVM.isLoading {
                                     HStack {
                                         Spacer()
@@ -189,8 +165,4 @@ struct CapacitacionesView: View {
             .navigationBarHidden(true)
         }
     }
-}
-
-#Preview {
-    CapacitacionesView().preferredColorScheme(.dark)
 }
