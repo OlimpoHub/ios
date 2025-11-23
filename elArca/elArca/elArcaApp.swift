@@ -1,4 +1,3 @@
-
 //
 //  elArcaApp.swift
 //  elArca
@@ -12,25 +11,46 @@ import FlowStacks
 @main
 struct elArcaApp: App {
     @StateObject private var deepLinkRouter = DeepLinkRouter()
-    
+
     // Used to change the views
     @StateObject var router = CoordinatorViewModel()
-    
+
     @State var userNav: UserNav = .collaborator
     @State var notif: NotificationType = .with
-    
+
+    // Session store shared across app
+    @StateObject private var session = SessionStore.shared
+
     var body: some Scene {
         WindowGroup {
             AppBackground {
                 CoordinatorView(userNav: $userNav, notificationType: $notif)
                     .environmentObject(router)
                     .environmentObject(deepLinkRouter)
+                    .environmentObject(session)
                     .preferredColorScheme(.dark)
                     .onOpenURL { url in
                         deepLinkRouter.handle(url)
                     }
                     .onTapGesture {
                         hideKeyboard()
+                    }
+                    .onAppear {
+                        // Restore locally-stored session; this keeps users logged in across app restarts
+                        session.restoreSession()
+
+                        // If session was cleared elsewhere, ensure router goes to login
+                        if !session.isAuthenticated {
+                            router.changeView(newScreen: .login)
+                        } else {
+                            // Keep current behavior: go to home when session appears valid locally
+                            router.changeView(newScreen: .home)
+                        }
+
+                        // Observe global logout notifications and redirect to login
+                        NotificationCenter.default.addObserver(forName: .authDidLogout, object: nil, queue: .main) { _ in
+                            router.changeView(newScreen: .login)
+                        }
                     }
             }
         }

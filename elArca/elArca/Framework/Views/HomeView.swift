@@ -56,33 +56,33 @@ struct HomeView: View {
                     Texts(text: "Bienvenid@,", type: .medium)
                     Texts(text: viewModel.userName, type: .header)
                 }
-                
+
                 Spacer()
-                
+
                 HStack(spacing: 24) {
                     NotificationButton()
-                    
+
                     SystemButton(icon: Image(systemName: "gear"), iconSize: 30) {
                         router.changeView(newScreen: .configuration)
                     }
                 }
             }
             .padding(.top, 20)
-            
+
             Spacer()
-            
+
             // Attendance button
             MenuButton(text: userHome.qrText, height: qrSize, buttonType: .solid, image: .asset("QR"), screen: .attendance)
             
             Spacer()
-            
+
             HStack(){
                 Texts(text: "Menú principal", type: .header)
                 Spacer()
             }
             
             Spacer()
-            
+
             ForEach(userHome.items) { item in
                 MenuButton(
                     text: item.title,
@@ -96,5 +96,28 @@ struct HomeView: View {
             
         }
         .padding(.horizontal, 24)
+        
+//Debug button for simulating expired token to log out instantly
+/*
+        .overlay(
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        TokenManager.shared.debugExpireRefreshToken()
+                    }) {
+                        Text("DEBUG: Expire Refresh Token")
+                            .font(.caption)
+                            .padding(8)
+                            .background(Color.red.opacity(0.8))
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                    }
+                    .padding()
+                }
+            }
+        )
+ */
     }
 }
