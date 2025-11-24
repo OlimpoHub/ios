@@ -1,3 +1,4 @@
+
 //
 //  elArcaApp.swift
 //  elArca
@@ -10,13 +11,37 @@ import FlowStacks
 
 @main
 struct elArcaApp: App {
+    @StateObject private var deepLinkRouter = DeepLinkRouter()
+    
+    // Used to change the views
+    @StateObject var router = CoordinatorViewModel()
+    
+    @State var userNav: UserNav = .collaborator
+    @State var notif: NotificationType = .with
+    
     var body: some Scene {
         WindowGroup {
             AppBackground {
-                //CalendarView().preferredColorScheme(.dark)
-                //CoordinatorView().preferredColorScheme(.dark)
-                CapacitacionesView()
+                CoordinatorView(userNav: $userNav, notificationType: $notif)
+                    .environmentObject(router)
+                    .environmentObject(deepLinkRouter)
+                    .preferredColorScheme(.dark)
+                    .onOpenURL { url in
+                        deepLinkRouter.handle(url)
+                    }
+                    .onTapGesture {
+                        hideKeyboard()
+                    }
             }
         }
+    }
+}
+
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(
+            #selector(UIResponder.resignFirstResponder),
+            to: nil, from: nil, for: nil
+        )
     }
 }

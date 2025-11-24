@@ -31,11 +31,15 @@ struct CalendarView: View {
         ZStack(alignment: .top) {
             VStack {
                 // Header
-                Texts(text: "Calendario", type: .header)
-                    .multilineTextAlignment(.leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
-                    .foregroundColor(Color("Beige"))
+                HStack {
+                    Texts(text: "Calendario", type: .header)
+                        .foregroundColor(.white)
+                    
+                    Spacer()
+                }
+                .padding(.horizontal, 24)
+                .padding(.top, 20)
+                .padding(.bottom, 20)
 
                 // month and year
                 HStack {
@@ -44,7 +48,7 @@ struct CalendarView: View {
                     Spacer()
                 }
                 .padding(.bottom)
-                .padding(.horizontal)
+                .padding(.horizontal, 24)
                 .frame(maxWidth: .infinity)
 
                 // week days
@@ -94,7 +98,9 @@ struct CalendarView: View {
                     .animation(.default, value: viewModel.selection)
             }
             .gesture(dragGesture)
+            .navigationBarBackButtonHidden(true)
         }
+        .navigationBarBackButtonHidden(true)
     }
 
     // vertical gesture

@@ -15,6 +15,7 @@ struct WorkshopResponse: Codable, Identifiable {
     let horaSalida: String
     let Fecha: String
     let URL: String?
+    let Descripcion: String?
     
     // Identifiable conformance
     var id: String { idTaller }
@@ -25,6 +26,7 @@ struct WorkshopResponse: Codable, Identifiable {
     var endTime: String { horaSalida }
     var date: String { Fecha }
     var url: String? { URL }
+    var descripcion: String? { Descripcion }
     
     // UI-only property
     var imageName: String { "img_taller_default" }
@@ -36,5 +38,6 @@ struct WorkshopResponse: Codable, Identifiable {
         case horaSalida
         case Fecha
         case URL
+        case Descripcion
     }
 }

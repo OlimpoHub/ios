@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import FlowStacks
 
 enum UserHome {
     case collaborator
@@ -40,13 +39,13 @@ enum UserHome {
 }
 
 struct HomeView: View {
-    var userName: String = "Mundito"
-    var notifications: NotificationType = .with
+    @StateObject private var viewModel = HomeViewModel()
+    
     var qrSize: CGFloat = hasBigScreen() ? 148 : 110
     
     var userHome: UserHome = .collaborator
     
-    @EnvironmentObject var navigator: FlowNavigator<Screen>
+    @EnvironmentObject var router: CoordinatorViewModel
 
     var body: some View {
         VStack {
@@ -54,8 +53,8 @@ struct HomeView: View {
             HStack {
                 // Name
                 VStack(alignment: .leading) {
-                    Texts(text: "Bienvenido,", type: .medium)
-                    Texts(text: userName, type: .header)
+                    Texts(text: "Bienvenid@,", type: .medium)
+                    Texts(text: viewModel.userName, type: .header)
                 }
                 
                 Spacer()
@@ -64,10 +63,11 @@ struct HomeView: View {
                     NotificationButton()
                     
                     SystemButton(icon: Image(systemName: "gear"), iconSize: 30) {
-                        changeView(screen: .configuration, navigator: navigator)
+                        router.changeView(newScreen: .configuration)
                     }
                 }
             }
+            .padding(.top, 20)
             
             Spacer()
             
@@ -96,12 +96,5 @@ struct HomeView: View {
             
         }
         .padding(.horizontal, 24)
-        .navigationBarBackButtonHidden(true)
-    }
-}
-
-#Preview {
-    VStack{
-        HomeView(userHome: .collaborator)
     }
 }

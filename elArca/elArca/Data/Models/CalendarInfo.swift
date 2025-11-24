@@ -9,7 +9,6 @@ import Foundation
 
 struct CalendarInfo: Codable {
     let idTaller: String
-    let idCapacitacion: String
     let idUsuario: String
     let nombreTaller: String
     let horaEntrada: String      // "08:00:00"
@@ -18,7 +17,6 @@ struct CalendarInfo: Codable {
     
     enum CodingKeys: String, CodingKey {
         case idTaller
-        case idCapacitacion
         case idUsuario
         case nombreTaller
         case horaEntrada

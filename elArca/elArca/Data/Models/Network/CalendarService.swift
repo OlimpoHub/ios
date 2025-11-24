@@ -12,7 +12,6 @@ final class CalendarService {
     static let shared = CalendarService()
     private init() {}
 
-    // Decodifier for date
     private static var decoder: JSONDecoder = {
         let dec = JSONDecoder()
         dec.dateDecodingStrategy = .custom { decoder in
@@ -30,22 +29,26 @@ final class CalendarService {
 
     func getCalendarList(baseURL: URL, path: String = "calendar/", limit: Int? = nil) async throws -> [CalendarInfo] {
         var url = baseURL.appendingPathComponent(path)
-        var params: Parameters = [:]
-        if let limit { params["limit"] = limit }
-
-        let request = AF.request(url, method: .get, parameters: params).validate()
-        let response = await request.serializingData().response
-
-        switch response.result {
-        case .success(let data):
-            if let jsonString = String(data: data, encoding: .utf8) {
-                    print("JSON completo recibido desde la API:\n\(jsonString)")
-                } else {
-                    print("No se pudo convertir la respuesta a String (data.count = \(data.count))")
-                }
-            return try CalendarService.decoder.decode([CalendarInfo].self, from: data)
-        case .failure(let error):
-            throw error
+        
+        if let limit {
+            var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+            components?.queryItems = [URLQueryItem(name: "limit", value: "\(limit)")]
+            url = components?.url ?? url
         }
+
+        print("Requesting calendar list: \(url.absoluteString)")
+        
+        // IMPORTANT
+        var req = URLRequest(url: url)
+        req.httpMethod = "GET"
+
+        // Interceptor
+        let (data, _) = try await NetworkClient.shared.request(req)
+
+        if let jsonString = String(data: data, encoding: .utf8) {
+            print("JSON recibido:\n\(jsonString)")
+        }
+
+        return try CalendarService.decoder.decode([CalendarInfo].self, from: data)
     }
 }

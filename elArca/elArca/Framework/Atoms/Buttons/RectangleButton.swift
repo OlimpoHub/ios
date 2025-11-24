@@ -31,7 +31,7 @@ enum ButtonType {
     var backgroundColor: Color {
         switch self {
         case .largeGray, .mediumGray:
-            return Color("Gray")
+            return Color("Grayy")
         case .smallBlue, .mediumBlue, .largeBlue:
             return Color("DarkBlue")
         case .mediumRed:
