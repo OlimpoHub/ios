@@ -65,8 +65,7 @@ struct Beneficiary: View {
                                 ],
                                 spacing: 30
                             ) {
-                                ForEach(viewModel.filteredBeneficiaries, id: \.idBeneficiario)
- { beneficiary in
+                                ForEach(viewModel.filteredBeneficiaries, id: \.idBeneficiario){ beneficiary in
                                     Button {
                                         selectedBeneficiary = beneficiary
                                     } label: {
