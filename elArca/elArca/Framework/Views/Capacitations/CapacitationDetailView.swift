@@ -25,7 +25,7 @@ struct CapacitationsDetailView: View {
                             .frame(width: 44, height: 44)
                     }
 
-                    if let name = viewModel.discapacity?.nombre {
+                    if let name = viewModel.discapacity?.name {
                         Texts(text: name, type: .header)
                             .foregroundColor(.white)
                     } else {
@@ -79,18 +79,6 @@ struct CapacitationsDetailView: View {
                                     .frame(height: 180)
                                     .cornerRadius(12)
 
-                                // "Sobre la discapacidad" section
-                                VStack(alignment: .leading, spacing: 16) {
-                                    Texts(text: "Sobre la discapacidad:", type: .subtitle)
-                                        .foregroundColor(.white)
-
-                                    VStack(alignment: .leading, spacing: 12) {
-                                        DiscapacityBulletPoint(text: "Información disponible para consulta")
-                                        DiscapacityBulletPoint(text: "Recursos de apoyo disponibles")
-                                        DiscapacityBulletPoint(text: "Accesibilidad garantizada")
-                                    }
-                                }
-
                                 Spacer(minLength: 20)
                             }
                             .padding(24)
@@ -106,87 +94,3 @@ struct CapacitationsDetailView: View {
         .navigationBarHidden(true)
     }
 }
-
-// Bullet point component for discapacity information
-struct DiscapacityBulletPoint: View {
-    let text: String
-
-    var body: some View {
-        HStack(alignment: .top, spacing: 8) {
-            Text("•")
-                .font(.system(size: 16, weight: .bold))
-                .foregroundColor(.white)
-
-            Texts(text: text, type: .medium)
-                .foregroundColor(.white)
-        }
-    }
-}                            .multilineTextAlignment(.center)
-                            .padding(24)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    } else if let discapacity = viewModel.discapacity {
-                        ScrollView(showsIndicators: false) {
-                            VStack(alignment: .leading, spacing: 24) {
-                                // Discapacity Description Section
-                                VStack(alignment: .leading, spacing: 12) {
-                                    Texts(text: "Descripción", type: .subtitle)
-                                        .foregroundColor(.white)
-
-                                    Texts(
-                                        text: discapacity.descripcion ?? "No hay descripción proporcionada.",
-                                        type: .medium
-                                    )
-                                    .foregroundColor(.white)
-                                    .lineSpacing(4)
-                                }
-
-                                // Image placeholder
-                                Rectangle()
-                                    .fill(Color.gray.opacity(0.3))
-                                    .frame(height: 180)
-                                    .cornerRadius(12)
-
-                                // "Sobre la discapacidad" section
-                                VStack(alignment: .leading, spacing: 16) {
-                                    Texts(text: "Sobre la discapacidad:", type: .subtitle)
-                                        .foregroundColor(.white)
-
-                                    VStack(alignment: .leading, spacing: 12) {
-                                        DiscapacityBulletPoint(text: "Información disponible para consulta")
-                                        DiscapacityBulletPoint(text: "Recursos de apoyo disponibles")
-                                        DiscapacityBulletPoint(text: "Accesibilidad garantizada")
-                                    }
-                                }
-
-                                Spacer(minLength: 20)
-                            }
-                            .padding(24)
-                        }
-                    } else {
-                        Texts(text: "No hay información disponible.", type: .medium)
-                            .foregroundColor(.white.opacity(0.8))
-                            .padding(24)
-                    }
-                }
-            }
-        }
-        .navigationBarHidden(true)
-    }
-}
-
-// Bullet point component for discapacity information
-struct DiscapacityBulletPoint: View {
-    let text: String
-
-    var body: some View {
-        HStack(alignment: .top, spacing: 8) {
-            Text("•")
-                .font(.system(size: 16, weight: .bold))
-                .foregroundColor(.white)
-
-            Texts(text: text, type: .medium)
-                .foregroundColor(.white)
-        }
-    }
-}
-
