@@ -42,11 +42,6 @@ struct ConfigurationView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Texts(text: "User ID: ", type: .mediumbold)
-                    Texts(text: userId, type: .medium)
-                }
-
-                VStack(alignment: .leading, spacing: 4) {
                     Texts(text: "Rol: ", type: .mediumbold)
                     Texts(text: role, type: .medium)
                 }
