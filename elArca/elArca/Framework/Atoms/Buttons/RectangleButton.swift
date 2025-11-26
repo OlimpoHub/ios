@@ -83,13 +83,12 @@ struct RectangleButton: View {
 
     var body: some View {
         Button(action: action) {
-            Text(title)
-                .font(.custom("Poppins-SemiBold", size: type.fontSize))
+            Texts(text: title, type: .mediumbold, size: type.fontSize)
                 .foregroundColor(type.textColor)
                 .padding(.horizontal, type.horizontalPadding)
                 .padding(.vertical, type.verticalPadding)
                 .background(type.backgroundColor)
-                .cornerRadius(8)
+                .cornerRadius(8)            
         }
         .buttonStyle(.plain)
     }

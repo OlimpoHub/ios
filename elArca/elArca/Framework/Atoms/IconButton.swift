@@ -13,6 +13,8 @@ struct IconButton: View {
     var title: String
     var screen: Screen
 
+    @ObservedObject var accessibility = TextsViewModel()
+    
     // Customization
     var iconSize: CGFloat = 26
     var textSize: CGFloat = 12
@@ -48,7 +50,7 @@ struct IconButton: View {
                     .frame(width: iconSize, height: iconSize)
                     .foregroundColor(iconColor)
 
-                Texts(text: title, type: .small)
+                Texts(text: title, type: .small, scale: (accessibility.font == "Poppins" ? 1 : 0.8))
                     .foregroundColor(textColor)
             }
             .padding(.vertical, 8)

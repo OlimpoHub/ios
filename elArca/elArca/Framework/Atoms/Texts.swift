@@ -51,12 +51,14 @@ enum TextType {
 struct Texts: View {
     var text: String
     var type: TextType = .medium
+    var size: CGFloat = 0
+    var scale: CGFloat = 0
     
     @ObservedObject var accessibility = TextsViewModel()
     
     var body: some View {
         Text(text)
-            .font(.custom("\(accessibility.font)-\(type.thickness)", size: type.fontSize))
+            .font(.custom("\(accessibility.font)-\(type.thickness)", size: (size != 0 ? size : type.fontSize) * (scale != 0 ? scale : accessibility.fontScale)))
             .onChange(of: accessibility.font) {
                 print("\(accessibility.font)-\(type.thickness)")
             }

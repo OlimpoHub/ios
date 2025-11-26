@@ -15,6 +15,7 @@ struct ConfigurationView: View {
     
     @State var dyslexicFontToggle: Bool = AccesibilityViewModel().dyslexicToggle
     @State var bigFontToggle: Bool = AccesibilityViewModel().biggerFontToggle
+    @State var popup: Bool = false
 
     // Read from UserDefaults/Keychain
     private var userId: String { KeychainHelper.shared.currentUserIdFromDefaults() ?? "-" }
@@ -55,6 +56,7 @@ struct ConfigurationView: View {
                         .tint(Color("HighlightBlue"))
                         .onChange(of: dyslexicFontToggle) {
                             viewModel.setDyslexicToggle(value: dyslexicFontToggle)
+                            popup = true
                         }
                     }
                     DividerLine()
@@ -68,9 +70,15 @@ struct ConfigurationView: View {
                         .tint(Color("HighlightBlue"))
                         .onChange(of: bigFontToggle) {
                             viewModel.setBiggerFontToggle(value: bigFontToggle)
+                            popup = true
                         }
                     }
                     DividerLine()
+                }
+            }
+            .alert("Para que todos los cambios tengan efecto regresa a la página anterior.", isPresented: $popup) {
+                Button("OK", role: .cancel) {
+                    popup = false
                 }
             }
 

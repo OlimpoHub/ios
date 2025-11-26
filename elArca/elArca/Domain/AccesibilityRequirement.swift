@@ -58,7 +58,7 @@ class AccesibilityRequirement : AccesibilityRequirementProtocol, ObservableObjec
     func getFontScale() -> CGFloat {
         let toggleValue = dataRepository.getBiggerFontToggle()
         if toggleValue {
-            return 1.4
+            return 1.2
         }
         return 1
     }
