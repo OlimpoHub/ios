@@ -79,8 +79,7 @@ class LoginViewModel: ObservableObject {
                     message = "Respuesta inválida del servidor."
                 case .urlError(let err):
                     message = "Error de red: Revisa tu conexión"
-
-
+                    
                     // If we have a refresh token locally, keep the session alive while offline
                     if self.tokenManager.restoreSessionLocally() {
                         let cachedUserName = KeychainHelper.shared.read(service: "com.elarca.auth", account: "userName") ?? ""
@@ -97,7 +96,8 @@ class LoginViewModel: ObservableObject {
                                 self.isLoading = false
                             }
                             return
-                       }
+                        }
+                    }
                 }
                 await MainActor.run {
                     self.loginError = message
