@@ -52,7 +52,7 @@ struct ConfigurationView: View {
 
             Button(action: {
                 // Perform logout: clear session and navigate to login
-                SessionStore.shared.clearSession()
+                session.clearSession()
                 router.changeView(newScreen: .login)
             }) {
                 HStack {

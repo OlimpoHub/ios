@@ -83,13 +83,21 @@ class LoginViewModel: ObservableObject {
 
                     // If we have a refresh token locally, keep the session alive while offline
                     if self.tokenManager.restoreSessionLocally() {
-                        let roleFromKeychain = KeychainHelper.shared.read(service: "com.elarca.auth", account: "userRole") ?? ""
-                        await MainActor.run {
-                            self.isLoading = false
-                            self.onLoginSuccess?(roleFromKeychain)
-                        }
-                        return
-                    }
+                        let cachedUserName = KeychainHelper.shared.read(service: "com.elarca.auth", account: "userName") ?? ""
+                        if self.userName == cachedUserName {
+                            let roleFromKeychain = KeychainHelper.shared.read(service: "com.elarca.auth", account: "userRole") ?? ""
+                            await MainActor.run {
+                                self.isLoading = false
+                                self.onLoginSuccess?(roleFromKeychain)
+                            }
+                            return
+                        } else {
+                            await MainActor.run {
+                                self.loginError = "El usuario ingresado no coincide con la sesión guardada en el dispositivo."
+                                self.isLoading = false
+                            }
+                            return
+                       }
                 }
                 await MainActor.run {
                     self.loginError = message

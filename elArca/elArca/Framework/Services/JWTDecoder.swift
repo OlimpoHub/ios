@@ -14,7 +14,7 @@ struct JWTDecoder {
         let payloadPart = String(parts[1])
 
         // JWT uses base64url encoding
-        // This for when the application is offline so we can validace token without contactig the server
+        // This is for when the application is offline so we can validate token without contacting the server
         
         var base64 = payloadPart
             .replacingOccurrences(of: "-", with: "+")
