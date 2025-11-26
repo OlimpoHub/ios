@@ -45,7 +45,10 @@ struct CoordinatorView: View {
                         ReadQRView(viewModel: AttendanceViewModel())
                         Spacer()
                     }
-                    
+
+                case .configuration:
+                    ConfigurationView()
+
                 default:
                     VStack {
                         Spacer()

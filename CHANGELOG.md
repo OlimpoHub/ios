@@ -6,6 +6,21 @@
 
  - Offline feature for consult workshops.
  
+## [0.1.1] – 24/11/2025
+
+### Added
+
+ - Offline login and session persistence improvements.
+ - A configuration screen with logout and basic user info display.
+
+### Updated
+
+ - Login flow and error handling given offline implementation
+
+### Fixed
+
+ - Various small fixes to support offline authentication and session restoration.
+
 ## [0.1.0] – 20/11/2025
 
 ### Added
