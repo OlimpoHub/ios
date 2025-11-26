@@ -19,7 +19,7 @@ extension CDWorkshops {
         self.url           = dto.URL
         self.descripcion   = dto.Descripcion
 
-        // Convert `Fecha` (String ISO8601) intp Date
+        // Convert `Fecha` (String ISO8601) into Date
         let formatter = ISO8601DateFormatter()
         if let date = formatter.date(from: dto.Fecha) {
             self.fecha = date
