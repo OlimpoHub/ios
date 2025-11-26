@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.1] – 26/11/2025
+
+### Fixed
+
+ - Correctly display time in hour and minutes and format date.
+
 ## [0.1.1] – 25/11/2025
 
 ### Added
