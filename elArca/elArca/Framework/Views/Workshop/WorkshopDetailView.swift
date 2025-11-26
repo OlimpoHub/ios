@@ -1,9 +1,3 @@
-//
-//  WorkshopDetailView.swift
-//  elArca
-//
-//  Created by Carlos Martinez Vazquez on 09/11/25.
-//
 import SwiftUI
 
 struct WorkshopDetailView: View {
@@ -98,7 +92,7 @@ struct WorkshopDetailView: View {
                                         .foregroundColor(.white)
 
                                     VStack(alignment: .leading, spacing: 12) {
-                                        BulletPoint(text: "Horario: \(workshop.startTime) - \(workshop.endTime)")
+                                        BulletPoint(text: "Horario: \(formatTime(workshop.startTime)) - \(formatTime(workshop.endTime))")
                                         BulletPoint(text: "Fecha: \(formatDate(workshop.date))")
                                     }
                                 }
@@ -120,19 +114,46 @@ struct WorkshopDetailView: View {
 
     // Helper function to format date string
     private func formatDate(_ dateString: String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        // Parse seconds-level ISO string: "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        let isoFormatter = DateFormatter()
+        isoFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        isoFormatter.locale = Locale(identifier: "en_US_POSIX")
+        isoFormatter.timeZone = TimeZone(secondsFromGMT: 0)
 
-        if let date = dateFormatter.date(from: dateString) {
+        if let date = isoFormatter.date(from: dateString) {
             let outputFormatter = DateFormatter()
             outputFormatter.dateFormat = "dd MMM yyyy"
             outputFormatter.locale = Locale(identifier: "es_ES")
             return outputFormatter.string(from: date)
         }
 
-        return dateString.prefix(10).replacingOccurrences(of: "-", with: "/")
+        // Fallback: try to show a readable short date
+        return String(dateString.prefix(10)).replacingOccurrences(of: "-", with: "/")
+    }
+
+    // Helper to format time strings and remove seconds
+    private func formatTime(_ timeString: String) -> String {
+        // Expected inputs: "08:00:00", "8:00:00", or "08:00"
+        // Try parsing with a strict formatter first
+        let formatterWithSeconds = DateFormatter()
+        formatterWithSeconds.dateFormat = "H:mm:ss"
+        formatterWithSeconds.locale = Locale(identifier: "en_US_POSIX")
+
+        if let date = formatterWithSeconds.date(from: timeString) {
+            let out = DateFormatter()
+            out.dateFormat = "HH:mm"
+            out.locale = Locale.current
+            return out.string(from: date)
+        }
+
+        // If parsing failed, try to remove seconds by splitting
+        let components = timeString.split(separator: ":")
+        if components.count >= 2 {
+            return "\(components[0]):\(components[1])"
+        }
+
+        // Fallback: return original
+        return timeString
     }
 }
 

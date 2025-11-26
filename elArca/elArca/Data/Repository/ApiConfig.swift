@@ -6,7 +6,7 @@
 //
 
 struct Api {
-    static let base = "http://localhost:8080/"
+    static let base = "http://74.208.78.8:8080/"
     struct routes {
         static let calendar = "calendar/"
         static let workshops = "workshop/"
