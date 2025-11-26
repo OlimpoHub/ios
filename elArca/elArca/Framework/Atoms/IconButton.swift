@@ -25,7 +25,7 @@ struct IconButton: View {
     
     var currentOpacity: CGFloat {
         switch router.stack.first {
-        case .home, .configuration:
+        case .home, .configuration, .attendance:
             return title == "Inicio" ? 1 : 0.4
         case .workshop:
             return title == "Talleres" ? 1 : 0.4
@@ -48,8 +48,7 @@ struct IconButton: View {
                     .frame(width: iconSize, height: iconSize)
                     .foregroundColor(iconColor)
 
-                Text(title)
-                    .font(.custom("Poppins-SemiBold", size: textSize))
+                Texts(text: title, type: .small)
                     .foregroundColor(textColor)
             }
             .padding(.vertical, 8)

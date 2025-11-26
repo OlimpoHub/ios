@@ -18,12 +18,13 @@ enum ButtonType {
     // Botones grandes
     case largeBlue
     case largeGray
+    case largeRed
 
     var fontSize: CGFloat {
         switch self {
         case .smallWhite, .smallBlue, .mediumBlue, .mediumRed, .mediumGray:
             return 14
-        case .largeBlue, .largeGray:
+        case .largeBlue, .largeGray, .largeRed:
             return 16
         }
     }
@@ -38,6 +39,8 @@ enum ButtonType {
             return Color("DarkRed")
         case .smallWhite:
             return .white
+        case .largeRed:
+            return Color("HighlightRed")
         }
     }
 
@@ -56,7 +59,7 @@ enum ButtonType {
             return 12
         case .mediumBlue, .mediumRed, .mediumGray:
             return 16
-        case .largeBlue, .largeGray:
+        case .largeBlue, .largeGray, .largeRed:
             return 20
         }
     }
@@ -67,7 +70,7 @@ enum ButtonType {
             return 6
         case .mediumBlue, .mediumRed, .mediumGray:
             return 8
-        case .largeBlue, .largeGray:
+        case .largeBlue, .largeGray, .largeRed:
             return 12
         }
     }

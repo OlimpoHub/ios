@@ -10,6 +10,11 @@ import SwiftUI
 struct ConfigurationView: View {
     @EnvironmentObject var router: CoordinatorViewModel
     @EnvironmentObject var session: SessionStore
+    
+    @StateObject private var viewModel = AccesibilityViewModel()
+    
+    @State var dyslexicFontToggle: Bool = AccesibilityViewModel().dyslexicToggle
+    @State var bigFontToggle: Bool = AccesibilityViewModel().biggerFontToggle
 
     // Read from UserDefaults/Keychain
     private var userId: String { KeychainHelper.shared.currentUserIdFromDefaults() ?? "-" }
@@ -34,8 +39,47 @@ struct ConfigurationView: View {
                 Spacer()
             }
             .padding(.top, 20)
+            
+            // Accessibility Menu
+            VStack(alignment: .leading, spacing: 8) {
+                Texts(text: "Accesibilidad:", type: .largebold)
+                
+                Spacer()
+                    .frame(height: 8)
+                
+                VStack {
+                    HStack {
+                        Toggle(isOn: $dyslexicFontToggle) {
+                            Texts(text: "Fuente para dislexia:", type: .largebold)
+                        }
+                        .tint(Color("HighlightBlue"))
+                        .onChange(of: dyslexicFontToggle) {
+                            viewModel.setDyslexicToggle(value: dyslexicFontToggle)
+                        }
+                    }
+                    DividerLine()
+                }
+                
+                VStack {
+                    HStack {
+                        Toggle(isOn: $bigFontToggle) {
+                            Texts(text: "Tamaño de letra grande:", type: .largebold)
+                        }
+                        .tint(Color("HighlightBlue"))
+                        .onChange(of: bigFontToggle) {
+                            viewModel.setBiggerFontToggle(value: bigFontToggle)
+                        }
+                    }
+                    DividerLine()
+                }
+            }
 
+            // User data
+            Spacer()
             VStack(alignment: .leading, spacing: 20) {
+                Texts(text: "Datos de la sesión:", type: .largebold)
+                    .padding(.bottom, 4)
+                
                 VStack(alignment: .leading, spacing: 4) {
                     Texts(text: "Nombre: ", type: .mediumbold)
                     Texts(text: userName, type: .medium)
@@ -46,26 +90,17 @@ struct ConfigurationView: View {
                     Texts(text: role, type: .medium)
                 }
             }
-            .padding(.vertical, 8)
-
-            Spacer()
-
-            Button(action: {
-                // Perform logout: clear session and navigate to login
-                SessionStore.shared.clearSession()
-                router.changeView(newScreen: .login)
-            }) {
-                HStack {
-                    Spacer()
-                    Text("Cerrar sesión")
-                        .foregroundColor(.white)
-                        .padding()
-                    Spacer()
+            
+            // Log out button
+            HStack {
+                Spacer()
+                RectangleButton(title: "Cerrar sesión", type: .largeRed) {
+                    SessionStore.shared.clearSession()
+                    router.changeView(newScreen: .login)
                 }
-                .background(Color.red)
-                .cornerRadius(8)
+                Spacer()
             }
-            .padding(.bottom, 40)
+            .padding(.bottom, 24)
 
         }
         .padding(.horizontal, 24)
