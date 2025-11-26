@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.1] – 25/11/2025
+
+### Added
+
+ - Offline feature for consult workshops.
+ 
 ## [0.1.0] – 20/11/2025
 
 ### Added
