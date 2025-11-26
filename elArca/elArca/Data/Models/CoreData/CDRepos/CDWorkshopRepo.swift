@@ -80,7 +80,7 @@ final class CDWorkshopRepo: WorkshopRepositoryProtocol {
                 id: id
             )
 
-            // Save in Core Dara
+            // Save in Core Data
             let bgCtx = stack.newBackgroundContext()
             try await bgCtx.perform {
                 let obj = CDWorkshops(context: bgCtx)
