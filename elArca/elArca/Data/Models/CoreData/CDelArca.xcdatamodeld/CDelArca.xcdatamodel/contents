@@ -8,4 +8,13 @@
         <attribute name="idUsuario" attributeType="String"/>
         <attribute name="nombreTaller" attributeType="String"/>
     </entity>
+    <entity name="CDWorkshops" representedClassName="elArca.CDWorkshops" syncable="YES">
+        <attribute name="descripcion" optional="YES" attributeType="String"/>
+        <attribute name="fecha" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="horaEntrada" attributeType="String"/>
+        <attribute name="horaSalida" attributeType="String"/>
+        <attribute name="idTaller" attributeType="String"/>
+        <attribute name="nombreTaller" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+    </entity>
 </model>

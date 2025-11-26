@@ -14,7 +14,7 @@ final class CoreDataStack {
     var viewContext: NSManagedObjectContext { container.viewContext }
 
     private init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "CDCalendar")
+        container = NSPersistentContainer(name: "CDelArca")
 
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
