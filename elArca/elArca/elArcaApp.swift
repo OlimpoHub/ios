@@ -20,15 +20,6 @@ struct elArcaApp: App {
 
     // Session store shared across app
     @StateObject private var session = SessionStore.shared
-
-    init() {
-        for familyName in UIFont.familyNames {
-            print(familyName)
-            for fontName in UIFont.fontNames(forFamilyName: familyName) {
-                print("--\(fontName)")
-            }
-        }
-    }
     
     var body: some Scene {
         WindowGroup {

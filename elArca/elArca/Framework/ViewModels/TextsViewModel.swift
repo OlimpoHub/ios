@@ -12,6 +12,7 @@ class TextsViewModel: ObservableObject {
     @Published var font: String
     @Published var fontScale: CGFloat
             
+    // Obtains the current scaling and font the user chose
     init() {
         font = AccesibilityRequirement().getFont()
         fontScale = AccesibilityRequirement().getFontScale()
@@ -21,10 +22,12 @@ class TextsViewModel: ObservableObject {
             .assign(to: &$fontScale)
     }
     
+    // Gets the current font that the user chose
     func getFont() -> String {
         return font
     }
     
+    // Gets the current font scaling the user chose
     func getFontScale() -> CGFloat {
         return fontScale
     }

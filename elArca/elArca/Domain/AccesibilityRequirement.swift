@@ -25,6 +25,7 @@ class AccesibilityRequirement : AccesibilityRequirementProtocol, ObservableObjec
     @Published var font: String
     @Published var fontScale: CGFloat
     
+    // Initializes the variables from the user default data
     init(dataRepository: AccesibilityRepositoryProtocol = AccesibilityRepository.shared) {
         self.dataRepository = dataRepository
         self.dyslexicToggle = dataRepository.getDyslexicToggle()
@@ -35,11 +36,13 @@ class AccesibilityRequirement : AccesibilityRequirementProtocol, ObservableObjec
         completeInit()
     }
     
+    // Finishes the initialization with the needed functions
     func completeInit() -> Void {
         self.font = getFont()
         self.fontScale = getFontScale()
     }
     
+    // Obtains the current font depending on the toggle value that the user chose
     func getFont() -> String {
         let toggleValue = dataRepository.getDyslexicToggle()
         if toggleValue {
@@ -48,6 +51,7 @@ class AccesibilityRequirement : AccesibilityRequirementProtocol, ObservableObjec
         return "Poppins"
     }
     
+    // Sets the current toogle value for the chosen font
     func setDyslexicToggle(value: Bool) -> Void {
         dataRepository.setDyslexicToggle(value: value)
         self.dyslexicToggle = dataRepository.getDyslexicToggle()
@@ -55,6 +59,7 @@ class AccesibilityRequirement : AccesibilityRequirementProtocol, ObservableObjec
         print("Set dyslexic toggle value to \(value)")
     }
     
+    // Obtains the current font scaling depending on the toggle value that the user chose
     func getFontScale() -> CGFloat {
         let toggleValue = dataRepository.getBiggerFontToggle()
         if toggleValue {
@@ -63,6 +68,7 @@ class AccesibilityRequirement : AccesibilityRequirementProtocol, ObservableObjec
         return 1
     }
     
+    // Sets the current toogle value for the chosen font scaling
     func setBiggerFontToggle(value: Bool) -> Void {
         dataRepository.setBiggerFontToggle(value: value)
         self.dyslexicToggle = dataRepository.getBiggerFontToggle()
