@@ -57,6 +57,8 @@ class SessionStore: ObservableObject {
     func clearSession() {
         tokenManager.clear()
         KeychainHelper.shared.delete(service: "com.elarca.auth", account: "userRole")
+        UserDefaults.standard.removeObject(forKey: "currentUserId")
+        UserDefaults.standard.removeObject(forKey: "currentUserName")
         isAuthenticated = false
         userRole = nil
     }

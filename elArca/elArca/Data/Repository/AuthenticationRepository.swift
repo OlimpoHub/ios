@@ -28,7 +28,9 @@ final class AuthenticationRepository: AuthenticationRequirementProtocol {
         KeychainHelper.shared.save(response.user.role ?? "", service: "com.elarca.auth", account: "userRole")
 
         // Also update the SessionStore observable state so UI can react immediately
-        SessionStore.shared.persistSession(access: response.accessToken, refresh: response.refreshToken, role: response.user.role)
+        await MainActor.run {
+            SessionStore.shared.persistSession(access: response.accessToken, refresh: response.refreshToken, role: response.user.role)
+        }
 
         return response
     }
