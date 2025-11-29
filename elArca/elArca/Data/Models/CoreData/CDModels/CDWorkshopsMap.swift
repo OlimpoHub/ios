@@ -19,7 +19,7 @@ extension CDWorkshops {
         self.url           = dto.URL
         self.descripcion   = dto.Descripcion
 
-        // Convert `Fecha` (String ISO8601) into Date
+        // Convert `Fecha` (String) into Date using a seconds-level ISO pattern
         let formatter = ISO8601DateFormatter()
         if let date = formatter.date(from: dto.Fecha) {
             self.fecha = date
@@ -29,15 +29,20 @@ extension CDWorkshops {
     }
 
     func toDTO() -> WorkshopResponse {
-        let formatter = ISO8601DateFormatter()
-        let isoDate = formatter.string(from: fecha)
+        // Emit a seconds-level ISO string (no milliseconds) matching: "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+
+        let formattedDate = dateFormatter.string(from: fecha)
 
         return WorkshopResponse(
             idTaller: idTaller,
             nombreTaller: nombreTaller,
             horaEntrada: horaEntrada,
             horaSalida: horaSalida,
-            Fecha: isoDate,
+            Fecha: formattedDate,
             URL: url,
             Descripcion: descripcion
         )
