@@ -163,9 +163,7 @@ struct BulletPoint: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
-            Text("•")
-                .font(.system(size: 16, weight: .bold))
-                .foregroundColor(.white)
+            Texts(text: "•", type: .largebold)
 
             Texts(text: text, type: .medium)
                 .foregroundColor(.white)

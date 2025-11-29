@@ -33,7 +33,7 @@ enum TextType {
             return 14
         case .large:
             return 16
-        case .largebold:
+        case .largebold:    
             return 16
         }
     }
@@ -41,22 +41,27 @@ enum TextType {
     var thickness: String {
         switch self {
         case .header, .subtitle, .smallbold, .mediumbold, .largebold:
-            return "Poppins-Bold"
+            return "Bold"
         case .small, .medium, .large:
-            return "Poppins-Regular"
+            return "Regular"
         }
     }
-    
-    
 }
 
 struct Texts: View {
     var text: String
     var type: TextType = .medium
+    var size: CGFloat = 0
+    var scale: CGFloat = 0
+    
+    @ObservedObject var accessibility = TextsViewModel()
     
     var body: some View {
         Text(text)
-            .font(.custom(type.thickness, size: type.fontSize))
+            .font(.custom("\(accessibility.font)-\(type.thickness)", size: (size != 0 ? size : type.fontSize) * (scale != 0 ? scale : accessibility.fontScale)))
+            .onChange(of: accessibility.font) {
+                print("\(accessibility.font)-\(type.thickness)")
+            }
             
     }
 }
