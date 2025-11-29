@@ -13,6 +13,19 @@ class BeneficiaryListViewModel: ObservableObject {
     @Published var beneficiaries: [BeneficiaryResponse] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
+    @Published var searchText: String = ""
+
+    var filteredBeneficiaries: [BeneficiaryResponse] {
+        if searchText.isEmpty {
+            return beneficiaries
+        }
+
+        return beneficiaries.filter { b in
+            let fullName = "\(b.nombre) \(b.apellidoPaterno)".lowercased()
+            return fullName.contains(searchText.lowercased())
+        }
+    }
+
 
     private let repository: BeneficiaryRepositoryProtocol
 
