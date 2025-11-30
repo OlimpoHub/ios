@@ -17,7 +17,7 @@ struct CoordinatorView: View {
     
     var body: some View {
         
-        ZStack(alignment: .bottom) {   // 👈 CAMBIO MÁS IMPORTANTE
+        ZStack(alignment: .bottom) {
             
             // Todas las pantallas
             Group {
@@ -57,13 +57,11 @@ struct CoordinatorView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color("Bg"))
             
-            // NAV BAR SI APLICA
             if router.screen.isNavbarViewable {
                 NavBar(userNav: userNav)
                     .frame(height: 65)
             }
         }
-        // 👇👇 EL FIX QUE EVITA QUE EL NAVBAR SE MUEVA CON EL TECLADO
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
