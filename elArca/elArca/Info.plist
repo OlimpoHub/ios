@@ -17,6 +17,8 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array>
+		<string>OpenDyslexic3-Regular.ttf</string>
+		<string>OpenDyslexic3-Bold.ttf</string>
 		<string>Poppins-SemiBold.ttf</string>
 		<string>Poppins-Regular.ttf</string>
 		<string>Poppins-Bold.ttf</string>
@@ -27,13 +29,10 @@
 		<dict>
 			<key>74.208.78.8</key>
 			<dict>
-				<!--Include to allow subdomains-->
 				<key>NSIncludesSubdomains</key>
 				<true/>
-				<!--Include to allow HTTP requests-->
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
-				<!--Include to specify minimum TLS version-->
 				<key>NSTemporaryExceptionMinimumTLSVersion</key>
 				<string>TLSv1.1</string>
 			</dict>

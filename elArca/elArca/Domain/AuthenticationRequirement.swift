@@ -11,5 +11,5 @@ import Foundation
 
 protocol AuthenticationRequirementProtocol {
 
-    func login(username: String, password: String) async throws -> LoginResponse.User
+    func login(username: String, password: String) async throws -> LoginResponse
 }

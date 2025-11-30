@@ -22,3 +22,4 @@ public class CDCalendarItem: NSManagedObject {
     @NSManaged public var horaEntrada: String
     @NSManaged public var horaSalida: String
 }
+
