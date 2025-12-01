@@ -13,6 +13,7 @@ struct Api {
         static let workshops = "workshop/"
         static let beneficiary = "beneficiary/"
         static let notifications = "notifications/"
+        static let attendance = "qr/validate/"
         //static let otherEndpoint = "otherEndpoint/"
         //Define the endpoints here as needed and then use them in the repositories.
     }
