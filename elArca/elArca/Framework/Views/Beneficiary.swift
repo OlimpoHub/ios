@@ -13,6 +13,8 @@ struct Beneficiary: View {
     @State private var descriptionValid: String = ""
     @State private var selectedBeneficiary: BeneficiaryResponse? = nil
     @State private var showRegister = false
+    @State private var showFilterSheet = false
+
 
     var body: some View {
         NavigationStack {
@@ -51,7 +53,9 @@ struct Beneficiary: View {
                                 type: .searchInput
                             )
                             IconButtonAtom(imageName: "filter") {
-                                print("Filtro")
+                                withAnimation(.spring()) {
+                                    showFilterSheet = true
+                                }
                             }
                         }
                         .padding(.horizontal)
@@ -99,6 +103,13 @@ struct Beneficiary: View {
                     .padding(.trailing, 24)
                     .padding(.bottom, 100)
                 }*/
+                if showFilterSheet {
+                    BeneficiaryFilterSheet(
+                        isPresented: $showFilterSheet,
+                        viewModel: viewModel
+                    )
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
             }
             .background(Color("Bg"))
             

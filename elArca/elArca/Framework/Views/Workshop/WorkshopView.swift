@@ -44,9 +44,9 @@ struct WorkshopView: View {
                                 type: .searchInput
                             )
                             
-                            IconButtonAtom(imageName: "filter") {
-                                print("Filtro Talleres")
-                            }
+//                            IconButtonAtom(imageName: "filter") {
+//                                print("Filtro Talleres")
+//                            }
                         }
                         .padding(.horizontal, 24)
                         .padding(.bottom, 12)
