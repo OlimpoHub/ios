@@ -7,7 +7,7 @@
 
 import Foundation
 import Alamofire
-
+ 
 final class NotificationService {
     static let shared = NotificationService()
     private init() {}
@@ -30,49 +30,57 @@ final class NotificationService {
 
     // Obtains the user notifications
     func fetchNotifications(baseURL: URL, path: String = "notifications/fetch", userId: String) async throws -> [NotificationInfo] {
-        let url = baseURL.appendingPathComponent(path)
+        var url = baseURL.appendingPathComponent(path)
                 
-        let params: [String: Any] = [
-            "userId": userId
-        ]
-
-        let request = AF.request(url, method: .get, parameters: params).validate()
-        let response = await request.serializingData().response
-
-        switch response.result {
-        case .success(let data):
-            if let jsonString = String(data: data, encoding: .utf8) {
-                    print("JSON completo recibido desde la API:\n\(jsonString)")
-                } else {
-                    print("No se pudo convertir la respuesta a String (data.count = \(data.count))")
-                }
-            return try NotificationService.decoder.decode([NotificationInfo].self, from: data)
-        case .failure(let error):
-            throw error
+        // Append query item userId
+        if var comps = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+            var items = comps.queryItems ?? []
+            items.append(URLQueryItem(name: "userId", value: userId))
+            comps.queryItems = items
+            url = comps.url ?? url
         }
+
+        print("Requesting notifications from \(url.absoluteString)")
+
+        var req = URLRequest(url: url)
+        req.httpMethod = "GET"
+
+        let (data, _) = try await NetworkClient.shared.request(req)
+
+        if let jsonString = String(data: data, encoding: .utf8) {
+            print("JSON completo recibido desde la API:\n\(jsonString)")
+        } else {
+            print("No se pudo convertir la respuesta a String (data.count = \(data.count))")
+        }
+
+        return try NotificationService.decoder.decode([NotificationInfo].self, from: data)
     }
     
     // Obtains the amount of notifications the user hasn't seen
     func fetchNewNotifications(baseURL: URL, path: String = "notifications/fetch/new", userId: String) async throws -> NotificationNewInfo {
-        let url = baseURL.appendingPathComponent(path)
-        let params: [String: Any] = [
-            "userId": userId
-        ]
+        var url = baseURL.appendingPathComponent(path)
 
-        let request = AF.request(url, method: .get, parameters: params).validate()
-        let response = await request.serializingData().response
-
-        switch response.result {
-        case .success(let data):
-            if let jsonString = String(data: data, encoding: .utf8) {
-                    print("JSON completo recibido desde la API:\n\(jsonString)")
-                } else {
-                    print("No se pudo convertir la respuesta a String (data.count = \(data.count))")
-                }
-            return try NotificationService.decoder.decode(NotificationNewInfo.self, from: data)
-        case .failure(let error):
-            throw error
+        if var comps = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+            var items = comps.queryItems ?? []
+            items.append(URLQueryItem(name: "userId", value: userId))
+            comps.queryItems = items
+            url = comps.url ?? url
         }
+
+        print("Requesting new notifications count from \(url.absoluteString)")
+
+        var req = URLRequest(url: url)
+        req.httpMethod = "GET"
+
+        let (data, _) = try await NetworkClient.shared.request(req)
+
+        if let jsonString = String(data: data, encoding: .utf8) {
+            print("JSON completo recibido desde la API:\n\(jsonString)")
+        } else {
+            print("No se pudo convertir la respuesta a String (data.count = \(data.count))")
+        }
+
+        return try NotificationService.decoder.decode(NotificationNewInfo.self, from: data)
     }
     
     // Marks a notification as read
@@ -82,7 +90,12 @@ final class NotificationService {
             "notificationId": notificationId
         ]
 
-        let request = AF.request(url, method: .post, parameters: body, encoding: JSONEncoding.default).validate()
-        await request.serializingData().response
+        var req = URLRequest(url: url)
+        req.httpMethod = "POST"
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+
+        // Use NetworkClient to perform the request and handle auth/refresh
+        _ = try await NetworkClient.shared.request(req)
     }
 }

@@ -30,20 +30,19 @@ class BeneficiaryService {
         let url = baseURL.appendingPathComponent(path + "list")
         print("Requesting beneficiaries from \(url.absoluteString)")
 
-        let request = AF.request(url, method: .get).validate()
-        let response = await request.serializingData().response
+        // IMPORTANT: build URLRequest and go through NetworkClient interceptor
+        var req = URLRequest(url: url)
+        req.httpMethod = "GET"
 
-        switch response.result {
-        case .success(let data):
-            if let jsonString = String(data: data, encoding: .utf8) {
-                    print("JSON completo recibido desde la API:\n\(jsonString)")
-                } else {
-                    print("No se pudo convertir la respuesta a String (data.count = \(data.count))")
-                }
-            return try BeneficiaryService.decoder.decode([BeneficiaryResponse].self, from: data)
-        case .failure(let error):
-            throw error
+        let (data, _) = try await NetworkClient.shared.request(req)
+
+        if let jsonString = String(data: data, encoding: .utf8) {
+            print("JSON completo recibido desde la API:\n\(jsonString)")
+        } else {
+            print("No se pudo convertir la respuesta a String (data.count = \(data.count))")
         }
+
+        return try BeneficiaryService.decoder.decode([BeneficiaryResponse].self, from: data)
     }
 
     func getBeneficiary(baseURL: URL, path: String, id: String) async throws -> BeneficiaryResponse {
@@ -51,42 +50,42 @@ class BeneficiaryService {
         let url = baseURL.appendingPathComponent(path + id)
         print("Requesting beneficiary \(id) from \(url.absoluteString)")
 
-        let (data, _) = try await URLSession.shared.data(from: url)
+        // IMPORTANT: build URLRequest and go through NetworkClient interceptor
+        var req = URLRequest(url: url)
+        req.httpMethod = "GET"
+
+        let (data, _) = try await NetworkClient.shared.request(req)
 
         if let jsonString = String(data: data, encoding: .utf8) {
-            print("✅ JSON recibido desde la API:\n\(jsonString)")
+            print(" JSON recibido desde la API:\n\(jsonString)")
         }
 
+        // Check for an error message in the response
         if let errorResponse = try? JSONDecoder().decode([String: String].self, from: data),
            let message = errorResponse["message"] {
             throw NSError(domain: "", code: -1,
                           userInfo: [NSLocalizedDescriptionKey: message])
         }
 
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        return try decoder.decode(BeneficiaryResponse.self, from: data)
+        return try BeneficiaryService.decoder.decode(BeneficiaryResponse.self, from: data)
     }
     
     func getFilterCategories(baseURL: URL, path: String) async throws -> BeneficiaryFilterCategories {
         let url = baseURL.appendingPathComponent(path + "categories")
         print("Requesting beneficiary filter categories from \(url.absoluteString)")
 
-        let request = AF.request(url, method: .get).validate()
-        let response = await request.serializingData().response
+        // Build GET request and use NetworkClient
+        var req = URLRequest(url: url)
+        req.httpMethod = "GET"
 
-        switch response.result {
-        case .success(let data):
-            if let jsonString = String(data: data, encoding: .utf8) {
-                print("Categorías recibidas:\n\(jsonString)")
-            }
-            let decoder = JSONDecoder()
-            return try decoder.decode(BeneficiaryFilterCategories.self, from: data)
+        let (data, _) = try await NetworkClient.shared.request(req)
 
-        case .failure(let error):
-            print("Error al obtener categorías de filtros: \(error)")
-            throw error
+        if let jsonString = String(data: data, encoding: .utf8) {
+            print("Categorías recibidas:\n\(jsonString)")
         }
+
+        let decoder = JSONDecoder()
+        return try decoder.decode(BeneficiaryFilterCategories.self, from: data)
     }
 
     func filterBeneficiaries(
@@ -105,26 +104,16 @@ class BeneficiaryService {
             print("Body JSON que se envía:\n\(jsonString)")
         }
 
-        var urlRequest = URLRequest(url: url)
-        urlRequest.method = .post
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest.httpBody = jsonData
+        var req = URLRequest(url: url)
+        req.httpMethod = "POST"
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.httpBody = jsonData
 
-        let response = await AF.request(urlRequest)
-            .validate()
-            .serializingData()
-            .response
+        let (data, _) = try await NetworkClient.shared.request(req)
 
-        switch response.result {
-        case .success(let data):
-            if let jsonString = String(data: data, encoding: .utf8) {
-                print("Beneficiarios filtrados:\n\(jsonString)")
-            }
-            return try BeneficiaryService.decoder.decode([BeneficiaryResponse].self, from: data)
-
-        case .failure(let error):
-            print("Error al filtrar beneficiarios: \(error)")
-            throw error
+        if let jsonString = String(data: data, encoding: .utf8) {
+            print("Beneficiarios filtrados:\n\(jsonString)")
         }
+        return try BeneficiaryService.decoder.decode([BeneficiaryResponse].self, from: data)
     }
 }
