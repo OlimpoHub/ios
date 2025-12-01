@@ -28,12 +28,21 @@ final class PasswordService {
         let body = ["email": email]
         req.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
 
-
         do {
-            let (data, response) = try await URLSession.shared.data(for: req)
-            guard let http = response as? HTTPURLResponse else { throw PasswordError.invalidResponse }
-            guard (200...299).contains(http.statusCode) else { throw PasswordError.http(status: http.statusCode, data: data) }
+            // Use NetworkClient so the request goes through the interceptor
+            let (_, http) = try await NetworkClient.shared.request(req)
+            // NetworkClient returns only on 2xx; otherwise it throws NetworkError.http
+            // If it succeeded, just return
+            _ = http
             return
+        } catch let net as NetworkError {
+            // Map network http errors to PasswordError.http
+            switch net {
+            case .http(let status, let data):
+                throw PasswordError.http(status: status, data: data)
+            default:
+                throw PasswordError.network(net)
+            }
         } catch {
             throw PasswordError.network(error)
         }
@@ -49,11 +58,9 @@ final class PasswordService {
         var req = URLRequest(url: url)
         req.httpMethod = "GET"
 
-
         do {
-            let (data, response) = try await URLSession.shared.data(for: req)
-            guard let http = response as? HTTPURLResponse else { throw PasswordError.invalidResponse }
-            guard (200...299).contains(http.statusCode) else { throw PasswordError.http(status: http.statusCode, data: data) }
+            let (data, http) = try await NetworkClient.shared.request(req)
+            // Decode
             do {
                 let decoded = try JSONDecoder().decode(VerifyResponse.self, from: data)
                 if decoded.valid, let email = decoded.email {
@@ -63,6 +70,13 @@ final class PasswordService {
                 }
             } catch {
                 throw PasswordError.decoding(error)
+            }
+        } catch let net as NetworkError {
+            switch net {
+            case .http(let status, let data):
+                throw PasswordError.http(status: status, data: data)
+            default:
+                throw PasswordError.network(net)
             }
         } catch {
             throw PasswordError.network(error)
@@ -81,12 +95,16 @@ final class PasswordService {
         let body = ["email": email, "password": password]
         req.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
 
-
         do {
-            let (data, response) = try await URLSession.shared.data(for: req)
-            guard let http = response as? HTTPURLResponse else { throw PasswordError.invalidResponse }
-            guard (200...299).contains(http.statusCode) else { throw PasswordError.http(status: http.statusCode, data: data) }
+            let (_, _) = try await NetworkClient.shared.request(req)
             return
+        } catch let net as NetworkError {
+            switch net {
+            case .http(let status, let data):
+                throw PasswordError.http(status: status, data: data)
+            default:
+                throw PasswordError.network(net)
+            }
         } catch {
             throw PasswordError.network(error)
         }
