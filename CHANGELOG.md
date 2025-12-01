@@ -6,6 +6,10 @@
 
  - Offline feature to send attendance when reconnecting.
 
+### Fixed
+
+ - Updated workshop, beneficiary and notification requests to go through the authenticated `NetworkClient` interceptor so newly protected backend endpoints continue working with a valid session.
+
 ## [0.1.1] – 30/11/2025
 
 ### Fixed
