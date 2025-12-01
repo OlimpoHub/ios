@@ -9,7 +9,7 @@ import SwiftUI
 import FlowStacks
 
 @main
-struct elArcaApp: App {
+struct elArcaApp: App {    
     @StateObject private var deepLinkRouter = DeepLinkRouter()
 
     // Used to change the views
@@ -29,6 +29,7 @@ struct elArcaApp: App {
                     .environmentObject(deepLinkRouter)
                     .environmentObject(session)
                     .preferredColorScheme(.dark)
+                    .buttonStyle(NoHighlightButtonStyle())
                     .onOpenURL { url in
                         deepLinkRouter.handle(url)
                     }

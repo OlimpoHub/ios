@@ -42,7 +42,7 @@ struct BeneficiarioInfoCardsView: View {
                 
                 // Dos columnas
                 HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 15) {
+                    VStack(alignment: .leading, spacing: 0) {
                         // Imagen
                         if let foto = beneficiary.foto, !foto.isEmpty,
                            let url = URL(string: foto) {
@@ -54,55 +54,77 @@ struct BeneficiarioInfoCardsView: View {
                             .frame(width: 120, height: 120)
                             .cornerRadius(16)
                             .shadow(radius: 4)
+                            .padding(.bottom, 40)
+
                         } else {
                             Rectangle()
                                 .fill(Color.white)
                                 .frame(width: 120, height: 120)
                                 .cornerRadius(16)
                                 .shadow(radius: 4)
+                                .padding(.bottom, 40)
+
                         }
                         
-                        // Fechas y estatus
+                        // Fecha de nacimiento
                         Texts(text: "Fecha de nacimiento:", type: .mediumbold)
+                            .padding(.bottom, 5)
                         Texts(text: ReadableDate(date: beneficiary.fechaNacimiento), type: .medium)
+                            .padding(.bottom, 15)
+                        
+                        // Fecha de ingreso
                         Texts(text: "Fecha de ingreso:", type: .mediumbold)
+                            .padding(.bottom, 5)
                         Texts(text: ReadableDate(date: beneficiary.fechaIngreso), type: .medium)
-                        Texts(text: "Estatus:", type: .mediumbold)
-                        Texts(text: beneficiary.estatus == 1 ? "Activo" : "Inactivo", type: .medium)
+                            .padding(.bottom, 15)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    VStack(alignment: .leading, spacing: 15) {
-                        Texts(text: "Nombre del beneficiario:", type: .mediumbold)
-                        Texts(text: "\(beneficiary.nombre) \(beneficiary.apellidoPaterno) \(beneficiary.apellidoMaterno ?? "")", type: .medium)
-                        Texts(text: "Nombre del contacto de emergencia:", type: .mediumbold)
-                        Texts(text: beneficiary.nombreContactoEmergencia ?? "N/A", type: .medium)
-                        Texts(text: "Relación del contacto:", type: .mediumbold)
-                        Texts(text: beneficiary.relacionContactoEmergencia ?? "N/A", type: .medium)
-                        Texts(text: "Número de emergencia:", type: .mediumbold)
-                        Texts(text: beneficiary.numeroEmergencia ?? "N/A", type: .medium)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .padding(.horizontal)
-                
+                    // Columna derecha
+                   VStack(alignment: .leading, spacing: 0) {
+                       // Contacto de emergencia
+                       Texts(text: "Contacto de emergencia:", type: .mediumbold)
+                           .multilineTextAlignment(.leading)
+                           .lineLimit(2)
+                           .frame(height: 46)
+                       Texts(text: beneficiary.nombreContactoEmergencia ?? "N/A", type: .medium)
+                           .padding(.bottom, 15)
+                       
+                       // Relación
+                       Texts(text: "Relación del contacto:", type: .mediumbold)
+                           .padding(.bottom, 5)
+                       Texts(text: beneficiary.relacionContactoEmergencia ?? "N/A", type: .medium)
+                           .padding(.bottom, 15)
+                       
+                       // Número de emergencias
+                       Texts(text: "Emergencias:", type: .mediumbold)
+                           .padding(.bottom, 5)
+                       Texts(text: beneficiary.numeroEmergencia ?? "N/A", type: .medium)
+                           .padding(.bottom, 15)
+                       
+                       // Discapacidades
+                       Texts(text: "Discapacidad(es):", type: .mediumbold)
+                           .multilineTextAlignment(.leading)
+                           .lineLimit(2)
+                           .frame(height: 20, alignment: .top)
+                           .padding(.bottom, 8)
+
+                       Texts(text: disabilityText, type: .medium)
+                           .multilineTextAlignment(.leading)
+                           .lineLimit(nil)
+                           .fixedSize(horizontal: false, vertical: true)
+                   }
+                   .frame(maxWidth: .infinity, alignment: .leading)
+               }
+               .padding(.horizontal)
                 // Descripción
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 5) {
                     Texts(text: "Descripción:", type: .mediumbold)
+                        .padding(.bottom, 5)
                     Texts(text: beneficiary.descripcion ?? "Sin descripción.", type: .medium)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.bottom, 15)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
-        
-                // Botones
-                /*HStack(spacing: 16) {
-                    RectangleButton(title: "Eliminar", action: {
-                        showAlert = true
-                    }, type: .mediumGray)
-                    
-                    RectangleButton(title: "Modificar", action: {
-                        print("Modificar beneficiario")
-                    }, type: .mediumBlue)
-                }*/
                 .padding(.horizontal)
                 
                 Spacer()
@@ -119,11 +141,24 @@ struct BeneficiarioInfoCardsView: View {
         }
     }
     
+    private var disabilityText: String {
+        if let list = beneficiary.discapacidades, !list.isEmpty {
+            return list.joined(separator: ", ")
+        }
+        if let single = beneficiary.discapacidad, !single.isEmpty {
+            return single
+        }
+        return "Sin discapacidades registradas."
+    }
+    
     // Función para formatear fechas
-    private func formatDate(_ date: Date) -> String {
+    func ReadableDate(date: Date?) -> String {
+        guard let date else { return "—" }
+
         let formatter = DateFormatter()
-        formatter.dateStyle = .medium
+        formatter.dateFormat = "dd/MMM/YYYY"
         formatter.locale = Locale(identifier: "es_MX")
+
         return formatter.string(from: date)
     }
 }
@@ -142,9 +177,11 @@ struct BeneficiarioInfoCardsView: View {
         descripcion: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         fechaIngreso: Date(),
         foto: nil,
-        estatus: 1
+        estatus: 1,
+        discapacidades: ["Sin discapacidades disponibles", "Visual"],
+        discapacidad: nil
     )
-    
+
     BeneficiarioInfoCardsView(beneficiary: sample)
         .preferredColorScheme(.dark)
 }
