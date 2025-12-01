@@ -29,7 +29,7 @@ final class CDAttendanceQRRepo: CDAttendanceQRRepoProtocol {
         // Obtains the attendances that has already that same data
         let req: NSFetchRequest<CDAttendanceQR> = CDAttendanceQR.fetchRequest()
         req.predicate = NSPredicate(
-            format: "qrValue == %@ AND readTime == %d AND userID == %@",
+            format: "qrValue == %@ AND readTime == %lld AND userID == %@",
             qrValue, readTime, userID
         )
 
@@ -58,25 +58,26 @@ final class CDAttendanceQRRepo: CDAttendanceQRRepoProtocol {
     func deleteAttendance(qrValue: String, readTime: Int, userID: String) async -> Void {
         let ctx = stack.viewContext
         let req: NSFetchRequest<CDAttendanceQR> = CDAttendanceQR.fetchRequest()
+        
+        print("Se supone debería de borrar, dentro de delete")
 
         // Obtains the attendances that has already that same data
         req.predicate = NSPredicate(
-            format: "qrValue == %@ AND readTime == %d AND userID == %@",
+            format: "qrValue == %@ AND readTime == %lld AND userID == %@",
             qrValue, readTime, userID
         )
+        
+        if let count = try? ctx.count(for: req), count > -10 {
+            print("Se tienen \(count) lineas")
+        }
 
         // Tries to delete the attendance from the core data
         do {
-            // The attendance is deleted
-            if let obj = try ctx.fetch(req).first {
-                ctx.delete(obj)
-
-                if ctx.hasChanges {
-                    try ctx.save()
-                }
-            }
+            let rows = try ctx.fetch(req)
+            rows.forEach { ctx.delete($0) }
+            try ctx.save()
         } catch {
-            print("Delete error:", error)
+            print("CoreData delete error:", error)
         }
     }
     
@@ -98,7 +99,7 @@ final class CDAttendanceQRRepo: CDAttendanceQRRepoProtocol {
         for attendance in attendances {
             do {
                 let result = await AttendanceRequirement.shared.tryToSendAttendance(qrValue: attendance.qrValue, readTime: attendance.readTime, userID: attendance.userID)
-                
+                                
                 // Doesn't matter the result, the post was successful
                 if result.reachedServer && result.finished {
                     // Deletes the attendance from the local data
