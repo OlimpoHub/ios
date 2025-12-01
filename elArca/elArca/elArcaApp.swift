@@ -21,6 +21,9 @@ struct elArcaApp: App {
     // Session store shared across app
     @StateObject private var session = SessionStore.shared
     
+    // Network monitor
+    let network = NetworkMonitor.shared
+    
     var body: some Scene {
         WindowGroup {
             AppBackground {
