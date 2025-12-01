@@ -40,45 +40,13 @@ final class AttendanceViewModel: ObservableObject {
 
         guard let url = URL(string: "\(Api.base)qr/validate") else { return }
 
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json",
-                         forHTTPHeaderField: "Content-Type")
-
-        let body: [String: Any] = [
-            "qrValue": qrValue,
-            "readTime": readTime,
-            "userID": userID
-        ]
-
-        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
-
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("Error en la petición:", error)
-                DispatchQueue.main.async {
-                    self.message = "Error al registrar asistencia"
-                    self.finished = true
-                }
-                return
-            }
-
-            let statusCode = (response as? HTTPURLResponse)?.statusCode ?? 0
-            if let data = data,
-               let body = String(data: data, encoding: .utf8) {
-                print("Respuesta del servidor:", body)
-            }
-            print("Status code:", statusCode)
-
-            DispatchQueue.main.async {
-                if (200..<300).contains(statusCode) {
-                    self.message = "Asistencia registrada correctamente"
-                } else {
-                    self.message = "Error al registrar asistencia"
-                }
-                self.finished = true
-            }
-        }.resume()
+        // Esta parte palante es parte del service
+        Task {
+            let response: AttendanceInfo = await AttendanceService().sendAttendance(url: url, qrValue: qrValue, readTime: readTime, userID: userID)
+            
+            finished = response.finished
+            message = response.message
+        }
     }
 
     func reset() {
