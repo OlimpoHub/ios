@@ -10,9 +10,12 @@ import Foundation
 protocol BeneficiaryRepositoryProtocol {
     func getBeneficiaries() async -> [BeneficiaryResponse]?
     func getBeneficiary(id: String) async -> BeneficiaryResponse?
+    
+    func getFilterCategories() async -> BeneficiaryFilterCategories?
+    func filterBeneficiaries(order: String?, disabilities: [String]) async -> [BeneficiaryResponse]?
 }
 
-final class BeneficiaryRepository: BeneficiaryRepositoryProtocol {
+class BeneficiaryRepository: BeneficiaryRepositoryProtocol {
     static let shared = BeneficiaryRepository()
 
     private var storage: [BeneficiaryResponse] = []
@@ -70,6 +73,48 @@ final class BeneficiaryRepository: BeneficiaryRepositoryProtocol {
             return beneficiary
         } catch {
             print("Error fetching beneficiary with id \(id): \(error)")
+            return nil
+        }
+    }
+    
+    func getFilterCategories() async -> BeneficiaryFilterCategories? {
+            guard let baseURL = URL(string: Api.base) else {
+                print("Error: Invalid base URL")
+                return nil
+            }
+
+            do {
+                let categories = try await BeneficiaryService.shared.getFilterCategories(
+                    baseURL: baseURL,
+                    path: Api.routes.beneficiary
+                )
+                return categories
+            } catch {
+                print("Error al obtener categorías de filtros: \(error)")
+                return nil
+            }
+        }
+
+    func filterBeneficiaries(order: String?, disabilities: [String]) async -> [BeneficiaryResponse]? {
+        guard let baseURL = URL(string: Api.base) else {
+            print("Error: Invalid base URL")
+            return nil
+        }
+
+        let body = BeneficiaryFilterBody(
+            filters: .init(discapacidades: disabilities),
+            order: order
+        )
+
+        do {
+            let filtered = try await BeneficiaryService.shared.filterBeneficiaries(
+                baseURL: baseURL,
+                path: Api.routes.beneficiary,
+                body: body
+            )
+            return filtered
+        } catch {
+            print("Error al filtrar beneficiarios: \(error)")
             return nil
         }
     }

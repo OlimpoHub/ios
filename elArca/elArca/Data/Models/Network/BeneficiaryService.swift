@@ -7,7 +7,7 @@
 import Foundation
 import Alamofire
 
-final class BeneficiaryService {
+class BeneficiaryService {
     static let shared = BeneficiaryService()
     
     // Decodifier for date
@@ -66,5 +66,65 @@ final class BeneficiaryService {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         return try decoder.decode(BeneficiaryResponse.self, from: data)
+    }
+    
+    func getFilterCategories(baseURL: URL, path: String) async throws -> BeneficiaryFilterCategories {
+        let url = baseURL.appendingPathComponent(path + "categories")
+        print("Requesting beneficiary filter categories from \(url.absoluteString)")
+
+        let request = AF.request(url, method: .get).validate()
+        let response = await request.serializingData().response
+
+        switch response.result {
+        case .success(let data):
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("Categorías recibidas:\n\(jsonString)")
+            }
+            let decoder = JSONDecoder()
+            return try decoder.decode(BeneficiaryFilterCategories.self, from: data)
+
+        case .failure(let error):
+            print("Error al obtener categorías de filtros: \(error)")
+            throw error
+        }
+    }
+
+    func filterBeneficiaries(
+        baseURL: URL,
+        path: String,
+        body: BeneficiaryFilterBody
+    ) async throws -> [BeneficiaryResponse] {
+
+        let url = baseURL.appendingPathComponent(path + "filter")
+        print("Requesting beneficiary filter to \(url.absoluteString)")
+
+        let encoder = JSONEncoder()
+        let jsonData = try encoder.encode(body)
+
+        if let jsonString = String(data: jsonData, encoding: .utf8) {
+            print("Body JSON que se envía:\n\(jsonString)")
+        }
+
+        var urlRequest = URLRequest(url: url)
+        urlRequest.method = .post
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.httpBody = jsonData
+
+        let response = await AF.request(urlRequest)
+            .validate()
+            .serializingData()
+            .response
+
+        switch response.result {
+        case .success(let data):
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("Beneficiarios filtrados:\n\(jsonString)")
+            }
+            return try BeneficiaryService.decoder.decode([BeneficiaryResponse].self, from: data)
+
+        case .failure(let error):
+            print("Error al filtrar beneficiarios: \(error)")
+            throw error
+        }
     }
 }
