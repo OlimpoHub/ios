@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.1] – 01/12/2025
+
+### Added
+
+ - Offline feature to send attendance when reconnecting.
+
 ## [0.1.1] – 26/11/2025
 
 ### Fixed

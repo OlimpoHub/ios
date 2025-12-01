@@ -20,6 +20,7 @@ class AttendanceRepository: AttendanceRepositoryProtocol {
         self.service = service
     }
     
+    // Registers an attendance in the server
     func sendAttendance(qrValue: String, readTime: Int, userID: String) async -> AttendanceInfo {
         do {
             return await service.sendAttendance(url: URL(string: "\(Api.base)\(Api.routes.attendance)")!, qrValue: qrValue, readTime: readTime, userID: userID)

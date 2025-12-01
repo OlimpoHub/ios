@@ -22,6 +22,7 @@ class AttendanceRequirement: AttendanceRequirementProtocol {
         self.localRepository = localRepository
     }
     
+    // Sends an attendance to the server
     func sendAttendance(qrValue: String) async -> AttendanceInfo {
         do {
             // Read userID in session
@@ -36,14 +37,17 @@ class AttendanceRequirement: AttendanceRequirementProtocol {
             let initialResponse = await tryToSendAttendance(qrValue: qrValue, readTime: readTime, userID: userID)
             
             if initialResponse.reachedServer == true {
+                // If it was successful, only returns the response
                 return initialResponse
             } else {
+                // If it couldn't reach the server, it stores the attendance
                 await localRepository.storeAttendance(qrValue: qrValue, readTime: readTime, userID: userID)
                 return AttendanceInfo(message: "No se pudo conectar al servidor, se guardará la asistencia para registrarla cuando haya conexión a internet.", finished: true, reachedServer: false)
             }
         }
     }
     
+    // Connects to the server to register an attendance
     func tryToSendAttendance(qrValue: String, readTime: Int, userID: String) async -> AttendanceInfo {
         let response = await networkRepository.sendAttendance(qrValue: qrValue, readTime: readTime, userID: userID)
         return response

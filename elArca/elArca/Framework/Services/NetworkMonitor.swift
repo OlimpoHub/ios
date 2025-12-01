@@ -17,6 +17,7 @@ final class NetworkMonitor {
     private var isConnected: Bool = false
     private var wasConnected: Bool = false
 
+    // Starts the monitor
     private init() {
         monitor = NWPathMonitor()
         queue = DispatchQueue(label: "com.yourapp.networkMonitor")
@@ -30,6 +31,7 @@ final class NetworkMonitor {
                 if self.isConnected {
                     // The internet is connected
                     Task {
+                        // Sends the stored attendance in case it has
                         await CDAttendanceQRRepo.shared.sendStoredAttendances()
                     }
                 } else {

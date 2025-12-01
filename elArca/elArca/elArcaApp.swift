@@ -21,7 +21,7 @@ struct elArcaApp: App {
     // Session store shared across app
     @StateObject private var session = SessionStore.shared
     
-    // Network monitor
+    // Network monitor to detect network changes
     let network = NetworkMonitor.shared
     
     var body: some Scene {

@@ -29,10 +29,11 @@ final class AttendanceViewModel: ObservableObject {
         sendAttendance()
     }
 
+    // Registers an attendance into the server
     private func sendAttendance() {
         guard !scannedCode.isEmpty else { return }
 
-        // Esta parte palante es parte del service
+        // Sends the attendance to the server
         Task {
             let response: AttendanceInfo = await attendanceRequirement.sendAttendance(qrValue: scannedCode)
             
