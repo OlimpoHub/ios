@@ -8,4 +8,5 @@
 struct AttendanceInfo {
     var message: String
     var finished: Bool
+    var reachedServer: Bool
 }

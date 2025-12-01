@@ -33,14 +33,14 @@ class AttendanceService {
                 print("Status code:", statusCode)
 
                 if (200..<300).contains(statusCode) {
-                    return AttendanceInfo(message: "Asistencia registrada correctamente", finished: true)
+                    return AttendanceInfo(message: "Asistencia registrada correctamente", finished: true, reachedServer: true)
                 } else {
-                    return AttendanceInfo(message: "Error al registrar asistencia", finished: true)
+                    return AttendanceInfo(message: "Error al registrar asistencia", finished: true, reachedServer: true)
                 }
 
             } catch {
                 print("Request error:", error)
-                return AttendanceInfo(message: "Error al registrar asistencia", finished: true)
+                return AttendanceInfo(message: "Sin conexión a la base de datos", finished: true, reachedServer: false)
             }
     }
 }

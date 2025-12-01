@@ -15,6 +15,12 @@ final class AttendanceViewModel: ObservableObject {
     @Published var scannedCode: String = ""
     @Published var message: String = "Escanea el QR de asistencia"
     @Published var finished: Bool = false
+    
+    var attendanceRequirement: AttendanceRequirementProtocol
+    
+    init(attendanceRequirement: AttendanceRequirementProtocol = AttendanceRequirement.shared) {
+        self.attendanceRequirement = attendanceRequirement
+    }
 
     func handleScannedCode(_ code: String) {
         print("handleScannedCode con: \(code)")
@@ -26,23 +32,9 @@ final class AttendanceViewModel: ObservableObject {
     private func sendAttendance() {
         guard !scannedCode.isEmpty else { return }
 
-        // Read userID in session
-        guard let userID = KeychainHelper.shared.currentUserIdFromDefaults(),
-              !userID.isEmpty else {
-            print("No hay userID guardado en UserDefaults")
-            self.message = "No se encontró el usuario en sesión"
-            self.finished = true
-            return
-        }
-
-        let qrValue = scannedCode
-        let readTime = Int(Date().timeIntervalSince1970 * 1000)
-
-        guard let url = URL(string: "\(Api.base)qr/validate") else { return }
-
         // Esta parte palante es parte del service
         Task {
-            let response: AttendanceInfo = await AttendanceService().sendAttendance(url: url, qrValue: qrValue, readTime: readTime, userID: userID)
+            let response: AttendanceInfo = await attendanceRequirement.sendAttendance(qrValue: scannedCode)
             
             finished = response.finished
             message = response.message
