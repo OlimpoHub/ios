@@ -42,9 +42,9 @@ struct Beneficiary: View {
                         .padding(.top, 20)
                         
                         // Search bar y filtro
-                        /*HStack(spacing: 8) {
+                        HStack(spacing: 8) {
                             TextInput(
-                                value: $descriptionValue,
+                                value: $viewModel.searchText,
                                 errorMessage: $descriptionValid,
                                 label: "",
                                 placeholder: "Buscar",
@@ -54,7 +54,7 @@ struct Beneficiary: View {
                                 print("Filtro")
                             }
                         }
-                        .padding(.horizontal)*/
+                        .padding(.horizontal)
                         
                         // Contenido principal con Scroll
                         ScrollView {
@@ -65,7 +65,7 @@ struct Beneficiary: View {
                                 ],
                                 spacing: 30
                             ) {
-                                ForEach(viewModel.beneficiaries, id: \.idBeneficiario) { beneficiary in
+                                ForEach(viewModel.filteredBeneficiaries, id: \.idBeneficiario){ beneficiary in
                                     Button {
                                         selectedBeneficiary = beneficiary
                                     } label: {
