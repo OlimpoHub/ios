@@ -14,7 +14,6 @@ struct BeneficiarioInfoCardsView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            // Background Color
             Color("Bg")
                 .ignoresSafeArea()
             
@@ -40,10 +39,10 @@ struct BeneficiarioInfoCardsView: View {
                 .padding(.bottom, 16)
 
                 
-                // Dos columnas
+                // Two Columns
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 0) {
-                        // Imagen
+                        // Image
                         if let foto = beneficiary.foto, !foto.isEmpty,
                            let url = URL(string: foto) {
                             AsyncImage(url: url) { image in
@@ -66,13 +65,11 @@ struct BeneficiarioInfoCardsView: View {
 
                         }
                         
-                        // Fecha de nacimiento
                         Texts(text: "Fecha de nacimiento:", type: .mediumbold)
                             .padding(.bottom, 5)
                         Texts(text: ReadableDate(date: beneficiary.fechaNacimiento), type: .medium)
                             .padding(.bottom, 15)
                         
-                        // Fecha de ingreso
                         Texts(text: "Fecha de ingreso:", type: .mediumbold)
                             .padding(.bottom, 5)
                         Texts(text: ReadableDate(date: beneficiary.fechaIngreso), type: .medium)
@@ -80,9 +77,7 @@ struct BeneficiarioInfoCardsView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    // Columna derecha
                    VStack(alignment: .leading, spacing: 0) {
-                       // Contacto de emergencia
                        Texts(text: "Contacto de emergencia:", type: .mediumbold)
                            .multilineTextAlignment(.leading)
                            .lineLimit(2)
@@ -90,19 +85,16 @@ struct BeneficiarioInfoCardsView: View {
                        Texts(text: beneficiary.nombreContactoEmergencia ?? "N/A", type: .medium)
                            .padding(.bottom, 15)
                        
-                       // Relación
                        Texts(text: "Relación del contacto:", type: .mediumbold)
                            .padding(.bottom, 5)
                        Texts(text: beneficiary.relacionContactoEmergencia ?? "N/A", type: .medium)
                            .padding(.bottom, 15)
                        
-                       // Número de emergencias
                        Texts(text: "Emergencias:", type: .mediumbold)
                            .padding(.bottom, 5)
                        Texts(text: beneficiary.numeroEmergencia ?? "N/A", type: .medium)
                            .padding(.bottom, 15)
                        
-                       // Discapacidades
                        Texts(text: "Discapacidad(es):", type: .mediumbold)
                            .multilineTextAlignment(.leading)
                            .lineLimit(2)
@@ -117,7 +109,6 @@ struct BeneficiarioInfoCardsView: View {
                    .frame(maxWidth: .infinity, alignment: .leading)
                }
                .padding(.horizontal)
-                // Descripción
                 VStack(alignment: .leading, spacing: 5) {
                     Texts(text: "Descripción:", type: .mediumbold)
                         .padding(.bottom, 5)
@@ -151,7 +142,6 @@ struct BeneficiarioInfoCardsView: View {
         return "Sin discapacidades registradas."
     }
     
-    // Función para formatear fechas
     func ReadableDate(date: Date?) -> String {
         guard let date else { return "—" }
 

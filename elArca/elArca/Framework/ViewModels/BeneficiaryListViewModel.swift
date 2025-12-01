@@ -20,10 +20,9 @@ class BeneficiaryListViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var searchText: String = ""
 
-    // Filtros (UI)
     @Published var sortOrder: BeneficiarySortOrder = .nameAsc
     @Published var selectedDisabilities: Set<String> = []   // MULTISELECT
-    @Published var availableDisabilities: [String] = []     // viene de /categories
+    @Published var availableDisabilities: [String] = []
 
     private let repository: BeneficiaryRepositoryProtocol
 
@@ -33,8 +32,6 @@ class BeneficiaryListViewModel: ObservableObject {
             await loadInitialData()
         }
     }
-
-    // MARK: - Carga inicial
 
     func loadInitialData() async {
         await fetchBeneficiaries()
@@ -68,12 +65,9 @@ class BeneficiaryListViewModel: ObservableObject {
         }
     }
 
-    // MARK: - Lista usada por la vista
-
     var filteredBeneficiaries: [BeneficiaryResponse] {
         var result = beneficiaries
 
-        // Filtro de búsqueda local por nombre
         if !searchText.isEmpty {
             let text = searchText.lowercased()
             result = result.filter { b in
@@ -83,7 +77,6 @@ class BeneficiaryListViewModel: ObservableObject {
             }
         }
 
-        // Orden local por nombre (aunque el backend también puede ordenar)
         result.sort { lhs, rhs in
             let ln = "\(lhs.nombre) \(lhs.apellidoPaterno)"
             let rn = "\(rhs.nombre) \(rhs.apellidoPaterno)"
@@ -98,8 +91,6 @@ class BeneficiaryListViewModel: ObservableObject {
 
         return result
     }
-
-    // MARK: - Acciones de filtros
 
     func applyFilters() async {
         guard let baseURL = URL(string: Api.base) else { return }
