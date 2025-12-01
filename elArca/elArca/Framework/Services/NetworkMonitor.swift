@@ -29,7 +29,9 @@ final class NetworkMonitor {
             if self.isConnected != self.wasConnected {
                 if self.isConnected {
                     // The internet is connected
-                    
+                    Task {
+                        await CDAttendanceQRRepo.shared.sendStoredAttendances()
+                    }
                 } else {
                     // The internet is disconnected
                 }
