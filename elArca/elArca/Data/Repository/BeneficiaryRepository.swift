@@ -10,7 +10,6 @@ import Foundation
 protocol BeneficiaryRepositoryProtocol {
     func getBeneficiaries() async -> [BeneficiaryResponse]?
     func getBeneficiary(id: String) async -> BeneficiaryResponse?
-    
     func getFilterCategories() async -> BeneficiaryFilterCategories?
     func filterBeneficiaries(order: String?, disabilities: [String]) async -> [BeneficiaryResponse]?
 }
