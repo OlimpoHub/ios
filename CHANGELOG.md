@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.1.1] – 30/11/2025
+
+### Fixed
+
+- Remove Filter icon on Workshops
+- Edit Beneficiary card to add disabilities, remove estatus and duplicated name
+
+### Added
+
+- Add filter and order beneficiaries
+- Add NoHighlightButtonStyle.swift in order to remove the automatic highlight of buttons and icons
 ## [0.1.1] – 26/11/2025
 
 ### Fixed
