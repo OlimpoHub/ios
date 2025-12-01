@@ -18,8 +18,8 @@ struct CoordinatorView: View {
     
     var body: some View {
         
-        ZStack(alignment: .bottom) {
-            if network.isConnected {
+        VStack {
+            if !network.isConnected {
                 OfflineBadge()
             }
             
@@ -58,7 +58,7 @@ struct CoordinatorView: View {
                     }
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
             .background(Color("Bg"))
             
             if router.screen.isNavbarViewable {
