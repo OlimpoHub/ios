@@ -12,27 +12,24 @@ struct CoordinatorView: View {
     @Binding var userNav: UserNav
     @Binding var notificationType: NotificationType
     
-    // Lets the screens change
     @EnvironmentObject var router: CoordinatorViewModel
     @StateObject private var attendanceVM = AttendanceViewModel()
     
     var body: some View {
         
-        VStack(spacing: 0) {
+        ZStack(alignment: .bottom) {
+            
+            // Todas las pantallas
             Group {
                 switch router.screen {
                 case .login:
                     LoginView()
-                
                 case .home:
                     HomeView()
-                    
                 case .notifications:
                     NotificationView(notificationType: notificationType)
-                    
                 case .workshop:
                     WorkshopView()
-                    
                 case .calendar:
                     CalendarView()
                     
@@ -41,14 +38,14 @@ struct CoordinatorView: View {
                     
                 case .beneficiaries:
                     Beneficiary()
-                    
                 case .attendance:
                     VStack {
                         Spacer()
                         ReadQRView(viewModel: AttendanceViewModel())
                         Spacer()
                     }
-                    
+                case .configuration:
+                    ConfigurationView()
                 default:
                     VStack {
                         Spacer()
@@ -61,11 +58,14 @@ struct CoordinatorView: View {
                     }
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color("Bg"))
             
             if router.screen.isNavbarViewable {
                 NavBar(userNav: userNav)
+                    .frame(height: 65)
             }
         }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }

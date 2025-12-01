@@ -13,6 +13,8 @@ struct Beneficiary: View {
     @State private var descriptionValid: String = ""
     @State private var selectedBeneficiary: BeneficiaryResponse? = nil
     @State private var showRegister = false
+    @State private var showFilterSheet = false
+
 
     var body: some View {
         NavigationStack {
@@ -42,19 +44,21 @@ struct Beneficiary: View {
                         .padding(.top, 20)
                         
                         // Search bar y filtro
-                        /*HStack(spacing: 8) {
+                        HStack(spacing: 8) {
                             TextInput(
-                                value: $descriptionValue,
+                                value: $viewModel.searchText,
                                 errorMessage: $descriptionValid,
                                 label: "",
                                 placeholder: "Buscar",
                                 type: .searchInput
                             )
                             IconButtonAtom(imageName: "filter") {
-                                print("Filtro")
+                                withAnimation(.spring()) {
+                                    showFilterSheet = true
+                                }
                             }
                         }
-                        .padding(.horizontal)*/
+                        .padding(.horizontal)
                         
                         // Contenido principal con Scroll
                         ScrollView {
@@ -65,7 +69,7 @@ struct Beneficiary: View {
                                 ],
                                 spacing: 30
                             ) {
-                                ForEach(viewModel.beneficiaries, id: \.idBeneficiario) { beneficiary in
+                                ForEach(viewModel.filteredBeneficiaries, id: \.idBeneficiario){ beneficiary in
                                     Button {
                                         selectedBeneficiary = beneficiary
                                     } label: {
@@ -99,6 +103,13 @@ struct Beneficiary: View {
                     .padding(.trailing, 24)
                     .padding(.bottom, 100)
                 }*/
+                if showFilterSheet {
+                    BeneficiaryFilterSheet(
+                        isPresented: $showFilterSheet,
+                        viewModel: viewModel
+                    )
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
             }
             .background(Color("Bg"))
             

@@ -1,5 +1,5 @@
 //
-//  NetworkClient.swift
+//  TokenManager.swift
 //  elArca
 //
 //  Created by Carlos Martinez Vazquez on 12/11/25.
@@ -100,8 +100,74 @@ final class TokenManager {
             throw AuthError.refreshFailed
         }
     }
+
+
+    func isRefreshTokenExpired() -> Bool? {
+        guard let refresh = getRefresh() else { return nil }
+        return JWTDecoder.isExpired(refresh)
+    }
+
+
+    func restoreSessionLocally() -> Bool {
+        guard let refresh = getRefresh() else {
+            keychain.delete(service: service, account: accessAccount)
+            keychain.delete(service: service, account: refreshAccount)
+            return false
+        }
+
+        if let expired = JWTDecoder.isExpired(refresh) {
+            if expired {
+                // Refresh token expired -> clear tokens and report no session
+                keychain.delete(service: service, account: accessAccount)
+                keychain.delete(service: service, account: refreshAccount)
+                NotificationCenter.default.post(name: .authDidLogout, object: nil)
+                return false
+            } else {
+                // Refresh token present and not expired
+                return true
+            }
+        }
+
+        // Couldn't decode exp -> conservative choice: keep session locally active until server validation
+        return true
+    }
 }
 
 extension Notification.Name {
     static let authDidLogout = Notification.Name("authDidLogout")
 }
+
+// DEBUG helpers for testing expired tokens
+
+extension TokenManager {
+    func makeExpiredJWT(secondsAgo: Int = 3600) -> String {
+        func base64UrlEncode(_ data: Data) -> String {
+            return data.base64EncodedString()
+                .replacingOccurrences(of: "+", with: "-")
+                .replacingOccurrences(of: "/", with: "_")
+                .replacingOccurrences(of: "=", with: "")
+        }
+
+        let header: [String: Any] = ["alg": "none", "typ": "JWT"]
+        let exp = Int(Date().timeIntervalSince1970) - secondsAgo
+        let payload: [String: Any] = ["sub": "debug-user", "exp": exp]
+
+        let headerData = try! JSONSerialization.data(withJSONObject: header)
+        let payloadData = try! JSONSerialization.data(withJSONObject: payload)
+
+        let headerPart = base64UrlEncode(headerData)
+        let payloadPart = base64UrlEncode(payloadData)
+
+        return "\(headerPart).\(payloadPart)."
+    }
+
+    func debugExpireRefreshToken(secondsAgo: Int = 3600) {
+        let expired = makeExpiredJWT(secondsAgo: secondsAgo)
+        KeychainHelper.shared.save(expired, service: service, account: refreshAccount)
+        KeychainHelper.shared.save("debug-access-token", service: service, account: accessAccount)
+
+        // Run restore; since the token is expired, restoreSessionLocally() will clear tokens and post logout
+        _ = restoreSessionLocally()
+    }
+}
+

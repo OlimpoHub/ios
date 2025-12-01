@@ -17,7 +17,8 @@ class WorkshopListRequirement: WorkshopListRequirementProtocol {
     
     let dataRepository: WorkshopRepositoryProtocol
     
-    init(dataRepository: WorkshopRepositoryProtocol = WorkshopRepository.shared) {
+    // offline-first
+    init(dataRepository: WorkshopRepositoryProtocol = CDWorkshopRepo.shared) {
         self.dataRepository = dataRepository
     }
     

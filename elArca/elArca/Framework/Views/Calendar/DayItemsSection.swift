@@ -14,8 +14,7 @@ struct DayItemsSection: View {
     var body: some View {
         Group {
             if viewModel.selection == nil {
-                Text("Selecciona un día para ver su lista")
-                    .foregroundColor(Color("Beige"))
+                Texts(text: "Selecciona un día para ver su lista", type: .medium)
                     .padding(.top, 8)
             } else {
                 List {

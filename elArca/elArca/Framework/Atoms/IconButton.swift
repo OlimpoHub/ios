@@ -13,6 +13,8 @@ struct IconButton: View {
     var title: String
     var screen: Screen
 
+    @ObservedObject var accessibility = TextsViewModel()
+    
     // Customization
     var iconSize: CGFloat = 26
     var textSize: CGFloat = 12
@@ -25,7 +27,7 @@ struct IconButton: View {
     
     var currentOpacity: CGFloat {
         switch router.stack.first {
-        case .home, .configuration:
+        case .home, .configuration, .attendance:
             return title == "Inicio" ? 1 : 0.4
         case .workshop:
             return title == "Talleres" ? 1 : 0.4
@@ -48,8 +50,7 @@ struct IconButton: View {
                     .frame(width: iconSize, height: iconSize)
                     .foregroundColor(iconColor)
 
-                Text(title)
-                    .font(.custom("Poppins-SemiBold", size: textSize))
+                Texts(text: title, type: .small, scale: (accessibility.font == "Poppins" ? 1 : 0.8))
                     .foregroundColor(textColor)
             }
             .padding(.vertical, 8)

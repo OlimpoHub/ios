@@ -11,6 +11,7 @@ class WorkshopViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     
+    
     var workshopListRequirement: WorkshopListRequirementProtocol
     
     private var allWorkshops: [WorkshopResponse] = []

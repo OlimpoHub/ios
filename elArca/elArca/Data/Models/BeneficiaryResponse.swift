@@ -1,5 +1,5 @@
 //
-//  BeneficiaryInfo.swift
+//  BeneficiaryResponse.swift
 //  elArca
 //
 //  Created by Frida Xcaret Vargas Trejo on 11/11/25.
@@ -21,6 +21,29 @@ struct BeneficiaryResponse: Codable, Identifiable, Hashable {
     let foto: String?
     let estatus: Int
 
+    let discapacidades: [String]?
+    let discapacidad: String?
+
     var id: String { idBeneficiario }
 }
 
+struct BeneficiaryFilterCategories: Decodable {
+    let disabilities: [String]
+
+    enum CodingKeys: String, CodingKey {
+        case disabilities = "discapacidad"
+    }
+}
+
+struct BeneficiaryFilterBody: Encodable {
+    struct Filters: Encodable {
+        let discapacidades: [String]?
+
+        enum CodingKeys: String, CodingKey {
+            case discapacidades = "Discapacidades"
+        }
+    }
+
+    let filters: Filters
+    let order: String?
+}

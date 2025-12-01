@@ -24,6 +24,7 @@ class LoginViewModel: ObservableObject {
     
     
     private let authRequirement: AuthenticationRequirementProtocol
+    private let tokenManager = TokenManager.shared
     
     init(authRequirement: AuthenticationRequirementProtocol = AuthenticationRepository.shared) {
         self.authRequirement = authRequirement
@@ -50,8 +51,8 @@ class LoginViewModel: ObservableObject {
             guard let self = self else { return }
             do {
                 // Use the repository/requirement to perform login
-                let user = try await self.authRequirement.login(username: self.userName, password: self.password)
-                let role = user.role ?? ""
+                let response = try await self.authRequirement.login(username: self.userName, password: self.password)
+                let role = response.user.role ?? ""
                 await MainActor.run {
                     self.isLoading = false
                     // Print the user id and username for debugging (visible in Xcode console / device logs)
@@ -77,12 +78,26 @@ class LoginViewModel: ObservableObject {
                 case .invalidData:
                     message = "Respuesta inválida del servidor."
                 case .urlError(let err):
-                    // Show a more specific message in DEBUG; otherwise keep a friendly text
-                    #if DEBUG
-                    message = "Error de red: \(err.localizedDescription)"
-                    #else
-                    message = "Error de red. Revisa tu conexión."
-                    #endif
+                    message = "Error de red: Revisa tu conexión"
+                    
+                    // If we have a refresh token locally, keep the session alive while offline
+                    if self.tokenManager.restoreSessionLocally() {
+                        let cachedUserName = KeychainHelper.shared.read(service: "com.elarca.auth", account: "userName") ?? ""
+                        if self.userName == cachedUserName {
+                            let roleFromKeychain = KeychainHelper.shared.read(service: "com.elarca.auth", account: "userRole") ?? ""
+                            await MainActor.run {
+                                self.isLoading = false
+                                self.onLoginSuccess?(roleFromKeychain)
+                            }
+                            return
+                        } else {
+                            await MainActor.run {
+                                self.loginError = "El usuario ingresado no coincide con la sesión guardada en el dispositivo."
+                                self.isLoading = false
+                            }
+                            return
+                        }
+                    }
                 }
                 await MainActor.run {
                     self.loginError = message

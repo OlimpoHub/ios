@@ -23,16 +23,15 @@ struct ReadQRView: View {
                 Texts(text: viewModel.message, type: .medium)
                     .multilineTextAlignment(.center)
                     .padding()
-                
-                //            if !viewModel.finished {
-                //                HStack {
-                //                    Spacer()
-                //                        .frame(height: 24)
-                //                }
-                //                RectangleButton(title: "Abrir cámara") {
-                //                    isPresentingScanner = true
-                //                }
-                //            }
+                            if !viewModel.finished {
+                                HStack {
+                                    Spacer()
+                                        .frame(height: 24)
+                                }
+                                RectangleButton(title: "Abrir cámara") {
+                                    isPresentingScanner = true
+                                }
+                            }
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

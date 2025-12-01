@@ -1,5 +1,53 @@
 # Changelog
 
+## [0.1.1] – 01/12/2025
+
+### Added
+
+ - Offline feature to send attendance when reconnecting.
+
+### Fixed
+
+ - Updated workshop, beneficiary and notification requests to go through the authenticated `NetworkClient` interceptor so newly protected backend endpoints continue working with a valid session.
+
+## [0.1.1] – 30/11/2025
+
+### Fixed
+
+- Remove Filter icon on Workshops
+- Edit Beneficiary card to add disabilities, remove estatus and duplicated name
+
+### Added
+
+- Add filter and order beneficiaries
+- Add NoHighlightButtonStyle.swift in order to remove the automatic highlight of buttons and icons
+## [0.1.1] – 26/11/2025
+
+### Fixed
+
+ - Correctly display time in hour and minutes and format date.
+
+## [0.1.1] – 25/11/2025
+
+### Added
+
+ - Offline feature for consult workshops.
+ 
+## [0.1.1] – 24/11/2025
+
+### Added
+
+ - Offline login and session persistence improvements.
+ - A configuration screen with logout and basic user info display.
+
+### Updated
+
+ - Login flow and error handling given offline implementation
+
+### Fixed
+
+ - Various small fixes to support offline authentication and session restoration.
+
 ## [0.1.0] – 20/11/2025
 
 ### Fixed
