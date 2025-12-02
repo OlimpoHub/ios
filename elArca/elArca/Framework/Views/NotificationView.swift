@@ -101,6 +101,15 @@ struct NotificationView: View {
                     .padding(.top, 10)
                     .padding(.bottom, 100)
                 }
+                .refreshable {
+                    Task {
+                        let result = await viewModel.reloadNotifications()
+                        
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            viewModel.notifications = result
+                        }
+                    }
+                }
             }
         }
     }

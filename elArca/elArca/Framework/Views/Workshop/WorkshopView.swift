@@ -98,9 +98,9 @@ struct WorkshopView: View {
                                     height: 110,
                                     buttonType: .gradient,
                                     image: .asset(workshop.imageName),
-                                    screen: .none
+                                    screen: .none,
+                                    isClickable: false
                                 )
-                                .allowsHitTesting(false)
                             }
                             .padding(EdgeInsets(top: -18, leading: -18, bottom: -14, trailing: -14))
                             .contentShape(Rectangle())
@@ -110,6 +110,15 @@ struct WorkshopView: View {
                     .padding(.horizontal, 24)
                     .padding(.top, 10)
                     .padding(.bottom, 100)
+                }
+                .refreshable {
+                    Task {
+                        let result = await viewModel.reloadWorkshops()
+                        
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            viewModel.workshops = result
+                        }
+                    }
                 }
             }
         }

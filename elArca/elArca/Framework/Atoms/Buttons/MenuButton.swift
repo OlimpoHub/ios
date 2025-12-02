@@ -39,6 +39,7 @@ struct MenuButton: View {
     var buttonType: MenuButtonType
     var image: MenuButtonImage
     var screen: Screen
+    var isClickable: Bool = true
     
     @EnvironmentObject var router: CoordinatorViewModel
     
@@ -88,6 +89,7 @@ struct MenuButton: View {
         .contentShape(Rectangle())
         .padding(EdgeInsets(top: 14, leading: 14, bottom: 9, trailing: 9))
         .clipShape(RoundedRectangle(cornerRadius: 20))
+        .allowsHitTesting(isClickable)
         .onTapGesture {
             if screen != .none {
                 router.changeView(newScreen: screen)
@@ -107,5 +109,11 @@ struct MenuButton: View {
         default:
             return "hammer.fill"
         }
+    }
+}
+
+#Preview {
+    VStack {
+        MenuButton(text: "Boton", height: 148, buttonType: .gradient, image: .asset("house"), screen: .none)
     }
 }
