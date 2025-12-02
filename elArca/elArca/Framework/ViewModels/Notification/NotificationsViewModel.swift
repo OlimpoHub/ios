@@ -36,4 +36,15 @@ class NotificationsViewModel: ObservableObject {
             self.isLoading = false
         }
     }
+    
+    // Obtains the user notifications again
+    func reloadNotifications() async -> [NotificationInfo] {
+        let result = await notificationsRequirement.fetchNotifications(userId: KeychainHelper.shared.currentUserIdFromDefaults() ?? "")
+
+        if let notifications = result {
+            return notifications
+        }
+                    
+        return []
+    }
 }

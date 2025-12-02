@@ -50,6 +50,18 @@ class BeneficiaryListViewModel: ObservableObject {
 
         isLoading = false
     }
+    
+    func refetchBeneficiaries() async -> [BeneficiaryResponse] {
+        await repository.clearStorage()
+        
+        if let result = await repository.getBeneficiaries() {
+            return result
+        } else {
+            errorMessage = "No se pudieron cargar los beneficiarios."
+        }
+        
+        return []
+    }
 
     private func fetchFilterCategories() async {
         guard let baseURL = URL(string: Api.base) else { return }
