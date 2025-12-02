@@ -104,11 +104,10 @@ struct WorkshopView: View {
                             
                             Spacer()
                                 .frame(height: 32)
-                    }
+                    }                    
                 }
                 .padding(.horizontal, 24)
                 .padding(.top, 10)
-                .padding(.bottom, 100)
                 .refreshable {
                     Task {
                         let result = await viewModel.reloadWorkshops()
