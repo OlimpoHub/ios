@@ -6,8 +6,9 @@
 
  - Scroll down behavior to reload data.
 
-### Fix
+### Fixed
 
+ - Deeplink router to work with email sent from backend.
  - Remove video placeholders from workshop details.
  - Modify Date info to weekly status of workshop.
 
