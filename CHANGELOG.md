@@ -2,6 +2,14 @@
 
 ## [0.1.1] – 01/12/2025
 
+### Fixed
+
+- Remove offline Atom offline when online 
+
+### Added
+
+- Atom for offline
+
 ### Added
 
  - Offline feature to send attendance when reconnecting.
