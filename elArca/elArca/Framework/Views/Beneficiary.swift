@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct Beneficiary: View {
     @StateObject private var viewModel = BeneficiaryListViewModel()
@@ -73,14 +74,26 @@ struct Beneficiary: View {
                                     Button {
                                         selectedBeneficiary = beneficiary
                                     } label: {
-                                        VStack(alignment: .leading, spacing: 8) {
-                                            Texts(text: "\(beneficiary.nombre) \(beneficiary.apellidoPaterno)", type: .medium)
-                                                .font(.headline)
-                                                .foregroundColor(.black)
+                                        VStack(alignment: .center, spacing: 8) {
+                                            if let url = beneficiary.foto {
+                                                WebImage(url: URL(string: url))
+                                                    .resizable()
+                                                    .scaledToFill()
+                                                    .frame(width: 72, height: 72)
+                                                    .clipShape(Circle())
+                                            } else {
+                                                Image(systemName: "person.fill")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 56, height: 56)
+                                                    .foregroundColor(.white)
+                                            }
+                                            
+                                            Texts(text: "\(beneficiary.nombre) \(beneficiary.apellidoPaterno)", type: .mediumbold)
                                         }
                                         .padding()
                                         .frame(maxWidth: .infinity, minHeight: 180)
-                                        .background(Color.white)
+                                        .background(MenuButtonType.gradient.background)
                                         .cornerRadius(24)
                                         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
                                     }

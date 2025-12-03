@@ -1,4 +1,5 @@
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct WorkshopDetailView: View {
     @StateObject private var viewModel: WorkshopDetailViewModel
@@ -80,12 +81,17 @@ struct WorkshopDetailView: View {
                                     .foregroundColor(.white)
                                     .lineSpacing(4)
                                 }
-
-//                                Rectangle()
-//                                    .fill(Color.gray.opacity(0.3))
-//                                    .frame(height: 180)
-//                                    .cornerRadius(12)
-
+                                
+                                HStack {
+                                    Spacer()
+                                    if let url = workshop.URL {
+                                        WebImage(url: URL(string: url))
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(height: 128)
+                                    }
+                                    Spacer()
+                                }
 
                                 VStack(alignment: .leading, spacing: 16) {
 //                                    Texts(text: "Sobre la capacitación:", type: .subtitle)

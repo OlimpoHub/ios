@@ -5,6 +5,7 @@
 ### Added
 
  - Scroll down behavior to reload data.
+ - Support for loading images from server.
 
 ### Fixed
 

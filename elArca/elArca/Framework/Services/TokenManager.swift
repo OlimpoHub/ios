@@ -7,6 +7,7 @@
 
 
 import Foundation
+import SDWebImage
 
 enum AuthError: Error {
     case refreshFailed
@@ -21,6 +22,8 @@ final class TokenManager {
     private let service = "com.elarca.auth"
     private let accessAccount = "accessToken"
     private let refreshAccount = "refreshToken"
+    
+    private let downloader = SDWebImageDownloader.shared
 
     // Internal actor that serializes the refreshTask management and performs the network refresh.
     private actor Refresher {
@@ -47,6 +50,7 @@ final class TokenManager {
 
 
     func save(access: String, refresh: String) {
+        downloader.setValue("Bearer \(access)", forHTTPHeaderField: "Authorization")
         keychain.save(access, service: service, account: accessAccount)
         keychain.save(refresh, service: service, account: refreshAccount)
     }
@@ -87,6 +91,7 @@ final class TokenManager {
         do {
             let token = try await task.value
             // Persist the new access token from outside the actor
+            downloader.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             keychain.save(token, service: service, account: accessAccount)
             // clear the actor-held task
             await refresher.clearTask()
