@@ -16,20 +16,25 @@ final class DeepLinkRouter: ObservableObject {
         print("DeepLinkRouter.handle -> \(url.absoluteString)")
         #endif
         guard let comps = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
-        let path = comps.host ?? comps.path // handles elArcaApp://reset?token=.. (host=reset) or elArcaApp://reset
+        // Build a normalized path string that includes host and path so we accept both
+        // elArcaApp://update-password?token=...  (host = "update-password")
+        // elArcaApp://user/update-password?token=... (host = "user", path = "/update-password")
+        let hostPart = comps.host ?? ""
+        let pathPart = comps.path // path contains leading slash if present
+        let combined = (hostPart + pathPart).lowercased()
+
         let queryItems = comps.queryItems ?? []
         if let token = queryItems.first(where: { $0.name == "token" })?.value {
-            let lower = path.lowercased()
-            if lower.contains("reset") {
+            if combined.contains("reset") {
                 DispatchQueue.main.async { self.activeRoute = .reset(token: token) }
                 return
             }
-            if lower.contains("activate") {
+            if combined.contains("activate") {
                 DispatchQueue.main.async { self.activeRoute = .activate(token: token) }
                 return
             }
-            // this is the one that should open from the website link after we get the Domain for El Arca App
-            if lower.contains("update") || lower.contains("update-password") {
+            // accept both update and update-password in any position
+            if combined.contains("update") || combined.contains("update-password") {
                 DispatchQueue.main.async { self.activeRoute = .updatePassword(token: token) }
                 return
             }
@@ -43,3 +48,4 @@ final class DeepLinkRouter: ObservableObject {
 // xcrun simctl openurl booted 'elArcaApp://reset?token=EXAMPLE_TOKEN'
 // xcrun simctl openurl booted 'elArcaApp://activate?token=EXAMPLE_TOKEN'
 // xcrun simctl openurl booted 'elArcaApp://update-password?token=EXAMPLE_TOKEN'
+// Also accepted: 'elArcaApp://user/update-password?token=EXAMPLE_TOKEN' or 'elArcaApp://user/update?token=EXAMPLE_TOKEN'

@@ -6,6 +6,10 @@
 
  - Scroll down behavior to reload data.
 
+### Fixed
+
+ - Deeplink router to work with email sent from backend.
+
 ## [0.1.1] – 01/12/2025
 
 ### Added
