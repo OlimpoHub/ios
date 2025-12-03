@@ -26,7 +26,7 @@ class BeneficiaryListViewModel: ObservableObject {
 
     private let repository: BeneficiaryRepositoryProtocol
 
-    init(repository: BeneficiaryRepositoryProtocol = BeneficiaryRepository.shared) {
+    init(repository: BeneficiaryRepositoryProtocol = CDBeneficiaryRepo.shared) {
         self.repository = repository
         Task {
             await loadInitialData()

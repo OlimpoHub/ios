@@ -24,7 +24,6 @@ final class CDBeneficiaryRepo: BeneficiaryRepositoryProtocol {
         self.service = service
     }
 
-    // Ejecuta sync solo una vez por ciclo de vida
     private func ensureSyncedOnce() {
         guard !didAttemptSync else { return }
         didAttemptSync = true
@@ -59,7 +58,7 @@ final class CDBeneficiaryRepo: BeneficiaryRepositoryProtocol {
         let req: NSFetchRequest<CDBeneficiary> = CDBeneficiary.fetchRequest()
         req.predicate = NSPredicate(format: "idBeneficiario == %@", id)
 
-        // Intentar desde Core Data
+        // Try from Core Data
         do {
             if let row = try ctx.fetch(req).first {
                 return row.toDTO()
@@ -68,7 +67,7 @@ final class CDBeneficiaryRepo: BeneficiaryRepositoryProtocol {
             print("CoreData fetch single beneficiary error:", error)
         }
 
-        // Fallback a API
+        // Fallback to API
         guard let baseURL = URL(string: Api.base) else {
             print("Error: Invalid base URL")
             return nil
@@ -81,7 +80,7 @@ final class CDBeneficiaryRepo: BeneficiaryRepositoryProtocol {
                 id: id
             )
 
-            // Guardar en Core Data
+            // Store in Core Data
             let bgCtx = stack.newBackgroundContext()
 
             try await bgCtx.perform {
@@ -141,6 +140,10 @@ final class CDBeneficiaryRepo: BeneficiaryRepositoryProtocol {
         }
     }
 
+    func clearStorage() async {
+        return
+    }
+    
     func sync() async {
         guard let baseURL = URL(string: Api.base) else {
             print("Api.base inválida")
@@ -174,7 +177,7 @@ final class CDBeneficiaryRepo: BeneficiaryRepositoryProtocol {
                 }
             }
 
-            // Contar elementos
+            // count elements
             let viewCtx = stack.viewContext
             let countReq: NSFetchRequest<CDBeneficiary> = CDBeneficiary.fetchRequest()
             let total = (try? viewCtx.count(for: countReq)) ?? -1
