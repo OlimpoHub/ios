@@ -9,6 +9,8 @@
 ### Fixed
 
  - Deeplink router to work with email sent from backend.
+ - Remove video placeholders from workshop details.
+ - Modify Date info to weekly status of workshop.
 
 ## [0.1.1] – 01/12/2025
 
