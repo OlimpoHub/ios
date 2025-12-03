@@ -25,22 +25,22 @@ extension CDBeneficiary {
         self.estatus = Int16(dto.estatus)
 
         // Convert array to Data for CoreData
-        if let discapacidades = dto.discapacidades {
-            let encoder = JSONEncoder()
-            self.discapacidades = try? encoder.encode(discapacidades)
+        if let list = dto.discapacidades, !list.isEmpty {
+            discapacidades = list.joined(separator: "||")
+        } else if let single = dto.discapacidad, !single.isEmpty {
+            discapacidades = single
         } else {
-            self.discapacidades = nil
+            discapacidades = nil
         }
-
-        self.discapacidad = dto.discapacidad
     }
 
     func toDTO() -> BeneficiaryResponse {
-
-        var decodedDiscapacidades: [String]? = nil
-        if let data = discapacidades {
-            decodedDiscapacidades = try? JSONDecoder().decode([String].self, from: data)
-        }
+    let listFromCore: [String]?
+    if let raw = discapacidades, !raw.isEmpty {
+        listFromCore = raw.components(separatedBy: "||")
+    } else {
+        listFromCore = nil
+    }
 
         return BeneficiaryResponse(
             idBeneficiario: idBeneficiario,
@@ -55,8 +55,8 @@ extension CDBeneficiary {
             fechaIngreso: fechaIngreso,
             foto: foto,
             estatus: Int(estatus),
-            discapacidades: decodedDiscapacidades,
-            discapacidad: discapacidad
+            discapacidades: listFromCore,
+            discapacidad: listFromCore?.first ?? discapacidad
         )
     }
 }

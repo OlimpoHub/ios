@@ -29,6 +29,6 @@ public class CDBeneficiary: NSManagedObject {
     @NSManaged public var estatus: Int16
 
 
-    @NSManaged public var discapacidades: Data?
+    @NSManaged public var discapacidades: String?
     @NSManaged public var discapacidad: String?         
 }
