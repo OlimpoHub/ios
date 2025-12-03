@@ -5,6 +5,7 @@
 ### Added
 
  - Scroll down behavior to reload data.
+ - Support for loading images from server.
 
 ## [0.1.1] – 01/12/2025
 
