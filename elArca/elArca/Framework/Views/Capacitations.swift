@@ -112,37 +112,32 @@ struct CapacitacionesView: View {
                                 destination: WorkshopDetailView(workshop: workshop)
                             ) {
                                 VStack(spacing: 12) {
-                                    // Workshop Card con AsyncImage
+                                    // Workshop Image
                                     ZStack {
-                                        RoundedRectangle(cornerRadius: 20)
-                                            .fill(Color.white)
-                                            .frame(width: 140, height: 140)
+                                        Circle()
+                                            .fill(Color("BlackCard"))
+                                            .frame(width: 100, height: 100)
                                         
-                                        // Cargar imagen desde URL
-                                        AsyncImage(url: URL(string: workshop.imageName)) { phase in
-                                            switch phase {
-                                            case .empty:
-                                                // Mientras carga
-                                                ProgressView()
-                                                    .progressViewStyle(CircularProgressViewStyle())
-                                            case .success(let image):
-                                                // Imagen cargada exitosamente
-                                                image
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                                    .frame(width: 100, height: 100)
-                                            case .failure:
-                                                // Si falla, mostrar el nombre como fallback
-                                                Text(workshop.name)
-                                                    .font(.custom("Poppins-Medium", size: 16))
-                                                    .foregroundColor(.black)
-                                                    .multilineTextAlignment(.center)
-                                                    .padding(.horizontal, 16)
-                                            @unknown default:
-                                                EmptyView()
-                                            }
+                                        if !workshop.imageName.isEmpty {
+                                            Image(workshop.imageName)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 70, height: 70)
+                                        } else {
+                                            // Placeholder icon
+                                            Image(systemName: "wrench.and.screwdriver")
+                                                .font(.system(size: 35))
+                                                .foregroundColor(.white.opacity(0.5))
                                         }
                                     }
+
+                                    // Workshop Name
+                                    Text(workshop.name)
+                                        .font(.custom("Poppins-Regular", size: 14))
+                                        .foregroundColor(.white)
+                                        .multilineTextAlignment(.center)
+                                        .lineLimit(2)
+                                        .frame(width: 100)
                                 }
                             }
                         }
@@ -152,6 +147,7 @@ struct CapacitacionesView: View {
             }
         }
     }
+    
     @ViewBuilder
     private var discapacidadesSection: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -186,16 +182,23 @@ struct CapacitacionesView: View {
                             destination: CapacitationsDetailView(id: item.idDiscapacidad)
                         ) {
                             ZStack {
-                                RoundedRectangle(cornerRadius: 20)
-                                    .fill(Color.white)
-                                    .frame(height: 160)
-                                    .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(Color("BlackCard"))
+                                    .frame(height: 140)
+                                    .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
                                 
-                                Text(item.name)
-                                    .font(.custom("Poppins-Medium", size: 16))
-                                    .foregroundColor(.black)
-                                    .multilineTextAlignment(.center)
-                                    .padding(.horizontal, 16)
+                                VStack(spacing: 8) {
+                                    // Placeholder icon for disability
+                                    Image(systemName: "heart.text.square")
+                                        .font(.system(size: 30))
+                                        .foregroundColor(.white.opacity(0.5))
+                                    
+                                    Text(item.name)
+                                        .font(.custom("Poppins-Medium", size: 15))
+                                        .foregroundColor(.white)
+                                        .multilineTextAlignment(.center)
+                                        .padding(.horizontal, 16)
+                                }
                             }
                         }
                     }
