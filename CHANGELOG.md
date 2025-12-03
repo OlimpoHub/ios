@@ -6,6 +6,11 @@
 
  - Scroll down behavior to reload data.
 
+### Fix
+
+ - Remove video placeholders from workshop details.
+ - Modify Date info to weekly status of workshop.
+
 ## [0.1.1] – 01/12/2025
 
 ### Added
