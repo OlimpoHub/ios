@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct WorkshopView: View {
     
@@ -96,7 +97,7 @@ struct WorkshopView: View {
                                     text: workshop.name,
                                     height: 110,
                                     buttonType: .gradient,
-                                    image: .asset(workshop.imageName),
+                                    image: workshop.URL ?? "" == "" ? .asset(workshop.imageName) : .url(workshop.URL ?? ""),
                                     screen: .none,
                                     isClickable: false
                                 )
