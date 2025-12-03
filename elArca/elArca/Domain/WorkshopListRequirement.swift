@@ -10,6 +10,7 @@ import Foundation
 protocol WorkshopListRequirementProtocol {
     func getWorkshopList() async -> [WorkshopResponse]?
     func getWorkshop(id: String) async -> WorkshopResponse?
+    func clearStorage() async -> Void
 }
 
 class WorkshopListRequirement: WorkshopListRequirementProtocol {
@@ -28,5 +29,9 @@ class WorkshopListRequirement: WorkshopListRequirementProtocol {
     
     func getWorkshop(id: String) async -> WorkshopResponse? {
         return await dataRepository.getWorkshop(id: id)
+    }
+    
+    func clearStorage() async {
+        return await dataRepository.clearStorage()
     }
 }

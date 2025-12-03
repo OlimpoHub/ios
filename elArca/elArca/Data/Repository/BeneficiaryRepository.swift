@@ -10,6 +10,7 @@ import Foundation
 protocol BeneficiaryRepositoryProtocol {
     func getBeneficiaries() async -> [BeneficiaryResponse]?
     func getBeneficiary(id: String) async -> BeneficiaryResponse?
+    func clearStorage() async -> Void
     
     func getFilterCategories() async -> BeneficiaryFilterCategories?
     func filterBeneficiaries(order: String?, disabilities: [String]) async -> [BeneficiaryResponse]?
@@ -75,6 +76,10 @@ class BeneficiaryRepository: BeneficiaryRepositoryProtocol {
             print("Error fetching beneficiary with id \(id): \(error)")
             return nil
         }
+    }
+    
+    func clearStorage() async {
+        didLoadFromAPI = false
     }
     
     func getFilterCategories() async -> BeneficiaryFilterCategories? {

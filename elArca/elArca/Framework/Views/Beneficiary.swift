@@ -89,6 +89,15 @@ struct Beneficiary: View {
                             .padding(.horizontal)
                             .padding(.bottom, 80)
                         }
+                        .refreshable {
+                            Task {
+                                let result = await viewModel.refetchBeneficiaries()
+                                
+                                withAnimation(.easeInOut(duration: 0.25)) {
+                                    viewModel.beneficiaries = result
+                                }
+                            }
+                        }
                     }
                 }
 
