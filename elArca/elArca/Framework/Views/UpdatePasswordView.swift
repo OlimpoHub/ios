@@ -23,7 +23,7 @@ struct UpdatePasswordView: View {
                                 .foregroundColor(.primary)
                         }
                         .padding(.top, 32)
-                        .padding(.trailing, 48)
+                        .padding(.trailing, 28)
 
                         // Centered form area
                         VStack {

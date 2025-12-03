@@ -39,7 +39,6 @@ struct FirstLoginView: View {
 
                                 RectangleButton(title: vm.isLoading ? "Enviando..." : "Enviar Correo") {
                                     vm.requestRecoveryEmail(completion: { _ in })
-                                    }
                                 }
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 52)
@@ -71,6 +70,7 @@ struct FirstLoginView: View {
                 .onTapGesture { hideKeyboard() }
             }
         }
+    }
     private func sendResetEmail() {
     }
 }
