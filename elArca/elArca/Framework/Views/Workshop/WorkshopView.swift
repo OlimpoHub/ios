@@ -90,7 +90,6 @@ struct WorkshopView: View {
             } else {
                 // --- Estado de Éxito (Lista) ---
                 ScrollView(showsIndicators: false) {
-                    VStack(spacing: 32) {
                         ForEach(viewModel.workshops) { workshop in
                             NavigationLink(destination: WorkshopDetailView(id: workshop.idTaller)) {
                                 MenuButton(
@@ -98,18 +97,25 @@ struct WorkshopView: View {
                                     height: 110,
                                     buttonType: .gradient,
                                     image: .asset(workshop.imageName),
-                                    screen: .none
+                                    screen: .none,
+                                    isClickable: false
                                 )
-                                .allowsHitTesting(false)
                             }
-                            .padding(EdgeInsets(top: -18, leading: -18, bottom: -14, trailing: -14))
-                            .contentShape(Rectangle())
-                            .padding(EdgeInsets(top: 18, leading: 18, bottom: 14, trailing: 14))
+                            
+                            Spacer()
+                                .frame(height: 32)
+                    }                    
+                }
+                .padding(.horizontal, 24)
+                .padding(.top, 10)
+                .refreshable {
+                    Task {
+                        let result = await viewModel.reloadWorkshops()
+                        
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            viewModel.workshops = result
                         }
                     }
-                    .padding(.horizontal, 24)
-                    .padding(.top, 10)
-                    .padding(.bottom, 100)
                 }
             }
         }

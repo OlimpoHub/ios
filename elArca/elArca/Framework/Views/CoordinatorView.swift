@@ -17,7 +17,7 @@ struct CoordinatorView: View {
     
     var body: some View {
         
-        ZStack(alignment: .bottom) {
+        VStack {
             
             // Todas las pantallas
             Group {

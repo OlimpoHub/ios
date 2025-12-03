@@ -96,6 +96,10 @@ final class CDWorkshopRepo: WorkshopRepositoryProtocol {
             return nil
         }
     }
+    
+    func clearStorage() async {
+        return
+    }
 
     // Sync (API -> Core Data)
     func sync() async {
