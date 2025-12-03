@@ -94,12 +94,12 @@ struct WorkshopDetailView: View {
                                 }
 
                                 VStack(alignment: .leading, spacing: 16) {
-                                    Texts(text: "Sobre la capacitación:", type: .subtitle)
-                                        .foregroundColor(.white)
+//                                    Texts(text: "Sobre la capacitación:", type: .subtitle)
+//                                        .foregroundColor(.white)
 
                                     VStack(alignment: .leading, spacing: 12) {
                                         BulletPoint(text: "Horario: \(formatTime(workshop.startTime)) - \(formatTime(workshop.endTime))")
-                                        BulletPoint(text: "Fecha: \(formatDate(workshop.date))")
+                                        BulletPoint(text: "Fecha: Lunes - Viernes")
                                     }
                                 }
 
