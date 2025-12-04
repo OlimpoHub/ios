@@ -1,4 +1,5 @@
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct CapacitacionesView: View {
 
@@ -51,20 +52,6 @@ struct CapacitacionesView: View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 32) {
 
-                // --- BUSCADOR ---
-                TextInput(
-                    value: $search,
-                    errorMessage: $searchError,
-                    label: "",
-                    placeholder: "Buscar",
-                    type: .searchBarInput
-                )
-                .onChange(of: search) { newValue in
-                    workshopVM.searchText = newValue
-                    discapacityVM.searchText = newValue
-                }
-                .padding(.horizontal, 24)
-
                 // --- TALLERES ---
                 talleresSection
 
@@ -112,24 +99,13 @@ struct CapacitacionesView: View {
                                 destination: WorkshopDetailView(workshop: workshop)
                             ) {
                                 VStack(spacing: 12) {
-                                    // Workshop Image
-                                    ZStack {
-                                        Circle()
-                                            .fill(Color("BlackCard"))
-                                            .frame(width: 100, height: 100)
-                                        
-                                        if !workshop.imageName.isEmpty {
-                                            Image(workshop.imageName)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 70, height: 70)
-                                        } else {
-                                            // Placeholder icon
-                                            Image(systemName: "wrench.and.screwdriver")
-                                                .font(.system(size: 35))
-                                                .foregroundColor(.white.opacity(0.5))
-                                        }
-                                    }
+                                    WebImage(url: URL(string: workshop.URL ?? ""))
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 100, height: 100)
+                                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                                        .contentShape(RoundedRectangle(cornerRadius: 16))
+                                        .clipped()
 
                                     // Workshop Name
                                     Text(workshop.name)
@@ -181,25 +157,14 @@ struct CapacitacionesView: View {
                         NavigationLink(
                             destination: CapacitationsDetailView(id: item.idDiscapacidad)
                         ) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(Color("BlackCard"))
-                                    .frame(height: 140)
-                                    .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
-                                
-                                VStack(spacing: 8) {
-                                    // Placeholder icon for disability
-                                    Image(systemName: "heart.text.square")
-                                        .font(.system(size: 30))
-                                        .foregroundColor(.white.opacity(0.5))
-                                    
-                                    Text(item.name)
-                                        .font(.custom("Poppins-Medium", size: 15))
-                                        .foregroundColor(.white)
-                                        .multilineTextAlignment(.center)
-                                        .padding(.horizontal, 16)
-                                }
+                            VStack(alignment: .center, spacing: 8) {
+                                Texts(text: item.title, type: .mediumbold)
                             }
+                            .padding()
+                            .frame(maxWidth: .infinity, minHeight: 180)
+                            .background(MenuButtonType.gradient.background)
+                            .cornerRadius(24)
+                            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
                         }
                     }
                 }
