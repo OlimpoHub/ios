@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.1] – 04/12/2025
+
+### Fixed
+
+- Scroll reload to use both cached and internet data.
+
 ## [0.1.1] – 03/12/2025
 
 ### Fixed

@@ -63,18 +63,9 @@ class BeneficiaryListViewModel: ObservableObject {
         return []
     }
 
-    private func fetchFilterCategories() async {
-        guard let baseURL = URL(string: Api.base) else { return }
-
-        do {
-            let categories = try await BeneficiaryService.shared.getFilterCategories(
-                baseURL: baseURL,
-                path: Api.routes.beneficiary
-            )
-            availableDisabilities = categories.disabilities
-        } catch {
-            print("Error al obtener categorías de filtrado: \(error)")
-        }
+    private func fetchFilterCategories() async -> Void {
+        await repository.clearStorage()
+        await fetchBeneficiaries()
     }
 
     var filteredBeneficiaries: [BeneficiaryResponse] {
