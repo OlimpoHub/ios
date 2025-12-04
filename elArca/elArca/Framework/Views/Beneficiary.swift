@@ -9,7 +9,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct Beneficiary: View {
-    @StateObject private var viewModel = BeneficiaryListViewModel()
+    @StateObject private var viewModel = BeneficiaryListViewModel(repository: CDBeneficiaryRepo.shared)
     @State private var descriptionValue: String = ""
     @State private var descriptionValid: String = ""
     @State private var selectedBeneficiary: BeneficiaryResponse? = nil
