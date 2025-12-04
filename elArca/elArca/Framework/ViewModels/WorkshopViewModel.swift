@@ -37,16 +37,9 @@ class WorkshopViewModel: ObservableObject {
         }
     }
     
-    func reloadWorkshops() async -> [WorkshopResponse] {
+    func reloadWorkshops() async -> Void {
         await workshopListRequirement.clearStorage()
-        
-        let result = await workshopListRequirement.getWorkshopList()
-        
-        if let workshops = result {
-            return workshops
-        }
-        
-        return []
+        loadWorkshops()
     }
     
     func filterWorkshops() {

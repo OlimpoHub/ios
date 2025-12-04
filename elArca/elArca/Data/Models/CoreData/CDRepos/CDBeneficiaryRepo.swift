@@ -141,6 +141,7 @@ final class CDBeneficiaryRepo: BeneficiaryRepositoryProtocol {
     }
 
     func clearStorage() async {
+        await self.sync()
         return
     }
     

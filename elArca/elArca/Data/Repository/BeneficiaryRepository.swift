@@ -80,6 +80,8 @@ class BeneficiaryRepository: BeneficiaryRepositoryProtocol {
     
     func clearStorage() async {
         didLoadFromAPI = false
+        
+        
     }
     
     func getFilterCategories() async -> BeneficiaryFilterCategories? {

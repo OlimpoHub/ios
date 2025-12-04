@@ -11,7 +11,7 @@ import SDWebImageSwiftUI
 struct WorkshopView: View {
     
     @StateObject private var viewModel = WorkshopViewModel()
-    
+        
     var body: some View {
         VStack {
             NavigationView {
@@ -111,11 +111,7 @@ struct WorkshopView: View {
                 .padding(.top, 10)
                 .refreshable {
                     Task {
-                        let result = await viewModel.reloadWorkshops()
-                        
-                        withAnimation(.easeInOut(duration: 0.25)) {
-                            viewModel.workshops = result
-                        }
+                        await viewModel.reloadWorkshops()
                     }
                 }
             }

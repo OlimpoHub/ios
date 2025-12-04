@@ -25,7 +25,7 @@ final class CDWorkshopRepo: WorkshopRepositoryProtocol {
     }
 
     // Launches a background sync only once per lifecycle
-    private func ensureSyncedOnce() {
+    private func ensureSyncedOnce() async {
         guard !didAttemptSync else { return }
         didAttemptSync = true
 
@@ -36,7 +36,7 @@ final class CDWorkshopRepo: WorkshopRepositoryProtocol {
 
 
     func getWorkshops() async -> [WorkshopResponse]? {
-        ensureSyncedOnce()
+        await ensureSyncedOnce()
 
         let ctx = stack.viewContext
         let req: NSFetchRequest<CDWorkshops> = CDWorkshops.fetchRequest()
@@ -98,6 +98,7 @@ final class CDWorkshopRepo: WorkshopRepositoryProtocol {
     }
     
     func clearStorage() async {
+        await self.sync()
         return
     }
 
