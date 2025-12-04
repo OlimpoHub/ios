@@ -2,8 +2,6 @@
 //  MenuButton.swift
 //  elArca
 //
-//  Created by Edmundo Canedo Cervantes on 04/11/25.
-//
 
 import SwiftUI
 import SDWebImageSwiftUI
@@ -20,7 +18,8 @@ enum MenuButtonType {
                 LinearGradient(
                     colors: [Color("DarkBlue"), Color("MenuBgDark")],
                     startPoint: UnitPoint(x: 0.14, y: 0.5),
-                    endPoint: UnitPoint(x: 0.96, y: 0.5))
+                    endPoint: UnitPoint(x: 0.96, y: 0.5)
+                )
             )
         case .solid:
             return AnyView(Color("DarkBlue"))
@@ -64,7 +63,6 @@ struct MenuButton: View {
         }
     }
     
-    // Helper function to map asset names to SF Symbols
     private func symbolForAsset(_ assetName: String) -> String {
         switch assetName {
         case "img_taller_arte":
@@ -88,30 +86,31 @@ struct MenuButton: View {
                 Spacer()
             }
             
-            switch image {
-            case .asset(let name):
-                if UIImage(named: name) != nil {
-                    Image(name)
+            ZStack {
+                switch image {
+                case .asset(let name):
+                    if UIImage(named: name) != nil {
+                        Image(name)
+                            .resizable()
+                            .scaledToFill()
+                    } else {
+                        Image(systemName: symbolForAsset(name))
+                            .resizable()
+                            .scaledToFit()
+                            .padding(20)
+                    }
+                    
+                case .url(let urlString):
+                    WebImage(url: URL(string: urlString))
                         .resizable()
-                        .scaledToFit()
-                        .frame(maxHeight: 140)
-                } else {
-                    let symbolName = symbolForAsset(name)
-                    Image(systemName: symbolName)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 80, height: 80)
-                        .foregroundColor(.white.opacity(0.9))
+                        .scaledToFill()
                 }
-                
-            case .url(let url):
-                WebImage(url: URL(string: url))
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxHeight: 140)
             }
-            
-            Spacer().frame(width: 40)
+            .frame(width: 100, height: 100)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .contentShape(RoundedRectangle(cornerRadius: 16))
+            .clipped()
+            .padding(.trailing, 8)
         }
         .frame(height: height)
         .frame(maxWidth: .infinity)
@@ -120,6 +119,12 @@ struct MenuButton: View {
 
 #Preview {
     VStack {
-        MenuButton(text: "Boton", height: 148, buttonType: .gradient, image: .asset("house"), screen: .none)
+        MenuButton(
+            text: "Boton",
+            height: 148,
+            buttonType: .gradient,
+            image: .asset("house"),
+            screen: .none
+        )
     }
 }
