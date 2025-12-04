@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct Beneficiary: View {
-    @StateObject private var viewModel = BeneficiaryListViewModel()
+    @StateObject private var viewModel = BeneficiaryListViewModel(repository: CDBeneficiaryRepo.shared)
     @State private var descriptionValue: String = ""
     @State private var descriptionValid: String = ""
     @State private var selectedBeneficiary: BeneficiaryResponse? = nil
@@ -73,14 +74,26 @@ struct Beneficiary: View {
                                     Button {
                                         selectedBeneficiary = beneficiary
                                     } label: {
-                                        VStack(alignment: .leading, spacing: 8) {
-                                            Texts(text: "\(beneficiary.nombre) \(beneficiary.apellidoPaterno)", type: .medium)
-                                                .font(.headline)
-                                                .foregroundColor(.black)
+                                        VStack(alignment: .center, spacing: 8) {
+                                            if let url = beneficiary.foto {
+                                                WebImage(url: URL(string: url))
+                                                    .resizable()
+                                                    .scaledToFill()
+                                                    .frame(width: 72, height: 72)
+                                                    .clipShape(Circle())
+                                            } else {
+                                                Image(systemName: "person.fill")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 56, height: 56)
+                                                    .foregroundColor(.white)
+                                            }
+                                            
+                                            Texts(text: "\(beneficiary.nombre) \(beneficiary.apellidoPaterno)", type: .mediumbold)
                                         }
                                         .padding()
                                         .frame(maxWidth: .infinity, minHeight: 180)
-                                        .background(Color.white)
+                                        .background(MenuButtonType.gradient.background)
                                         .cornerRadius(24)
                                         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
                                     }
@@ -88,6 +101,15 @@ struct Beneficiary: View {
                             }
                             .padding(.horizontal)
                             .padding(.bottom, 80)
+                        }
+                        .refreshable {
+                            Task {
+                                let result = await viewModel.refetchBeneficiaries()
+                                
+                                withAnimation(.easeInOut(duration: 0.25)) {
+                                    viewModel.beneficiaries = result
+                                }
+                            }
                         }
                     }
                 }

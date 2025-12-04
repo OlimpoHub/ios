@@ -10,6 +10,7 @@ import Foundation
 protocol WorkshopRepositoryProtocol {
     func getWorkshops() async -> [WorkshopResponse]?
     func getWorkshop(id: String) async -> WorkshopResponse?
+    func clearStorage() async -> Void
 }
 
 final class WorkshopRepository: WorkshopRepositoryProtocol {
@@ -65,5 +66,9 @@ final class WorkshopRepository: WorkshopRepositoryProtocol {
             print("Error fetching workshop with id \(id): \(error)")
             return nil
         }
+    }
+    
+    func clearStorage() async {
+        didLoadFromAPI = false
     }
 }

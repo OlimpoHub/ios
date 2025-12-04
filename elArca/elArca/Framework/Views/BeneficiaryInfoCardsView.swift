@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct BeneficiarioInfoCardsView: View {
     let beneficiary: BeneficiaryResponse
@@ -45,15 +46,14 @@ struct BeneficiarioInfoCardsView: View {
                         // Image
                         if let foto = beneficiary.foto, !foto.isEmpty,
                            let url = URL(string: foto) {
-                            AsyncImage(url: url) { image in
-                                image.resizable().scaledToFill()
-                            } placeholder: {
-                                ProgressView()
-                            }
-                            .frame(width: 120, height: 120)
-                            .cornerRadius(16)
-                            .shadow(radius: 4)
-                            .padding(.bottom, 40)
+                            WebImage(url: url)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 120, height: 120)
+                                .clipShape(RoundedRectangle(cornerRadius: 16))
+                                .shadow(radius: 4)
+                                .padding(.bottom, 40)
+                                .allowsHitTesting(false)
 
                         } else {
                             Rectangle()

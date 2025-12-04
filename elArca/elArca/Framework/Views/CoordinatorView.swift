@@ -9,6 +9,7 @@ import Combine
 import SwiftUI
 
 struct CoordinatorView: View {
+    @EnvironmentObject var network: NetworkMonitor
     @Binding var userNav: UserNav
     @Binding var notificationType: NotificationType
     
@@ -17,7 +18,11 @@ struct CoordinatorView: View {
     
     var body: some View {
         
-        ZStack(alignment: .bottom) {
+        VStack (spacing: 0) {
+            if !network.isConnected {
+                OfflineBadge()
+                .background(Color("Bg"))
+            }
             
             // Todas las pantallas
             Group {
@@ -58,7 +63,7 @@ struct CoordinatorView: View {
                     }
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
             .background(Color("Bg"))
             
             if router.screen.isNavbarViewable {

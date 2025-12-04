@@ -10,6 +10,7 @@ import Foundation
 protocol BeneficiaryListRequirementProtocol {
     func getBeneficiaryList() async -> [BeneficiaryResponse]?
     func getBeneficiary(id: String) async -> BeneficiaryResponse?
+    func clearStorage() async -> Void
 }
 
 class BeneficiaryListRequirement: BeneficiaryListRequirementProtocol {
@@ -17,7 +18,7 @@ class BeneficiaryListRequirement: BeneficiaryListRequirementProtocol {
     
     let dataRepository: BeneficiaryRepositoryProtocol
     
-    init(dataRepository: BeneficiaryRepositoryProtocol = BeneficiaryRepository.shared) {
+    init(dataRepository: BeneficiaryRepositoryProtocol = CDBeneficiaryRepo.shared) {
         self.dataRepository = dataRepository
     }
     
@@ -27,5 +28,9 @@ class BeneficiaryListRequirement: BeneficiaryListRequirementProtocol {
     
     func getBeneficiary(id: String) async -> BeneficiaryResponse? {
         return await dataRepository.getBeneficiary(id: id)
+    }
+    
+    func clearStorage() async {
+        return await dataRepository.clearStorage()
     }
 }

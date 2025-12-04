@@ -1,6 +1,34 @@
 # Changelog
 
+## [0.1.1] – 03/12/2025
+
+### Fixed
+
+- Fix offline 
+- Change atom color
+
+## [0.1.1] – 02/12/2025
+
+### Added
+
+ - Scroll down behavior to reload data.
+ - Support for loading images from server.
+
+### Fixed
+
+ - Deeplink router to work with email sent from backend.
+ - Remove video placeholders from workshop details.
+ - Modify Date info to weekly status of workshop.
+
 ## [0.1.1] – 01/12/2025
+
+### Fixed
+
+- Remove offline Atom offline when online 
+
+### Added
+
+- Atom for offline
 
 ### Added
 

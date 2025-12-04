@@ -22,12 +22,13 @@ struct elArcaApp: App {
     @StateObject private var session = SessionStore.shared
     
     // Network monitor to detect network changes
-    let network = NetworkMonitor.shared
+    @StateObject var network = NetworkMonitor.shared
     
     var body: some Scene {
         WindowGroup {
             AppBackground {
                 CoordinatorView(userNav: $userNav, notificationType: $notif)
+                    .environmentObject(network)
                     .environmentObject(router)
                     .environmentObject(deepLinkRouter)
                     .environmentObject(session)
