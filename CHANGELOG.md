@@ -4,6 +4,7 @@
 
 ### Fixed
 
+- Add interceptor for correct display of disability view
 - Fix offline 
 - Change atom color
 - Fix image on workshop buttons
