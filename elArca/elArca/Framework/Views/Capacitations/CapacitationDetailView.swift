@@ -10,7 +10,7 @@ struct CapacitationsDetailView: View {
 
     var body: some View {
         ZStack {
-            Color("Background")
+            Color("Bg")
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
@@ -72,12 +72,6 @@ struct CapacitationsDetailView: View {
                                     .foregroundColor(.white)
                                     .lineSpacing(4)
                                 }
-
-                                // Image placeholder
-                                Rectangle()
-                                    .fill(Color.gray.opacity(0.3))
-                                    .frame(height: 180)
-                                    .cornerRadius(12)
 
                                 Spacer(minLength: 20)
                             }
