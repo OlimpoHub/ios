@@ -51,11 +51,12 @@ struct MenuButton: View {
                 }
             }) {
                 structure
+                    .background(buttonType.background.drawingGroup())
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .contentShape(RoundedRectangle(cornerRadius: 20))
             }
             .buttonStyle(.plain)
-            .background(buttonType.background.drawingGroup())
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-            .contentShape(RoundedRectangle(cornerRadius: 20))
+            
         } else {
             structure
                 .background(buttonType.background.drawingGroup())

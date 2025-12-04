@@ -27,7 +27,7 @@ struct IconButton: View {
     
     var currentOpacity: CGFloat {
         switch router.stack.first {
-        case .home, .configuration, .attendance:
+        case .home, .configuration, .attendance, .capacitations:
             return title == "Inicio" ? 1 : 0.4
         case .workshop:
             return title == "Talleres" ? 1 : 0.4

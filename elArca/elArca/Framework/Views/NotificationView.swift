@@ -94,6 +94,7 @@ struct NotificationView: View {
                                     }
                                     DividerLine()
                                 }
+                                .contentShape(Rectangle())
                             }
                         }
                     }
