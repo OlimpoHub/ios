@@ -6,6 +6,7 @@
 
 - Fix offline 
 - Change atom color
+- Fix image on workshop buttons
 
 ## [0.1.1] – 02/12/2025
 
