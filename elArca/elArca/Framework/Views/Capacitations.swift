@@ -160,11 +160,12 @@ struct CapacitacionesView: View {
                             VStack(alignment: .center, spacing: 8) {
                                 Texts(text: item.title, type: .mediumbold)
                             }
-                            .padding()
-                            .frame(maxWidth: .infinity, minHeight: 180)
+                            .frame(maxWidth: .infinity, minHeight: 100)
+                            .padding(.horizontal, 10)
                             .background(MenuButtonType.gradient.background)
                             .cornerRadius(24)
                             .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+                            .padding(.horizontal, 4)
                         }
                     }
                 }
