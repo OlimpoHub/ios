@@ -37,6 +37,10 @@ struct CoordinatorView: View {
                     WorkshopView()
                 case .calendar:
                     CalendarView()
+                    
+                case .capacitations:
+                    CapacitacionesView()
+                    
                 case .beneficiaries:
                     Beneficiary()
                 case .attendance:

@@ -11,6 +11,8 @@ struct Api {
     struct routes {
         static let calendar = "calendar/"
         static let workshops = "workshop/"
+        static let discapacities = "discapacity/"
+        
         static let beneficiary = "beneficiary/"
         static let notifications = "notifications/"
         static let attendance = "qr/validate/"

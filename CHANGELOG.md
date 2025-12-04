@@ -78,6 +78,14 @@
 
 ## [0.1.0] – 20/11/2025
 
+### Fixed
+
+- Improved the view of a single discapacity info
+
+### Added
+
+- Added full capacitation view with discapacities and workshops
+
 ### Added
 
  - Added support for public IP handling to improve external connectivity.
