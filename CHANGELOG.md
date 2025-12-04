@@ -4,6 +4,7 @@
 
 ### Fixed
 
+- Fix image on capacitations
 - Add interceptor for correct display of disability view
 - Fix offline 
 - Change atom color
