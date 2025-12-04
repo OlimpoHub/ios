@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1] – 03/12/2025
+
+### Fixed
+
+- Fix offline 
+- Change atom color
+
 ## [0.1.1] – 02/12/2025
 
 ### Added
