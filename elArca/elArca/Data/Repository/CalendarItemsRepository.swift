@@ -10,7 +10,13 @@
 
 import Foundation
 
-final class CalendarItemsRepository: CalendarItemsRequirement {
+protocol CalendarItemsRepositoryProtocol {
+    func items(for day: Date) async -> [DayItem]
+    func remove(_ item: DayItem) async
+}
+
+
+final class CalendarItemsRepository: CalendarItemsRepositoryProtocol {
     private var storage: [Date: [DayItem]] = [:]
     private let calendar: Calendar = .current
     private var didLoadFromAPI = false
