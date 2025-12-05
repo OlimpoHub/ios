@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Represents a calendar week
 struct Week: Hashable, Identifiable {
     let id: String
     let days: [Date]
@@ -24,11 +25,13 @@ struct Week: Hashable, Identifiable {
 }
 
 extension Week: Equatable {
+    // Compares two weeks based on their IDs
     static func == (lhs: Week, rhs: Week) -> Bool {
         lhs.id == rhs.id
     }
 }
 
 extension Week {
+    // Represents the current week
     static let current = Week(days: Calendar.currentWeek(from: Calendar.nearestMonday(from: .now)), order: .current)
 }

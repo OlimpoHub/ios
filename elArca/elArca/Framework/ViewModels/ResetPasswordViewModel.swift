@@ -19,10 +19,12 @@ final class ResetPasswordViewModel: ObservableObject {
 
     private let requirement: PasswordRequirementProtocol
 
+    // Initializes the view model with the password requirement service
     init(requirement: PasswordRequirementProtocol = PasswordRequirement.shared) {
         self.requirement = requirement
     }
 
+    // Sends a recovery email request and reports completion status
     func requestRecoveryEmail(completion: @escaping (Result<Void, Error>) -> Void) {
         emailError = ""
         errorMessage = nil
@@ -50,6 +52,7 @@ final class ResetPasswordViewModel: ObservableObject {
         }
     }
 
+    // Verifies the provided token and retrieves the associated email
     func verifyToken(token: String) {
         showingVerifyState = true
         isLoading = true
@@ -74,6 +77,7 @@ final class ResetPasswordViewModel: ObservableObject {
         }
     }
 
+    // Validates inputs and updates the password for the verified email
     func updatePassword(completion: @escaping (Result<Void, Error>) -> Void) {
         errorMessage = nil
         guard password.count >= 8 else {

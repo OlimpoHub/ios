@@ -1,12 +1,16 @@
 import Foundation
 import Combine
 
+// ViewModel for managing calendar data
 @MainActor
 final class CalendarViewModel: ObservableObject {
+    // Selected date in the calendar
     @Published var selection: Date? {
         didSet { Task { await loadForSelection() } }
     }
+    // Title displaying the current month and year
     @Published var title: String = Calendar.monthAndYear(from: .now)
+    // Items for the currently selected day
     @Published private(set) var itemsForSelectedDay: [DayItem] = []
 
     private let repo: CalendarItemsRequirementProtocol

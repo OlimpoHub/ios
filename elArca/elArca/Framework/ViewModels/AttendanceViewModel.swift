@@ -42,6 +42,7 @@ final class AttendanceViewModel: ObservableObject {
         }
     }
 
+    // Cleans the reading cod
     func reset() {
         scannedCode = ""
         message = "Escanea el QR de asistencia"

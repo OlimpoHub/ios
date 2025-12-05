@@ -46,11 +46,13 @@ class CoordinatorViewModel: ObservableObject {
         stack = [newScreen]
     }
     
+    // Adds a new view in top of the current
     func push(newScreen: Screen) {
         self.screen = newScreen
         stack.append(newScreen)
     }
     
+    // Removes the top view
     func pop() {
         if stack.count >= 2{
             stack.popLast()

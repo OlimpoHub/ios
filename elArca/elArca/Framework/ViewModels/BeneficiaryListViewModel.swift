@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+// Enum for sorting beneficiaries
 enum BeneficiarySortOrder {
     case nameAsc
     case nameDesc
@@ -26,6 +27,7 @@ class BeneficiaryListViewModel: ObservableObject {
 
     private let requirement: BeneficiaryListRequirementProtocol
 
+    // Initializes the view model and loads initial data
     init(requirement: BeneficiaryListRequirementProtocol = BeneficiaryListRequirement.shared) {
         self.requirement = requirement
         Task {
@@ -33,11 +35,13 @@ class BeneficiaryListViewModel: ObservableObject {
         }
     }
 
+    // Loads beneficiaries and filter categories on startup
     func loadInitialData() async {
         await fetchBeneficiaries()
         await fetchFilterCategories()
     }
 
+    // Fetches the main list of beneficiaries
     func fetchBeneficiaries() async {
         isLoading = true
         errorMessage = nil
@@ -51,6 +55,7 @@ class BeneficiaryListViewModel: ObservableObject {
         isLoading = false
     }
     
+    // Forces a clean refetch of beneficiaries and returns the result
     func refetchBeneficiaries() async -> [BeneficiaryResponse] {
         await requirement.clearStorage()
         
@@ -63,11 +68,13 @@ class BeneficiaryListViewModel: ObservableObject {
         return []
     }
 
+    // Refreshes data used for filtering
     private func fetchFilterCategories() async -> Void {
         await requirement.clearStorage()
         await fetchBeneficiaries()
     }
 
+    // Returns beneficiaries filtered by search text and sorted by selected order
     var filteredBeneficiaries: [BeneficiaryResponse] {
         var result = beneficiaries
 
@@ -95,6 +102,7 @@ class BeneficiaryListViewModel: ObservableObject {
         return result
     }
 
+    // Applies sorting and disability filters through the API
     func applyFilters() async {
         guard let baseURL = URL(string: Api.base) else { return }
 
@@ -137,6 +145,7 @@ class BeneficiaryListViewModel: ObservableObject {
         isLoading = false
     }
 
+    // Resets all filters to defaults and reloads the list
     func clearFilters() {
         sortOrder = .nameAsc
         selectedDisabilities.removeAll()

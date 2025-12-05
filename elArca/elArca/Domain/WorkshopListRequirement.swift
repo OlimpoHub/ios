@@ -7,15 +7,19 @@
 
 import Foundation
 
+// Protocol and class for managing workshops
 protocol WorkshopListRequirementProtocol {
+    // Fetches the list of workshops
     func getWorkshopList() async -> [WorkshopResponse]?
+    // Fetches a specific workshop by ID
     func getWorkshop(id: String) async -> WorkshopResponse?
+    // Clears stored workshop data
     func clearStorage() async -> Void
 }
 
 class WorkshopListRequirement: WorkshopListRequirementProtocol {
     static let shared = WorkshopListRequirement()
-    
+
     let dataRepository: WorkshopRepositoryProtocol
     
     // offline-first

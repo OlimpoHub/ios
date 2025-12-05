@@ -7,12 +7,16 @@
 
 import Foundation
 
+// Service for handling authentication-related operations
+
+// Enum representing possible network errors
 enum NetworkError: Error {
     case http(status: Int, data: Data?)
     case invalidData
     case urlError(Error)
 }
 
+// Struct representing the response for a login request
 struct LoginResponse: Codable {
     struct User: Codable {
         let id: String

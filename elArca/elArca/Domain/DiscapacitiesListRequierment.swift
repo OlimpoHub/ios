@@ -1,7 +1,10 @@
 import Foundation
 
+// Protocol and class for managing discapacities
 protocol DiscapacityListRequirementProtocol {
+    // Fetches the list of discapacities
     func getDiscapacityList() async -> [DiscapacityResponse]?
+    // Fetches a specific discapacity by ID
     func getDiscapacity(id: String) async -> DiscapacityResponse?
 }
 
