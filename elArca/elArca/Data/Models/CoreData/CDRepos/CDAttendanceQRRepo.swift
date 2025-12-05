@@ -5,12 +5,19 @@
 //  Created by Edmundo Canedo Cervantes on 30/11/25.
 //
 
+// Repository for persisting attendance QR reads locally in Core Data.
+// - Stores attendances that couldn't be posted due to offline connectivity.
+// - Provides logic to retry sending stored attendances.
+
 import Foundation
 import CoreData
 
 protocol CDAttendanceQRRepoProtocol {
+    // Saves an attendance locally if it isn't already present.
     func storeAttendance(qrValue: String, readTime: Int, userID: String) async -> Void
+    // Deletes a locally stored attendance.
     func deleteAttendance(qrValue: String, readTime: Int, userID: String) async -> Void
+    // Attempts to send all stored attendances to the server.
     func sendStoredAttendances() async -> Void
 }
 

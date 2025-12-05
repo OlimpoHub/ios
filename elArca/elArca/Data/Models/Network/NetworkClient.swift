@@ -3,7 +3,11 @@
 //  elArca
 //
 //  Created by Carlos Martinez Vazquez on 12/11/25.
+//  Simple HTTP client wrapper that attaches auth tokens and handles 401 refresh logic.
+//  - Uses TokenManager to add Authorization header.
+//  - On 401 attempts a token refresh and retries once.
 //
+
 
 import Foundation
 
@@ -13,6 +17,8 @@ final class NetworkClient {
 
     private let tokenManager = TokenManager.shared
 
+    // Performs the request and returns (Data, HTTPURLResponse).
+    // - Throws NetworkError or AuthError on failures.
     func request(_ req: URLRequest) async throws -> (Data, HTTPURLResponse) {
         var request = req
 

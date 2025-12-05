@@ -5,6 +5,9 @@
 //  Created by Edmundo Canedo Cervantes on 26/11/25.
 //
 
+// Accessibility repository that proxies persisted user settings (e.g. dyslexic font, larger font)
+// - Delegates to AccesibilityService which uses UserDefaults.
+
 import Foundation
 
 protocol AccesibilityRepositoryProtocol {

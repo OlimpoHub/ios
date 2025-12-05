@@ -5,6 +5,9 @@
 //  Created by Edmundo Canedo Cervantes on 26/11/25.
 //
 
+// Small wrapper around UserDefaults for accessibility-related toggles.
+// - Stores/retrieves dyslexic font and bigger font preferences.
+
 import Foundation
 
 final class AccesibilityService {

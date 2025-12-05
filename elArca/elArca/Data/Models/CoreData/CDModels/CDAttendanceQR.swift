@@ -4,6 +4,7 @@
 //
 //  Created by Edmundo Canedo Cervantes on 30/11/25.
 //
+// Core Data entity to persist attendance QR reads when offline.
 
 import Foundation
 import CoreData

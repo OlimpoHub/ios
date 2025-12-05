@@ -4,6 +4,7 @@
 //
 //  Created by Fátima Figueroa on 25/11/25.
 //
+//  Core Data entity representing workshop metadata stored locally.
 
 import Foundation
 import CoreData

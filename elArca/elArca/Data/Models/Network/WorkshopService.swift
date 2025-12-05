@@ -5,6 +5,9 @@
 //  Created by Carlos Martinez Vazquez on 05/11/25.
 //
 
+// Network service responsible for fetching workshop data from the API.
+// - Exposes methods to fetch all workshops or a single workshop by id.
+
 import Foundation
 
 final class WorkshopService {
@@ -12,6 +15,7 @@ final class WorkshopService {
     private init() {}
 
     // Fetch multiple workshops (all of them)
+    // - Returns an array of WorkshopResponse decoded from the API.
     func getWorkshops(baseURL: URL, path: String) async throws -> [WorkshopResponse] {
         let url = baseURL.appendingPathComponent(path)
         print("WorkshopService: fetching workshops from \(url.absoluteString)")
@@ -35,6 +39,7 @@ final class WorkshopService {
     }
 
     // Fetch a single workshop by id (idTaller)
+    // - Returns the first WorkshopResponse object found in the "workshop" field of the response.
     func getWorkshop(baseURL: URL, path: String, id: String) async throws -> WorkshopResponse {
         let decoder = JSONDecoder()
         let fullPath = path + id

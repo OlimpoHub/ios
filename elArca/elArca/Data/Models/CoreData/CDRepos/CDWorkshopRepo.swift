@@ -5,6 +5,10 @@
 //  Created by Fátima Figueroa on 25/11/25.
 //
 
+// Core Data backed repository for workshops.
+// - Reads cached workshops and synchronizes with the API in background once.
+// - Methods return WorkshopResponse DTOs used throughout the app.
+
 import Foundation
 import CoreData
 
@@ -35,6 +39,7 @@ final class CDWorkshopRepo: WorkshopRepositoryProtocol {
     }
 
 
+    // Returns all workshops from local cache, triggers background sync the first time
     func getWorkshops() async -> [WorkshopResponse]? {
         await ensureSyncedOnce()
 
@@ -54,6 +59,7 @@ final class CDWorkshopRepo: WorkshopRepositoryProtocol {
         }
     }
 
+    // Returns a single workshop by id. Reads local first, otherwise fetches from API and caches it.
     func getWorkshop(id: String) async -> WorkshopResponse? {
         let ctx = stack.viewContext
         let req: NSFetchRequest<CDWorkshops> = CDWorkshops.fetchRequest()
@@ -147,4 +153,3 @@ final class CDWorkshopRepo: WorkshopRepositoryProtocol {
         }
     }
 }
-

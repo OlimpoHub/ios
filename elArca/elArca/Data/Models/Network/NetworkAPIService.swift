@@ -4,8 +4,8 @@
 //
 //  Created by Fátima Figueroa on 05/11/25.
 //
-// Shared network service that provides a generic fetch method for Decodable types
-// (If u need a different Decoder configuration for specific models, pass a custom JSONDecoder instance in your Service File)
+// Generic network helper that decodes responses into Decodable models.
+// - Use `fetch` to retrieve and decode JSON into any Decodable type.
 
 import Foundation
 

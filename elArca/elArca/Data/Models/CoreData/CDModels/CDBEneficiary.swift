@@ -3,7 +3,8 @@
 //  elArca
 //
 //  Created by Frida Xcaret Vargas Trejo on 01/12/25.
-//
+// Core Data entity for beneficiary data stored locally.
+// - Properties mirror BeneficiaryResponse fields and are used by repo mappers.
 
 import Foundation
 import CoreData
