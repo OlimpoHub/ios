@@ -21,6 +21,8 @@ final class WorkshopRepository: WorkshopRepositoryProtocol {
 
     init() {}
 
+    // Ensures data is fetched from API only once per app run.
+    // - Side effects: sets `didLoadFromAPI` and populates `storage`.
     private func ensureLoaded() async {
         guard !didLoadFromAPI else { return }
         didLoadFromAPI = true
@@ -43,11 +45,13 @@ final class WorkshopRepository: WorkshopRepositoryProtocol {
         }
     }
 
+    // Returns cached workshops; triggers a lazy load if needed.
     func getWorkshops() async -> [WorkshopResponse]? {
         await ensureLoaded()
         return storage
     }
 
+    // Returns a single workshop by id. Tries cache first; on miss, fetches from API and caches the result.
     func getWorkshop(id: String) async -> WorkshopResponse? {
         if let found = storage.first(where: { $0.idTaller == id }) {
             return found
@@ -68,6 +72,7 @@ final class WorkshopRepository: WorkshopRepositoryProtocol {
         }
     }
     
+    // Resets the loaded flag so the next `getWorkshops` call will fetch again from the API.
     func clearStorage() async {
         didLoadFromAPI = false
     }

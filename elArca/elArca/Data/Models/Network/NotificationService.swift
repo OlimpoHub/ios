@@ -5,6 +5,10 @@
 //  Created by Edmundo Canedo Cervantes on 17/11/25.
 //
 
+// Service that handles notification-related API calls.
+// - Decodes dates using an ISO8601 decoder that is tolerant to fractional seconds.
+// - Exposes methods to fetch notifications, fetch new count, and mark notifications as read.
+
 import Foundation
 import Alamofire
  
@@ -29,6 +33,11 @@ final class NotificationService {
     }()
 
     // Obtains the user notifications
+    // - Parameters:
+    //   - baseURL: base API URL
+    //   - path: relative path (defaults to "notifications/fetch")
+    //   - userId: id of the user whose notifications will be fetched
+    // - Returns: an array of `NotificationInfo` decoded from the server
     func fetchNotifications(baseURL: URL, path: String = "notifications/fetch", userId: String) async throws -> [NotificationInfo] {
         var url = baseURL.appendingPathComponent(path)
                 
@@ -57,6 +66,11 @@ final class NotificationService {
     }
     
     // Obtains the amount of notifications the user hasn't seen
+    // - Parameters:
+    //   - baseURL: base API URL
+    //   - path: relative path (defaults to "notifications/fetch/new")
+    //   - userId: id of the user
+    // - Returns: `NotificationNewInfo` containing the unread count
     func fetchNewNotifications(baseURL: URL, path: String = "notifications/fetch/new", userId: String) async throws -> NotificationNewInfo {
         var url = baseURL.appendingPathComponent(path)
 
@@ -84,6 +98,11 @@ final class NotificationService {
     }
     
     // Marks a notification as read
+    // - Parameters:
+    //   - baseURL: base API URL
+    //   - path: relative path (defaults to "notifications/read")
+    //   - notificationId: id of the notification to mark as read
+    // - Returns: Void; throws on network/auth errors
     func readNotification(baseURL: URL, path: String = "notifications/read", notificationId: String) async throws -> Void {
         let url = baseURL.appendingPathComponent(path)
         let body: [String: Any] = [

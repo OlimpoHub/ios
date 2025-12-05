@@ -4,6 +4,10 @@
 //
 //  Created by Fátima Figueroa on 03/11/25.
 //
+// Simple in-memory calendar item repository.
+// - Lazily loads calendar events from API and groups DayItem by day.
+// - Provides simple time formatting helper used by UI.
+
 import Foundation
 
 final class CalendarItemsRepository: CalendarItemsRequirement {

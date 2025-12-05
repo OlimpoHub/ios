@@ -1,3 +1,6 @@
+// Service implementing password recovery flows (request recovery email, verify token, update password).
+// - Wraps NetworkClient and maps network errors to PasswordError.
+
 import Foundation
 
 final class PasswordService {
@@ -18,6 +21,8 @@ final class PasswordService {
     }
 
     // POST /user/recover-password { "email": "..." }
+    // - Parameters: email to request recovery for
+    // - Throws: PasswordError mapped from NetworkError or URL building errors
     func requestRecoveryEmail(email: String) async throws {
         guard let base = URL(string: Api.base) else { throw PasswordError.invalidURL }
         guard let url = URL(string: "user/recover-password", relativeTo: base) else { throw PasswordError.invalidURL }
@@ -49,6 +54,9 @@ final class PasswordService {
     }
 
     // GET /user/verify-token?token=... -> { valid: Bool, email: String }
+    // - Parameters: token to verify
+    // - Returns: email associated with valid token
+    // - Throws: PasswordError mapped from network or decoding errors
     func verifyToken(token: String) async throws -> String {
         guard let base = URL(string: Api.base) else { throw PasswordError.invalidURL }
         var comps = URLComponents(url: base.appendingPathComponent("user/verify-token"), resolvingAgainstBaseURL: false)
@@ -84,6 +92,8 @@ final class PasswordService {
     }
 
     // POST /user/update-password { "email": "...", "password": "..." }
+    // - Parameters: email and new password
+    // - Throws: PasswordError on network or decoding problems
     func updatePassword(email: String, password: String) async throws {
         guard let base = URL(string: Api.base) else { throw PasswordError.invalidURL }
         guard let url = URL(string: "user/update-password", relativeTo: base) else { throw PasswordError.invalidURL }

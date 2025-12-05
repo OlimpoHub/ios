@@ -5,6 +5,10 @@
 //  Created by Frida Xcaret Vargas Trejo on 01/12/25.
 //
 
+// Core Data backed repository for beneficiaries.
+// - Reads from local cache and falls back to API when needed.
+// - Provides sync to replace local cache with server data.
+
 import Foundation
 import CoreData
 
@@ -24,6 +28,8 @@ final class CDBeneficiaryRepo: BeneficiaryRepositoryProtocol {
         self.service = service
     }
 
+    // Ensures synchronization with the remote API is started once per app run.
+    // - Side effect: schedules a detached Task to call `sync()` in background.
     private func ensureSyncedOnce() {
         guard !didAttemptSync else { return }
         didAttemptSync = true
@@ -33,6 +39,7 @@ final class CDBeneficiaryRepo: BeneficiaryRepositoryProtocol {
         }
     }
 
+    /// Returns beneficiaries from local cache (triggers a background sync once)
     func getBeneficiaries() async -> [BeneficiaryResponse]? {
         ensureSyncedOnce()
 
@@ -53,6 +60,7 @@ final class CDBeneficiaryRepo: BeneficiaryRepositoryProtocol {
         }
     }
 
+    /// Returns a single beneficiary by id: tries local first, then API and caches the result.
     func getBeneficiary(id: String) async -> BeneficiaryResponse? {
         let ctx = stack.viewContext
         let req: NSFetchRequest<CDBeneficiary> = CDBeneficiary.fetchRequest()
@@ -116,6 +124,7 @@ final class CDBeneficiaryRepo: BeneficiaryRepositoryProtocol {
         }
     }
 
+    /// Calls API to filter beneficiaries by the provided disabilities and optional order
     func filterBeneficiaries(order: String?, disabilities: [String]) async -> [BeneficiaryResponse]? {
         guard let baseURL = URL(string: Api.base) else {
             print("Error: Invalid base URL")
@@ -145,6 +154,7 @@ final class CDBeneficiaryRepo: BeneficiaryRepositoryProtocol {
         return
     }
     
+    /// Replaces local Core Data beneficiaries with the server list
     func sync() async {
         guard let baseURL = URL(string: Api.base) else {
             print("Api.base inválida")
@@ -190,4 +200,3 @@ final class CDBeneficiaryRepo: BeneficiaryRepositoryProtocol {
         }
     }
 }
-

@@ -5,6 +5,9 @@
 //  Created by Edmundo Canedo Cervantes on 30/11/25.
 //
 
+// Service that posts attendance records to the backend.
+// - sendAttendance returns an AttendanceInfo describing success, failure, and connectivity.
+
 import Foundation
 
 class AttendanceService {

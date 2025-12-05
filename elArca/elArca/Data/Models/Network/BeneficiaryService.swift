@@ -3,7 +3,10 @@
 //  elArca
 //
 //  Created by Frida Xcaret Vargas Trejo on 11/11/25.
-//
+// Service that handles beneficiary-related API calls.
+// - Decodes dates using a tolerant ISO8601 decoder.
+// - Provides methods to list, fetch single beneficiary, get categories and filter.
+
 import Foundation
 import Alamofire
 
@@ -26,6 +29,10 @@ class BeneficiaryService {
         return dec
     }()
     
+    // Fetches all beneficiaries
+    // - Parameters: baseURL and path (relative)
+    // - Returns: array of `BeneficiaryResponse` decoded from the server
+    // - Throws: network/auth/decoding errors propagated from NetworkClient
     func getBeneficiaries(baseURL: URL, path: String) async throws -> [BeneficiaryResponse] {
         let url = baseURL.appendingPathComponent(path + "list")
         print("Requesting beneficiaries from \(url.absoluteString)")
@@ -45,6 +52,10 @@ class BeneficiaryService {
         return try BeneficiaryService.decoder.decode([BeneficiaryResponse].self, from: data)
     }
 
+    // Fetches a single beneficiary by id
+    // - Parameters: baseURL, path, id
+    // - Returns: `BeneficiaryResponse` for the given id
+    // - Throws: network/auth/decoding errors; maps simple error messages into NSError
     func getBeneficiary(baseURL: URL, path: String, id: String) async throws -> BeneficiaryResponse {
 
         let url = baseURL.appendingPathComponent(path + id)
@@ -70,6 +81,9 @@ class BeneficiaryService {
         return try BeneficiaryService.decoder.decode(BeneficiaryResponse.self, from: data)
     }
     
+    // Fetches filter categories for beneficiaries
+    // - Returns: `BeneficiaryFilterCategories`
+    // - Throws: network/auth/decoding errors
     func getFilterCategories(baseURL: URL, path: String) async throws -> BeneficiaryFilterCategories {
         let url = baseURL.appendingPathComponent(path + "categories")
         print("Requesting beneficiary filter categories from \(url.absoluteString)")
@@ -88,6 +102,10 @@ class BeneficiaryService {
         return try decoder.decode(BeneficiaryFilterCategories.self, from: data)
     }
 
+    // Filters beneficiaries using provided body
+    // - Parameters: baseURL, path, body containing filters
+    // - Returns: filtered array of `BeneficiaryResponse`
+    // - Throws: network/auth/decoding errors
     func filterBeneficiaries(
         baseURL: URL,
         path: String,

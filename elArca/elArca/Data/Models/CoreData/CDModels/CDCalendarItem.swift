@@ -4,6 +4,7 @@
 //
 //  Created by Fátima Figueroa on 11/11/25.
 //
+//  Core Data entity representing a calendar item (workshop instance).
 
 import Foundation
 import CoreData
@@ -22,4 +23,3 @@ public class CDCalendarItem: NSManagedObject {
     @NSManaged public var horaEntrada: String
     @NSManaged public var horaSalida: String
 }
-

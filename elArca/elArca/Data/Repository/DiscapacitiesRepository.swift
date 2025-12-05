@@ -1,3 +1,6 @@
+// Repository for discapacities (disabilities).
+// - Loads data lazily from DiscapacityService and caches in memory.
+
 import Foundation
 
 protocol DiscapacityRepositoryProtocol {
