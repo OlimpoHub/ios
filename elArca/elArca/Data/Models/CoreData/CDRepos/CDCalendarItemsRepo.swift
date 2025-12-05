@@ -12,7 +12,9 @@
 import Foundation
 import CoreData
 
-final class CDCalendarItemsRepo: CalendarItemsRequirement {
+final class CDCalendarItemsRepo: CalendarItemsRepositoryProtocol {
+    static let shared = CDCalendarItemsRepo()
+    
     private let stack: CoreDataStack
     private let service: CalendarService
     private let calendar: Calendar = .current

@@ -17,6 +17,7 @@ class WorkshopDetailViewModel: ObservableObject {
     private let id: String
     private let requirement: WorkshopListRequirementProtocol
 
+    // Initializes the view model and triggers the fetch of workshop details
     init(id: String, requirement: WorkshopListRequirementProtocol = WorkshopListRequirement.shared) {
         self.id = id
         self.requirement = requirement
@@ -25,6 +26,7 @@ class WorkshopDetailViewModel: ObservableObject {
         }
     }
 
+    // Loads workshop details from the data source
     func fetch() async {
         isLoading = true
         errorMessage = nil

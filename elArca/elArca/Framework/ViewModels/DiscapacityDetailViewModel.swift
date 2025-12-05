@@ -15,12 +15,14 @@ class DiscapacityDetailViewModel: ObservableObject {
     
     private var allDisabilities: [DiscapacityResponse] = []
 
+    // Initializes the view model and triggers the load process
     init(id: String, disabilityListRequirement: DiscapacityListRequirementProtocol = DiscapacityListRequirement.shared) {
         self.id = id
         self.disabilityListRequirement = disabilityListRequirement
         load()
     }
     
+    // Loads disability details from the data source
     func load() {
         isLoading = true
         errorMessage = nil

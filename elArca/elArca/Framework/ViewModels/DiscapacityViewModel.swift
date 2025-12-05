@@ -13,11 +13,13 @@ class DiscapacityViewModel: ObservableObject {
     
     var disabilityListRequirement: DiscapacityListRequirementProtocol
     
+    // Initializes the view model and loads the list of disabilities
     init(disabilityListRequirement: DiscapacityListRequirementProtocol = DiscapacityListRequirement.shared) {
         self.disabilityListRequirement = disabilityListRequirement
         loadDisabilities()
     }
     
+    // Fetches the full disability list from the data source
     func loadDisabilities() {
         isLoading = true
         errorMessage = nil
@@ -34,6 +36,7 @@ class DiscapacityViewModel: ObservableObject {
         }
     }
     
+    // Applies search filtering to the disability list
     func filterDisabilities() {
         if searchText.isEmpty {
             self.disabilities = allDisabilities
