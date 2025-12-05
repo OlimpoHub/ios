@@ -24,10 +24,10 @@ class BeneficiaryListViewModel: ObservableObject {
     @Published var selectedDisabilities: Set<String> = []   // MULTISELECT
     @Published var availableDisabilities: [String] = []
 
-    private let repository: BeneficiaryRepositoryProtocol
+    private let requirement: BeneficiaryListRequirementProtocol
 
-    init(repository: BeneficiaryRepositoryProtocol = CDBeneficiaryRepo.shared) {
-        self.repository = repository
+    init(requirement: BeneficiaryListRequirementProtocol = BeneficiaryListRequirement.shared) {
+        self.requirement = requirement
         Task {
             await loadInitialData()
         }
@@ -42,7 +42,7 @@ class BeneficiaryListViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
 
-        if let result = await repository.getBeneficiaries() {
+        if let result = await requirement.getBeneficiaryList() {
             beneficiaries = result
         } else {
             errorMessage = "No se pudieron cargar los beneficiarios."
@@ -52,9 +52,9 @@ class BeneficiaryListViewModel: ObservableObject {
     }
     
     func refetchBeneficiaries() async -> [BeneficiaryResponse] {
-        await repository.clearStorage()
+        await requirement.clearStorage()
         
-        if let result = await repository.getBeneficiaries() {
+        if let result = await requirement.getBeneficiaryList() {
             return result
         } else {
             errorMessage = "No se pudieron cargar los beneficiarios."
@@ -64,7 +64,7 @@ class BeneficiaryListViewModel: ObservableObject {
     }
 
     private func fetchFilterCategories() async -> Void {
-        await repository.clearStorage()
+        await requirement.clearStorage()
         await fetchBeneficiaries()
     }
 
