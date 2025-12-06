@@ -119,7 +119,7 @@ struct TextInput: View {
                         }
                     } label: {
                         HStack {
-                            Text(value == "" ? placeholder : selectedOption)
+                            Texts(text: value == "" ? placeholder : selectedOption, type: .medium)
                             Spacer()
                         }
                         .frame(minHeight: baseSize * 3, maxHeight: baseSize * 3)

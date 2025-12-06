@@ -18,12 +18,13 @@ enum ButtonType {
     // Botones grandes
     case largeBlue
     case largeGray
+    case largeRed
 
     var fontSize: CGFloat {
         switch self {
         case .smallWhite, .smallBlue, .mediumBlue, .mediumRed, .mediumGray:
             return 14
-        case .largeBlue, .largeGray:
+        case .largeBlue, .largeGray, .largeRed:
             return 16
         }
     }
@@ -38,6 +39,8 @@ enum ButtonType {
             return Color("DarkRed")
         case .smallWhite:
             return .white
+        case .largeRed:
+            return Color("HighlightRed")
         }
     }
 
@@ -56,7 +59,7 @@ enum ButtonType {
             return 12
         case .mediumBlue, .mediumRed, .mediumGray:
             return 16
-        case .largeBlue, .largeGray:
+        case .largeBlue, .largeGray, .largeRed:
             return 20
         }
     }
@@ -67,7 +70,7 @@ enum ButtonType {
             return 6
         case .mediumBlue, .mediumRed, .mediumGray:
             return 8
-        case .largeBlue, .largeGray:
+        case .largeBlue, .largeGray, .largeRed:
             return 12
         }
     }
@@ -80,13 +83,12 @@ struct RectangleButton: View {
 
     var body: some View {
         Button(action: action) {
-            Text(title)
-                .font(.custom("Poppins-SemiBold", size: type.fontSize))
+            Texts(text: title, type: .mediumbold, size: type.fontSize)
                 .foregroundColor(type.textColor)
                 .padding(.horizontal, type.horizontalPadding)
                 .padding(.vertical, type.verticalPadding)
                 .background(type.backgroundColor)
-                .cornerRadius(8)
+                .cornerRadius(8)            
         }
         .buttonStyle(.plain)
     }

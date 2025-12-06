@@ -1,3 +1,6 @@
+// Password recovery repository that proxies calls to PasswordService.
+// - Methods may throw and return strings/tokens as defined by the service.
+
 import Foundation
 
 protocol PasswordRepositoryProtocol {
