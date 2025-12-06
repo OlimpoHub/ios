@@ -5,6 +5,9 @@
 //  Created by Fátima Figueroa on 05/11/25.
 //
 
+// Service for fetching calendar items from the API.
+// - Decodes date strings using a tolerant ISO8601 decoder.
+
 import Foundation
 import Alamofire
 

@@ -4,6 +4,11 @@
 //
 //  Created by Fátima Figueroa on 11/11/25.
 //
+//  Lightweight wrapper around NSPersistentContainer used by the app.
+//  - Provides a shared container and convenience for creating background contexts.
+//  - Configures migration and merge policies appropriate for this app.
+//
+
 
 import CoreData
 
@@ -14,7 +19,7 @@ final class CoreDataStack {
     var viewContext: NSManagedObjectContext { container.viewContext }
 
     private init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "CDCalendar")
+        container = NSPersistentContainer(name: "CDelArca")
 
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
@@ -35,6 +40,7 @@ final class CoreDataStack {
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
 
+    // Returns a new background context preconfigured with the app's merge policy.
     func newBackgroundContext() -> NSManagedObjectContext {
         let ctx = container.newBackgroundContext()
         ctx.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy

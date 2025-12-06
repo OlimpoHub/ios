@@ -13,7 +13,7 @@ struct DayView: View {
     
     var body: some View {
         VStack(spacing: 12) {
-            Text(Calendar.dayNumber(from: date))
+            Texts(text: Calendar.dayNumber(from: date), type: .medium)
                 .background {
                     if date == selectedDate {
                         Circle()

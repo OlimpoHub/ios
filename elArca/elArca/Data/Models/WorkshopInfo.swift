@@ -5,6 +5,10 @@
 //  Created by Carlos Martinez Vazquez on 04/11/25.
 //
 
+// Unified workshop model used as DTO and domain object.
+// - Codable for network serialization.
+// - Identifiable for SwiftUI and collection usage.
+
 import Foundation
 
 // Unified model - serves as both DTO and domain model
@@ -20,7 +24,7 @@ struct WorkshopResponse: Codable, Identifiable {
     // Identifiable conformance
     var id: String { idTaller }
     
-    // Computed properties for cleaner UI access
+    // Computed properties for easier UI access
     var name: String { nombreTaller }
     var startTime: String { horaEntrada }
     var endTime: String { horaSalida }
@@ -28,7 +32,7 @@ struct WorkshopResponse: Codable, Identifiable {
     var url: String? { URL }
     var descripcion: String? { Descripcion }
     
-    // UI-only property
+    // UI-only property (maps to asset name)
     var imageName: String { "img_taller_default" }
     
     enum CodingKeys: String, CodingKey {

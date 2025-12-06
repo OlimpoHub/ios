@@ -4,9 +4,19 @@
 //
 //  Created by Fátima Figueroa on 03/11/25.
 //
+// Simple in-memory calendar item repository.
+// - Lazily loads calendar events from API and groups DayItem by day.
+// - Provides simple time formatting helper used by UI.
+
 import Foundation
 
-final class CalendarItemsRepository: CalendarItemsRequirement {
+protocol CalendarItemsRepositoryProtocol {
+    func items(for day: Date) async -> [DayItem]
+    func remove(_ item: DayItem) async
+}
+
+
+final class CalendarItemsRepository: CalendarItemsRepositoryProtocol {
     private var storage: [Date: [DayItem]] = [:]
     private let calendar: Calendar = .current
     private var didLoadFromAPI = false

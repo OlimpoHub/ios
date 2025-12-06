@@ -4,6 +4,7 @@
 //
 //  Created by Fátima Figueroa on 11/11/25.
 //
+//  Core Data entity representing a calendar item (workshop instance).
 
 import Foundation
 import CoreData

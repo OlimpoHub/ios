@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="24299" systemVersion="24G231" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CDAttendanceQR" representedClassName="elArca.CDAttendanceQR" syncable="YES">
+        <attribute name="qrValue" optional="YES" attributeType="String"/>
+        <attribute name="readTime" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="userID" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="CDBeneficiary" representedClassName="elArca.CDBeneficiary" syncable="YES">
+        <attribute name="apellidoMaterno" optional="YES" attributeType="String"/>
+        <attribute name="apellidoPaterno" optional="YES" attributeType="String"/>
+        <attribute name="descripcion" optional="YES" attributeType="String"/>
+        <attribute name="discapacidad" optional="YES" attributeType="String"/>
+        <attribute name="discapacidades" optional="YES" attributeType="String"/>
+        <attribute name="estatus" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="fechaIngreso" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="fechaNacimiento" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="foto" optional="YES" attributeType="String"/>
+        <attribute name="idBeneficiario" optional="YES" attributeType="String"/>
+        <attribute name="nombre" optional="YES" attributeType="String"/>
+        <attribute name="nombreContactoEmergencia" optional="YES" attributeType="String"/>
+        <attribute name="numeroEmergencia" optional="YES" attributeType="String"/>
+        <attribute name="relacionContactoEmergencia" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="CDCalendarItem" representedClassName="elArca.CDCalendarItem" syncable="YES">
+        <attribute name="fecha" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="horaEntrada" attributeType="String"/>
+        <attribute name="horaSalida" attributeType="String"/>
+        <attribute name="idTaller" attributeType="String"/>
+        <attribute name="idUsuario" attributeType="String"/>
+        <attribute name="nombreTaller" attributeType="String"/>
+    </entity>
+    <entity name="CDWorkshops" representedClassName="elArca.CDWorkshops" syncable="YES">
+        <attribute name="descripcion" optional="YES" attributeType="String"/>
+        <attribute name="fecha" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="horaEntrada" attributeType="String"/>
+        <attribute name="horaSalida" attributeType="String"/>
+        <attribute name="idTaller" attributeType="String"/>
+        <attribute name="nombreTaller" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+    </entity>
+</model>

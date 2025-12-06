@@ -5,6 +5,10 @@
 //  Created by Edmundo Canedo Cervantes on 17/11/25.
 //
 
+// Notification repository responsible for fetching and marking notifications.
+// - Uses NotificationService to request data from the backend.
+// - Methods return decoded NotificationInfo models or simple flags.
+
 import Foundation
 
 protocol NotificationRepositoryProtocol {
@@ -22,6 +26,7 @@ final class NotificationRepository: NotificationRepositoryProtocol {
     init() {}
     
     // Obtains the user notifications
+    // - Returns an array of NotificationInfo or empty array on error.
     func fetchNotifications(userId: String) async -> [NotificationInfo]? {
         guard let baseURL = URL(string: Api.base) else {
             print("Error: Invalid base URL")
@@ -62,7 +67,7 @@ final class NotificationRepository: NotificationRepositoryProtocol {
         }
     }
     
-    // Marks a notification as read
+    // Marks a notification as read (fire and forget)
     func readNotifications(notificationId: String) async {
         guard let baseURL = URL(string: Api.base) else {
             print("Error: Invalid base URL")

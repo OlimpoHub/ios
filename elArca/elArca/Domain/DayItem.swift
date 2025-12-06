@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Struct representing a calendar day item
 public struct DayItem: Identifiable, Hashable {
     public let id = UUID()
     public let title: String
@@ -14,6 +15,7 @@ public struct DayItem: Identifiable, Hashable {
     public let date: Date
 }
 
+// Returns the start of the day for a given date
 public func dayKey(_ date: Date, calendar: Calendar = .current) -> Date {
     calendar.startOfDay(for: date)
 }

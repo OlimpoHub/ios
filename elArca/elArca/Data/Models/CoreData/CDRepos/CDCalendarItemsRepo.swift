@@ -5,10 +5,16 @@
 //  Created by Fátima Figueroa on 11/11/25.
 //
 
+// Calendar items repository backed by Core Data.
+// - Returns DayItem objects for a given date using cached data.
+// - Synchronizes with server in background (one-time per process).
+
 import Foundation
 import CoreData
 
-final class CDCalendarItemsRepo: CalendarItemsRequirement {
+final class CDCalendarItemsRepo: CalendarItemsRepositoryProtocol {
+    static let shared = CDCalendarItemsRepo()
+    
     private let stack: CoreDataStack
     private let service: CalendarService
     private let calendar: Calendar = .current
@@ -20,6 +26,8 @@ final class CDCalendarItemsRepo: CalendarItemsRequirement {
     }
 
     // Public API
+    // Returns DayItem list for the specified day. Reads from local cache and
+    // triggers a background sync the first time this method is called.
     func items(for day: Date) async -> [DayItem] {
         // 1) Attempts to synchronize once per boot (does not block if there is no network)
         if !didAttemptSync {
@@ -52,11 +60,11 @@ final class CDCalendarItemsRepo: CalendarItemsRequirement {
         }
     }
 
+    // Removes the specified DayItem from local storage (matches by date and title)
     func remove(_ item: DayItem) async {
         let ctx = stack.viewContext
         let req: NSFetchRequest<CDCalendarItem> = CDCalendarItem.fetchRequest()
-        req.predicate = NSPredicate(format: "fecha == %@ AND nombreTaller == %@",
-                                    item.date as NSDate, item.title)
+        req.predicate = NSPredicate(format: "fecha == %@ AND nombreTaller == ", item.date as NSDate, item.title)
 
         do {
             let rows = try ctx.fetch(req)

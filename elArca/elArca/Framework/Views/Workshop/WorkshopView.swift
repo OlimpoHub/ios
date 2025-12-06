@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct WorkshopView: View {
     
     @StateObject private var viewModel = WorkshopViewModel()
-    
+        
     var body: some View {
         VStack {
             NavigationView {
@@ -20,7 +21,8 @@ struct WorkshopView: View {
                         .ignoresSafeArea()
                     
                     VStack(spacing: 0) {
-                        // Header with Title and Notification Bell (needs to update icons and add navbar)
+                        
+                        // Header con título y campana
                         HStack {
                             Texts(text: "Talleres", type: .header)
                                 .foregroundColor(.white)
@@ -33,9 +35,31 @@ struct WorkshopView: View {
                         .padding(.top, 20)
                         .padding(.bottom, 20)
                         
+                        // Search Bar
+                        HStack(spacing: 8) {
+                            TextInput(
+                                value: $viewModel.searchText,
+                                errorMessage: .constant(""),
+                                label: "",
+                                placeholder: "Buscar taller",
+                                type: .searchInput
+                            )
+                            
+//                            IconButtonAtom(imageName: "filter") {
+//                                print("Filtro Talleres")
+//                            }
+                        }
+                        .padding(.horizontal, 24)
+                        .padding(.bottom, 12)
+                        .onChange(of: viewModel.searchText) { _ in
+                            viewModel.filterWorkshops()
+                        }
+
+                        
                         // Contenido principal
                         mainContent
                     }
+
                 }
                 .edgesIgnoringSafeArea(.bottom)
             }
@@ -67,26 +91,28 @@ struct WorkshopView: View {
             } else {
                 // --- Estado de Éxito (Lista) ---
                 ScrollView(showsIndicators: false) {
-                    VStack(spacing: 32) {
                         ForEach(viewModel.workshops) { workshop in
                             NavigationLink(destination: WorkshopDetailView(id: workshop.idTaller)) {
                                 MenuButton(
                                     text: workshop.name,
                                     height: 110,
                                     buttonType: .gradient,
-                                    image: .asset(workshop.imageName),
-                                    screen: .none
+                                    image: workshop.URL ?? "" == "" ? .asset(workshop.imageName) : .url(workshop.URL ?? ""),
+                                    screen: .none,
+                                    isClickable: false
                                 )
-                                .allowsHitTesting(false)
                             }
-                            .padding(EdgeInsets(top: -18, leading: -18, bottom: -14, trailing: -14))
-                            .contentShape(Rectangle())
-                            .padding(EdgeInsets(top: 18, leading: 18, bottom: 14, trailing: 14))
-                        }
+                            
+                            Spacer()
+                                .frame(height: 32)
+                    }                    
+                }
+                .padding(.horizontal, 24)
+                .padding(.top, 10)
+                .refreshable {
+                    Task {
+                        await viewModel.reloadWorkshops()
                     }
-                    .padding(.horizontal, 24)
-                    .padding(.top, 10)
-                    .padding(.bottom, 100)
                 }
             }
         }
